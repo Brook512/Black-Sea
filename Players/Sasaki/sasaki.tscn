@@ -871,7 +871,7 @@ script = ExtResource("2_x50d2")
 
 [node name="SasakiSprite2D" parent="." instance=ExtResource("3_4v5of")]
 animation = &"LeftIdle"
-frame = 3
+frame = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -885,8 +885,8 @@ script = ExtResource("4_x50d2")
 one_shot = true
 
 [node name="DialogueRange" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 0
+collision_layer = 64
+collision_mask = 64
 
 [node name="DialogueCollision" type="CollisionShape2D" parent="DialogueRange"]
 position = Vector2(-0.3325, -0.5)

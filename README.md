@@ -170,13 +170,12 @@ light() 处理器也会在每一个像素上运行，并且同时还会在每一
 collision_layer是一个位掩码（bitmask），用于表示这个物体属于哪些碰撞层。
 collision_mask是一个位掩码，用于表示这个物体会检测哪些碰撞层上的物体。
 
-设定 collision layer——1：主角，2：NPC，3：Item，4：敌人子弹，5：主角子弹 6.wall
+设定 collision layer——1：主角，2：NPC，3：Item，4：敌人攻击，5：主角攻击 6.wall 7 对话
 
 主角的mask——234
 NPC的mask——15
 Item的mask——1
-敌人子弹的mask——1
-主角子弹的mask——2
+
 wall 的 mask——123
 
 怪物的血量以架势条为核心

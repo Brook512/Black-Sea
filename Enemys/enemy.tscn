@@ -1,6 +1,6 @@
-[gd_scene load_steps=48 format=3 uid="uid://cxrrtphldctpn"]
+[gd_scene load_steps=54 format=3 uid="uid://cxrrtphldctpn"]
 
-[ext_resource type="Script" uid="uid://ssbmbtstcmhw" path="res://Enemys/Scripts/EnemyAttack.gd" id="1_otsyk"]
+[ext_resource type="Script" uid="uid://ssbmbtstcmhw" path="res://Enemys/Scripts/BasicEnemy.gd" id="1_otsyk"]
 [ext_resource type="Texture2D" uid="uid://d003ug3fw2t8l" path="res://Enemys/BlueSprite/Attack1.png" id="2_b6aq8"]
 [ext_resource type="Shader" uid="uid://ihptsce2xesl" path="res://Enemys/Scripts/HitFlash.gdshader" id="2_cqow8"]
 [ext_resource type="Texture2D" uid="uid://doin4q254t23d" path="res://Enemys/BlueSprite/Attack2.png" id="3_ebo36"]
@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://cranamhnrfour" path="res://Enemys/BlueSprite/Idle.png" id="7_g4fnr"]
 [ext_resource type="Texture2D" uid="uid://beu8biewcxaw0" path="res://Enemys/BlueSprite/Jump.png" id="8_jwi26"]
 [ext_resource type="Texture2D" uid="uid://d3baxcr1we22d" path="res://Enemys/BlueSprite/Run.png" id="9_05cy4"]
+[ext_resource type="Script" uid="uid://cw2u6nsjh5srb" path="res://Enemys/Scripts/EnemyAnimations.gd" id="11_dwt4o"]
+[ext_resource type="Script" uid="uid://f56o2g3k6ut8" path="res://Players/Sasaki/SasakiCollision.gd" id="11_oy085"]
+[ext_resource type="Script" uid="uid://5tjjk7s7eut5" path="res://Enemys/Scripts/EnemyCollision.gd" id="13_111e3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oy085"]
 shader = ExtResource("2_cqow8")
@@ -298,6 +301,14 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cqow8"]
 size = Vector2(28, 71)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dwt4o"]
+size = Vector2(11.7775, 8.28571)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oy085"]
+size = Vector2(27, 71)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_111e3"]
+
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_otsyk")
 
@@ -307,11 +318,36 @@ position = Vector2(2.38419e-07, -4)
 scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_wuphf")
 animation = &"Idle"
+script = ExtResource("11_dwt4o")
 
-[node name="AttackTimer" type="Timer" parent="."]
-
-[node name="Timer2" type="Timer" parent="."]
-
-[node name="HurtBody" type="CollisionShape2D" parent="."]
+[node name="MoveBody" type="CollisionShape2D" parent="."]
 position = Vector2(3, -4.5)
 shape = SubResource("RectangleShape2D_cqow8")
+
+[node name="DialogueRange" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 64
+
+[node name="DialogueCollision" type="CollisionShape2D" parent="DialogueRange"]
+position = Vector2(-0.3325, -0.5)
+scale = Vector2(6, 3.5)
+shape = SubResource("RectangleShape2D_dwt4o")
+script = ExtResource("11_oy085")
+
+[node name="HurtBody" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBody"]
+position = Vector2(2.5, -4.5)
+shape = SubResource("RectangleShape2D_oy085")
+
+[node name="AttackRange" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="AttackCollision" type="CollisionShape2D" parent="AttackRange"]
+position = Vector2(27.335, -15.87)
+scale = Vector2(6, 3.5)
+shape = SubResource("CircleShape2D_111e3")
+script = ExtResource("13_111e3")
