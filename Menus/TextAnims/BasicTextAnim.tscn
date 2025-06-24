@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://delg07fswkv7u"]
+
+[ext_resource type="Script" uid="uid://bjgiadnh2hy4e" path="res://Menus/TextAnims/TextAnimator.gd" id="1_yg2xv"]
+[ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="2_r0i1j"]
+[ext_resource type="Script" uid="uid://c700qg1hn2eng" path="res://Menus/TextAnims/TextAppear.gd" id="3_xbt2r"]
+
+[node name="BasicTextAnim" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchor_left = 0.96
+anchor_right = 2.315
+anchor_bottom = 1.0
+offset_right = 360.0
+offset_bottom = 240.0
+grow_horizontal = 0
+script = ExtResource("1_yg2xv")
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.7
+anchor_right = 0.97
+anchor_bottom = 0.98
+grow_horizontal = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 4.2
+offset_top = 3.0
+offset_right = 335.2
+offset_bottom = 64.0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/table_v_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_r0i1j")
+theme_override_fonts/mono_font = ExtResource("2_r0i1j")
+text = " speed alone is unassailable."
+script = ExtResource("3_xbt2r")

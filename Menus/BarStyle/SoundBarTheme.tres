@@ -1,0 +1,16 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://5l7yydypenmq"]
+
+[ext_resource type="Texture2D" uid="uid://qvcnaswxmxfr" path="res://Menus/BarStyle/GrabberDown.png" id="1_fwgcu"]
+[ext_resource type="Texture2D" uid="uid://by8xl41lidsgk" path="res://Menus/BarStyle/Grabber.png" id="2_c2kq4"]
+[ext_resource type="StyleBox" uid="uid://b5lhg5aec3gpf" path="res://Menus/BarStyle/soundbar.tres" id="2_detr7"]
+[ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="4_fnufb"]
+
+[resource]
+default_font = ExtResource("4_fnufb")
+CheckButton/icons/checked = null
+CheckButton/icons/checked_mirrored = null
+HSlider/icons/grabber = ExtResource("1_fwgcu")
+HSlider/icons/grabber_highlight = ExtResource("2_c2kq4")
+HSlider/styles/grabber_area = null
+HSlider/styles/grabber_area_highlight = null
+HSlider/styles/slider = ExtResource("2_detr7")

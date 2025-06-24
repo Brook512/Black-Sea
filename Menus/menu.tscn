@@ -1,0 +1,118 @@
+[gd_scene load_steps=15 format=3 uid="uid://cr1y42hfhbqpn"]
+
+[ext_resource type="Shader" uid="uid://bxsge4p5blgx6" path="res://Menus/Scripts/CycleBackground.gdshader" id="1_asx6s"]
+[ext_resource type="Script" uid="uid://oker8m1j6vkj" path="res://Menus/Scripts/MenuScene.gd" id="1_cyvgt"]
+[ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="1_f371u"]
+[ext_resource type="Texture2D" uid="uid://cbrtby03xx82t" path="res://Menus/Background/1.png" id="2_h3048"]
+[ext_resource type="StyleBox" uid="uid://id6piakcqc0i" path="res://Menus/ButtonStyles/BasicButtonHover.tres" id="4_ecop0"]
+[ext_resource type="Theme" uid="uid://c6xtw867jkixy" path="res://Menus/ButtonStyles/ButtonTheme.tres" id="4_nhv1u"]
+[ext_resource type="StyleBox" uid="uid://bwuc7pdqp7moi" path="res://Menus/ButtonStyles/BasicButtonPressed.tres" id="5_h3048"]
+[ext_resource type="StyleBox" uid="uid://hsqa12gw7bij" path="res://Menus/ButtonStyles/BasicButton.tres" id="6_cyvgt"]
+[ext_resource type="Script" uid="uid://k1e74ldfnc0i" path="res://Menus/MoveLabel.gd" id="8_cyvgt"]
+[ext_resource type="Texture2D" uid="uid://cbrnyr8vqow6r" path="res://Menus/Background/2.png" id="9_3dpnx"]
+[ext_resource type="Shader" uid="uid://0wkvmlm3dek6" path="res://Menus/Background/Moon.gdshader" id="9_150j7"]
+[ext_resource type="Texture2D" uid="uid://jdi7gqfdw426" path="res://Menus/Background/3.png" id="9_nhv1u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xdhtn"]
+shader = ExtResource("1_asx6s")
+shader_parameter/offset = Vector2(1, 0)
+shader_parameter/speed = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vmkh2"]
+shader = ExtResource("9_150j7")
+shader_parameter/outline_color = Color(1, 1, 1, 0.8)
+shader_parameter/outline_size = 1.0
+shader_parameter/glow_speed = 1.0
+shader_parameter/glow_intensity = 0.5
+shader_parameter/glow_pulse_range = 0.3
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_cyvgt")
+
+[node name="UI" type="CanvasGroup" parent="."]
+z_index = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+z_index = 2
+offset_left = 241.0
+offset_top = 73.0
+offset_right = 334.0
+offset_bottom = 182.0
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Start" type="Button" parent="UI/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_nhv1u")
+theme_override_fonts/font = ExtResource("1_f371u")
+theme_override_styles/hover = ExtResource("4_ecop0")
+theme_override_styles/pressed = ExtResource("5_h3048")
+theme_override_styles/normal = ExtResource("6_cyvgt")
+text = "Start"
+
+[node name="Settings" type="Button" parent="UI/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_nhv1u")
+text = "Settings"
+
+[node name="Load" type="Button" parent="UI/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_nhv1u")
+text = "Load"
+
+[node name="About" type="Button" parent="UI/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_nhv1u")
+text = "About"
+
+[node name="Quit" type="Button" parent="UI/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_nhv1u")
+text = "Quit"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 35.0
+offset_top = 28.0
+offset_right = 195.0
+offset_bottom = 73.0
+theme_override_colors/font_color = Color(0.268293, 0.301504, 0.672617, 1)
+theme_override_colors/font_shadow_color = Color(0.168702, 0.191799, 0.46686, 1)
+theme_override_fonts/font = ExtResource("1_f371u")
+theme_override_font_sizes/font_size = 50
+text = "Black"
+
+[node name="Label" type="Label" parent="Label"]
+layout_mode = 0
+offset_left = 103.0
+offset_top = 10.0
+offset_right = 264.0
+offset_bottom = 55.0
+theme_override_colors/font_color = Color(0.586693, 0.740235, 0.94617, 1)
+theme_override_colors/font_shadow_color = Color(0.588235, 0.741176, 0.945098, 0.760784)
+theme_override_fonts/font = ExtResource("1_f371u")
+theme_override_font_sizes/font_size = 50
+text = "Life"
+script = ExtResource("8_cyvgt")
+
+[node name="BottomCloud" type="Sprite2D" parent="."]
+z_index = -1
+material = SubResource("ShaderMaterial_xdhtn")
+position = Vector2(194.333, 119.375)
+scale = Vector2(0.703704, 0.73071)
+texture = ExtResource("9_nhv1u")
+
+[node name="Moon" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_vmkh2")
+position = Vector2(121, 84)
+texture = ExtResource("9_3dpnx")
+
+[node name="Background" type="Sprite2D" parent="."]
+visibility_layer = 8
+z_index = -2
+position = Vector2(191, 125)
+scale = Vector2(0.77691, 0.890432)
+texture = ExtResource("2_h3048")
+
+[connection signal="pressed" from="UI/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

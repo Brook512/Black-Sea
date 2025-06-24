@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://qt3vku7iju8f"]
+
+[ext_resource type="Texture2D" uid="uid://kthlnuo47alw" path="res://Menus/PixelArtGUI/Textures/Panels/UniversalPanel1Outline.png" id="1_og2yh"]
+
+[node name="WhiteBoarder" type="NinePatchRect"]
+offset_left = 74.0
+offset_top = 144.0
+offset_right = 141.0
+offset_bottom = 164.0
+scale = Vector2(4, 4)
+texture = ExtResource("1_og2yh")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2

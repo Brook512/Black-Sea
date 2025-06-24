@@ -1,0 +1,21 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c6xtw867jkixy"]
+
+[ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="1_u4ajf"]
+[ext_resource type="StyleBox" uid="uid://id6piakcqc0i" path="res://Menus/ButtonStyles/BasicButtonHover.tres" id="2_morml"]
+[ext_resource type="StyleBox" uid="uid://hsqa12gw7bij" path="res://Menus/ButtonStyles/BasicButton.tres" id="3_6qb1t"]
+[ext_resource type="StyleBox" uid="uid://bwuc7pdqp7moi" path="res://Menus/ButtonStyles/BasicButtonPressed.tres" id="4_f00y7"]
+
+[resource]
+default_font = ExtResource("1_u4ajf")
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 16
+Button/fonts/font = ExtResource("1_u4ajf")
+Button/styles/disabled = null
+Button/styles/focus = null
+Button/styles/hover = ExtResource("2_morml")
+Button/styles/normal = ExtResource("3_6qb1t")
+Button/styles/pressed = ExtResource("4_f00y7")

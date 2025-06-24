@@ -1,0 +1,6 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://dsho0xyb5s4uw"]
+
+[ext_resource type="Texture2D" uid="uid://bnehhdm228kis" path="res://Menus/PixelArtGUI/Textures/Icons/8/SoundHigh.png" id="1_0m7ks"]
+
+[resource]
+atlas = ExtResource("1_0m7ks")
