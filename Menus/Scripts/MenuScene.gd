@@ -11,7 +11,8 @@ func _on_start_pressed() -> void:
 func switch_scene(scene_key: String) -> void:
 	var path = _get_scene_path(scene_key)
 	if ResourceLoader.exists(path):
-		get_tree().change_scene_to_file(path)
+		GlobalSceneManager.goto_scene(path)
+
 		print("场景切换至: " + scene_key)
 	else:
 		push_error("场景路径无效: " + path)

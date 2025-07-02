@@ -10,7 +10,7 @@ class_name Sasaki
 @export var acceleration: float = 10.
 
 @export var gravity: float = 1000.0  # 增加重力值，使跳跃感觉更自然
-@export var dodge_speed: float = 300.0
+
 @export var terminal_velocity: float = 1000.0
 @export var air_control_factor: float = 0.5  # 空中移动控制系数
 @export var jump_buffer_time: float = 0.1  # 跳跃缓冲时间
@@ -20,23 +20,22 @@ var facing_vec: float = 1.0  # 默认为朝右
 
 @onready var anim_tree = $SasakiAnimationTree
 @onready var status = $StatusManager
-
+	# 获取攻击碰撞体节点（假设名为"AttackArea"）
+@onready var attack_collision = $AttackRange/AttackCollision
 var in_attack_stage = false
 var in_dodge_stage = false
 var is_jumping = false
 var last_on_floor_time: float = 0.0  # 记录最后在地面的时间
 var jump_requested: bool = false
 var jump_request_time: float = 0.0
-var dodge_origin_position
-var dodge_target_position
-var dodge_progress
-var dodge_duration =0.3
-var dodge_distance = 80
+
+@export var dodge_duration =0.3
+
 
 var _dir: float = 0.  # 当前输入方向
 
 # 状态枚举和变量
-enum State { IDLE, MOVE, DODGE, ATTACK, JUMP, FALL, HURT }
+enum State { IDLE, LEFTMOVE,RIGHTMOVE, DODGE, ATTACK, JUMP, FALL, HURT }
 var current_state: State = State.IDLE
 var previous_state: State = State.IDLE
 
@@ -103,8 +102,10 @@ func _update_state():
 		else:  # 下落中
 			_change_state(State.FALL)
 	else:
-		if abs(_dir) > 0.1 and enable_move_siganl:
-			_change_state(State.MOVE)
+		if _dir > 0.1 and enable_move_siganl:
+			_change_state(State.RIGHTMOVE)
+		elif _dir < -0.1 and enable_move_siganl:
+			_change_state(State.LEFTMOVE)
 		else:
 			_change_state(State.IDLE)
 
@@ -119,10 +120,7 @@ func _update_movement(delta):
 	if abs(_dir) > 0.1 and enable_move_siganl and !in_dodge_stage and !in_attack_stage:
 		target_velocity_x = _dir * move_speed * control_factor
 	
-	# 闪避有独立的移动处理
-	if in_dodge_stage:
-		target_velocity_x = facing_vec * dodge_speed
-	# 攻击中减少移动能力
+	 #攻击中减少移动能力
 	elif in_attack_stage:
 		target_velocity_x = target_velocity_x * 0.4
 	
@@ -137,27 +135,27 @@ func _update_actions(delta):
 	if Input.is_action_just_pressed("dodge") and !in_dodge_stage:
 		in_dodge_stage = true
 		emit_signal("dodge_signal", facing_vec)
-		dodge_origin_position = position
-		dodge_target_position = position + Vector2(facing_vec * dodge_distance, 0)
-		dodge_progress = 0.0
-	elif in_dodge_stage:
-		_handle_dodge_movement(delta)
+
 	# 检测攻击输入
 	if Input.is_action_just_pressed("attack"):
-		in_attack_stage = true
-		emit_signal("attack_signal", facing_vec)
+		_handle_attack(facing_vec)
 	
 	# 处理跳跃输入
 	_handle_jump()
+	
+	
+func _handle_attack(direc):
+	in_attack_stage = true
+	emit_signal("attack_signal", direc)
+	var attack_center_x = attack_collision.global_position.x
+	if (direc > 0 and attack_center_x < 0) or (direc < 0 and attack_center_x > 0):  # 角色朝右
+		# 使用碰撞体的全局位置检测中心点x坐标
+		var mirror_transform = Transform2D()
+		mirror_transform.x.x = -1  # 水平翻转
+		attack_collision.transform = attack_collision.transform * mirror_transform
+		# 视觉提示：更新碰撞体位置（可选）
+		attack_collision.position.x = abs(attack_collision.position.x)
 
-func _handle_dodge_movement(delta):
-	dodge_progress += delta / dodge_duration
-	if dodge_progress < 1.0:
-		# 使用缓动函数进行平滑移动
-		var ease_value = ease(dodge_progress, 0.8)  # 0.8用于调整缓动强度
-		position = dodge_origin_position.lerp(dodge_target_position, ease_value)
-	else:
-		position = dodge_target_position
 
 func _handle_jump():
 	# 在地面或离地边缘时间内，且有跳跃请求
@@ -190,7 +188,9 @@ func _change_state(new_state: State):
 	match new_state:
 		State.IDLE:
 			emit_signal("idle_signal", facing_vec)
-		State.MOVE:
+		State.LEFTMOVE:
+			emit_signal("move_signal", facing_vec)
+		State.RIGHTMOVE:
 			emit_signal("move_signal", facing_vec)
 		State.ATTACK:
 			emit_signal("attack_signal", facing_vec)
@@ -211,16 +211,18 @@ func _dodge_end():
 	in_dodge_stage = false
 
 
-func _on_hurt_body_area_entered(area: Area2D) -> void:
-	#if area.is_in_group("enemies"):
-	emit_signal("hurt_signal",status.attack_damage ,facing_vec)
-	
-func _on_attack_range_body_entered(body: Node2D) -> void:
-	if in_attack_stage and body.is_in_group("enemies"):
-		# 应用伤害
-		body.take_damage(status.attack_damage)
-		print("Enemy hit! Damage: ", status.attack_damage)
+
 
 
 func _on_dialogue_range_body_entered(body: Node2D) -> void:
 	pass # Replace with function body.
+
+
+func _on_attack_range_area_entered(hurtarea: Area2D) -> void:
+	if hurtarea.owner == owner:
+		return
+	hurtarea.owner.take_damage(status.attack_damage)
+	
+func take_damage(damage):
+	hurt_signal.emit(facing_vec, status.attack_damage)
+	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=3 uid="uid://b1ukdapkscdqb"]
+[gd_scene load_steps=100 format=3 uid="uid://b1ukdapkscdqb"]
 
 [ext_resource type="Script" uid="uid://c6ru8kvol2lqt" path="res://Players/Sasaki/Scripts/Sasaki.gd" id="1_6cpd0"]
 [ext_resource type="Script" uid="uid://dsjbqhnfjh8ph" path="res://Players/Sasaki/Scripts/sasaki_animation_tree.gd" id="2_x50d2"]
@@ -190,12 +190,14 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4q4da"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_chwjq"]
+switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fnjue"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3x127"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3xo22"]
+switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bstwj"]
 
@@ -254,12 +256,12 @@ states/Run/node = SubResource("AnimationNodeBlendSpace1D_hh5x7")
 states/Run/position = Vector2(-70, -272)
 states/Start/position = Vector2(-181, -64)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_yok3o"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_oyxuu"), "Idle", "Attack1", SubResource("AnimationNodeStateMachineTransition_4q4da"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_chwjq"), "Idle", "Hurt", SubResource("AnimationNodeStateMachineTransition_fnjue"), "Run", "Hurt", SubResource("AnimationNodeStateMachineTransition_3x127"), "Hurt", "Run", SubResource("AnimationNodeStateMachineTransition_3xo22"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_bstwj"), "Attack1", "Attack2", SubResource("AnimationNodeStateMachineTransition_e5jn5"), "Attack1", "Idle", SubResource("AnimationNodeStateMachineTransition_v0k5c"), "Attack2", "Idle", SubResource("AnimationNodeStateMachineTransition_snr0q"), "Hurt", "Death", SubResource("AnimationNodeStateMachineTransition_54c1r"), "Death", "End", SubResource("AnimationNodeStateMachineTransition_m7j0k"), "Idle", "Dodge", SubResource("AnimationNodeStateMachineTransition_4v5of"), "Dodge", "Idle", SubResource("AnimationNodeStateMachineTransition_0dbv8"), "Run", "Dodge", SubResource("AnimationNodeStateMachineTransition_5kta4"), "Dodge", "Run", SubResource("AnimationNodeStateMachineTransition_wwim2"), "Run", "Attack1", SubResource("AnimationNodeStateMachineTransition_d3nwv"), "Attack1", "Run", SubResource("AnimationNodeStateMachineTransition_pr33u"), "Idle", "JumpStateMachine", SubResource("AnimationNodeStateMachineTransition_3rbhi"), "JumpStateMachine", "Idle", SubResource("AnimationNodeStateMachineTransition_y4syw"), "JumpStateMachine", "Run", SubResource("AnimationNodeStateMachineTransition_2e7ff"), "Run", "JumpStateMachine", SubResource("AnimationNodeStateMachineTransition_4iom4")]
-graph_offset = Vector2(-580.751, -16.3076)
+graph_offset = Vector2(-580.751, -190.785)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ln7o6"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_hm7y0"]
-graph_offset = Vector2(-657.509, 67.3447)
+graph_offset = Vector2(-455.438, 233.205)
 nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_cl5qm")
 nodes/StateMachine/position = Vector2(-320, 240)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_ln7o6")
@@ -267,7 +269,7 @@ nodes/TimeScale/position = Vector2(121.698, 205.23)
 node_connections = [&"TimeScale", 0, &"StateMachine", &"output", 0, &"TimeScale"]
 
 [sub_resource type="Animation" id="Animation_6cpd0"]
-length = 1.2
+length = 1.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -291,6 +293,30 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["Attack1"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackRange/AttackCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackRange/AttackCollision:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(27.335, -15.87), Vector2(27.335, -15.87)]
 }
 
 [sub_resource type="Animation" id="Animation_x50d2"]
@@ -318,6 +344,30 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["Attack2"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackRange/AttackCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.7667, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackRange/AttackCollision:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(27.335, -15.87), Vector2(27.335, -15.87)]
 }
 
 [sub_resource type="Animation" id="Animation_4v5of"]
@@ -348,6 +398,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_6uw1v"]
+length = 1.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -355,10 +406,10 @@ tracks/0/path = NodePath("SasakiSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4]
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -486,7 +537,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_d3nwv"]
-length = 1.4
+length = 1.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -494,10 +545,10 @@ tracks/0/path = NodePath("SasakiSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6]
+"values": [0, 1, 2, 3, 4, 5]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -510,6 +561,30 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["LeftAttack1"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackRange/AttackCollision:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-27.335, -15.87), Vector2(-27.335, -15.87)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackRange/AttackCollision:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_pr33u"]
@@ -537,6 +612,30 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["LeftAttack2"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackRange/AttackCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0333333, 0.8, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackRange/AttackCollision:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-27.335, -15.87), Vector2(-27.335, -15.87)]
 }
 
 [sub_resource type="Animation" id="Animation_kn8kl"]
@@ -567,6 +666,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_p0hgs"]
+length = 1.6
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -575,10 +675,10 @@ tracks/0/path = NodePath("SasakiSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4]
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -760,6 +860,33 @@ tracks/1/keys = {
 "values": ["LeftTake Hit"]
 }
 
+[sub_resource type="Animation" id="Animation_gigsd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackRange/AttackCollision:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackRange/AttackCollision:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(27.335, -15.87)]
+}
+
 [sub_resource type="Animation" id="Animation_4iom4"]
 length = 1.6
 loop_mode = 1
@@ -835,12 +962,13 @@ _data = {
 &"LeftJumpAttack": SubResource("Animation_aay8b"),
 &"LeftRun": SubResource("Animation_y4syw"),
 &"LeftTake Hit": SubResource("Animation_2e7ff"),
+&"RESET": SubResource("Animation_gigsd"),
 &"Run": SubResource("Animation_4iom4"),
 &"TakeHit": SubResource("Animation_fq43n")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0dbv8"]
-size = Vector2(11.7775, 8.28571)
+size = Vector2(24, 4)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_htt48"]
 
@@ -849,6 +977,7 @@ size = Vector2(27, 53)
 
 [node name="sasaki" type="CharacterBody2D"]
 collision_mask = 46
+collision_priority = 2.0
 platform_wall_layers = 32
 script = ExtResource("1_6cpd0")
 
@@ -858,7 +987,7 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/StateMachine/Attack1/blend_position = -0.0589319
 parameters/StateMachine/Attack2/blend_position = 0
 parameters/StateMachine/Death/blend_position = 0
-parameters/StateMachine/Dodge/blend_position = 0
+parameters/StateMachine/Dodge/blend_position = -0.168975
 parameters/StateMachine/Hurt/blend_position = 0
 parameters/StateMachine/Idle/blend_position = -0.460405
 parameters/StateMachine/JumpStateMachine/Fall/blend_position = 0.0212373
@@ -872,6 +1001,7 @@ script = ExtResource("2_x50d2")
 [node name="SasakiSprite2D" parent="." instance=ExtResource("3_4v5of")]
 animation = &"LeftIdle"
 frame = 4
+frame_progress = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -889,14 +1019,16 @@ collision_layer = 64
 collision_mask = 64
 
 [node name="DialogueCollision" type="CollisionShape2D" parent="DialogueRange"]
-position = Vector2(-0.3325, -0.5)
+position = Vector2(-1.90735e-06, 7)
 scale = Vector2(6, 3.5)
 shape = SubResource("RectangleShape2D_0dbv8")
+debug_color = Color(1.78084e-06, 0.630676, 0.470089, 0.42)
 script = ExtResource("3_0dbv8")
 
 [node name="HurtBody" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 8
+collision_priority = 2.0
 
 [node name="BodyCollision" type="CollisionPolygon2D" parent="HurtBody"]
 scale = Vector2(3, 3)
@@ -910,12 +1042,12 @@ collision_mask = 0
 position = Vector2(27.335, -15.87)
 scale = Vector2(6, 3.5)
 shape = SubResource("CircleShape2D_htt48")
-script = ExtResource("3_0dbv8")
+disabled = true
+debug_color = Color(1, 0.00784314, 0.0509804, 0.270588)
 
 [node name="CollisionBody" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, -3.5)
 shape = SubResource("RectangleShape2D_4v5of")
 
 [connection signal="body_entered" from="DialogueRange" to="." method="_on_dialogue_range_body_entered"]
-[connection signal="area_entered" from="HurtBody" to="." method="_on_hurt_body_area_entered"]
-[connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
+[connection signal="area_entered" from="AttackRange" to="." method="_on_attack_range_area_entered"]

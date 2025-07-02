@@ -1,6 +1,6 @@
 重剑和刺剑
 
-#一、引擎的核心
+# 一、引擎的核心
 
 1. 特性
 树状数据结构​​：所有节点以树状结构组织，根节点通常是 MainLoop 或 SceneTree，每个节点及其子节点形成一个分支。（子节点继承父节点的变换（位置、旋转等））
@@ -24,7 +24,7 @@
 4. 
 
 
-#二、设计核心
+# 二、设计核心
 以重击，伤害数值为核心，优化战斗体验的设计
 挥砍的速度、范围、伤害
 格挡的帧数长短、格挡反击伤害
@@ -185,5 +185,65 @@ wall 的 mask——123
 ##4.status
 以架势条、血量和体力为核心
 
+# 八、LimboAI AI树
+Sequence Selector Condition AI树的三个关键组成部分
+通过这三个部分调用各种叶子节点task
 
- 
+创建自定义任务时，请扩展以下基类之一：BTAction、BTCondition、BTDecorator、BTComposite。
+```
+@tool # 表示该脚本在编辑器模式下也可运行
+extends BTAction
+
+# Task parameters.
+@export var parameter1: float
+@export var parameter2: Vector2
+
+## Note: Each method declaration is optional.
+## At minimum, you only need to define the "_tick" method.
+
+
+# Called to generate a display name for the task (requires @tool).
+func _generate_name() -> String:
+	return "MyTask"
+
+
+# Called to initialize the task.
+func _setup() -> void:
+	pass
+
+
+# Called when the task is entered.
+func _enter() -> void:
+	pass
+
+
+# Called when the task is exited.
+func _exit() -> void:
+	pass
+
+
+# Called each time this task is ticked (aka executed).
+func _tick(delta: float) -> Status:
+	return SUCCESS
+
+
+# Strings returned from this method are displayed as warnings in the editor.
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings := PackedStringArray()
+	return warnings
+```	
+ ## 敌人AI设计
+1. **全局属性设置**
+  position
+血量health、架势posture、体力stamina
+2. **对话阶段方法设置**  
+position固定，
+动画固定，
+碰撞体只激活对话碰撞体，
+血量、架势、体力无变化
+
+3. **攻击阶段方法设置**  
+轻击 Light Attack
+重击 Heavy Attack
+格挡 Block
+闪避 Dodge

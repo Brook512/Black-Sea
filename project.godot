@@ -17,14 +17,17 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
-SoundManager="*res://addons/sound_manager/module/SoundManager.tscn"
+GlobalSceneManager="*res://Scenes/Scripts/GlobalSceneManager.gd"
+
+[dialogue_manager]
+
+runtime/advanced/uses_dotnet=true
 
 [display]
 
 window/size/viewport_width=360
 window/size/viewport_height=240
-window/size/always_on_top=true
+window/size/initial_position_type=0
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="canvas_items"
@@ -40,7 +43,7 @@ version_control/autoload_on_startup=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AS2P/plugin.cfg", "res://addons/gut/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/sound_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/AS2P/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
 
 [input]
 
@@ -91,6 +94,7 @@ jump={
 
 [internationalization]
 
+locale/translations_pot_files=PackedStringArray("res://Dialogues/Teacher.dialogue")
 locale/size/borderless=false
 locale/subwindows/embed_subwindows=true
 

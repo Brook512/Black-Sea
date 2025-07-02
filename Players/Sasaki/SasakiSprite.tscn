@@ -1,10 +1,10 @@
-[gd_scene load_steps=128 format=3 uid="uid://88jhg7biipll"]
+[gd_scene load_steps=134 format=3 uid="uid://88jhg7biipll"]
 
 [ext_resource type="Texture2D" uid="uid://bmuoru7mt1sa8" path="res://Players/Sasaki/Sprites/Attack1.png" id="1_634g0"]
 [ext_resource type="Texture2D" uid="uid://c7m6acf7jomg" path="res://Players/Sasaki/Sprites/Attack2.png" id="2_3j2vg"]
 [ext_resource type="Texture2D" uid="uid://dhkvugvd7o6xs" path="res://Players/Sasaki/Sprites/Death.png" id="3_6sjqj"]
 [ext_resource type="Texture2D" uid="uid://bau8k0pkeflbq" path="res://Players/Sasaki/Sprites/Fall.png" id="4_tuvjo"]
-[ext_resource type="Texture2D" uid="uid://c5osb23gd2bg7" path="res://Players/Sasaki/Sprites/Dodge.png" id="4_uefxw"]
+[ext_resource type="Texture2D" uid="uid://b4hekalsdj1ck" path="res://Players/Sasaki/Sprites/Dodge2-1.png" id="4_ui6d2"]
 [ext_resource type="Texture2D" uid="uid://deo2k6fdt7xdy" path="res://Players/Sasaki/Sprites/Idle.png" id="5_xev60"]
 [ext_resource type="Texture2D" uid="uid://d3m5bjppkntw0" path="res://Players/Sasaki/Sprites/Jump.png" id="6_chjrr"]
 [ext_resource type="Texture2D" uid="uid://dhvkmeiixdsfs" path="res://Players/Sasaki/Sprites/LeftAttack1.png" id="7_hg2ny"]
@@ -15,8 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://c6u20ww76sc5j" path="res://Players/Sasaki/Sprites/LeftDeath.png" id="9_uefxw"]
 [ext_resource type="Texture2D" uid="uid://dvftk6w3ceu17" path="res://Players/Sasaki/Sprites/LeftIdle.png" id="10_7i0fp"]
 [ext_resource type="Texture2D" uid="uid://cmthw0t0xu8t8" path="res://Players/Sasaki/Sprites/LeftFall.png" id="10_h6mvi"]
-[ext_resource type="Texture2D" uid="uid://bkyr0k0rech14" path="res://Players/Sasaki/Sprites/LeftDodge.png" id="11_7i0fp"]
 [ext_resource type="Texture2D" uid="uid://dolqah6hm1tx5" path="res://Players/Sasaki/Sprites/LeftJump.png" id="11_c1kcj"]
+[ext_resource type="Texture2D" uid="uid://dsrwl0ehrisyr" path="res://Players/Sasaki/Sprites/LeftDodge2-1.png" id="12_al6w1"]
 [ext_resource type="Texture2D" uid="uid://c7t0uti2ingp0" path="res://Players/Sasaki/Sprites/LeftRun.png" id="12_ui6d2"]
 [ext_resource type="Texture2D" uid="uid://0uo0xls2edpk" path="res://Players/Sasaki/Sprites/LeftTake Hit - white silhouette.png" id="13_al6w1"]
 [ext_resource type="Texture2D" uid="uid://cjuou4vb6y1an" path="res://Players/Sasaki/Sprites/LeftJumpAttack.png" id="16_al6w1"]
@@ -94,24 +94,36 @@ atlas = ExtResource("3_6sjqj")
 region = Rect2(1000, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n1tge"]
-atlas = ExtResource("4_uefxw")
+atlas = ExtResource("4_ui6d2")
 region = Rect2(0, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s585p"]
-atlas = ExtResource("4_uefxw")
+atlas = ExtResource("4_ui6d2")
 region = Rect2(200, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_me3sx"]
-atlas = ExtResource("4_uefxw")
+atlas = ExtResource("4_ui6d2")
 region = Rect2(400, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e5sjo"]
-atlas = ExtResource("4_uefxw")
+atlas = ExtResource("4_ui6d2")
 region = Rect2(600, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5si1"]
-atlas = ExtResource("4_uefxw")
+atlas = ExtResource("4_ui6d2")
 region = Rect2(800, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbp5w"]
+atlas = ExtResource("4_ui6d2")
+region = Rect2(1000, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujhru"]
+atlas = ExtResource("4_ui6d2")
+region = Rect2(1200, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3o0f"]
+atlas = ExtResource("4_ui6d2")
+region = Rect2(1400, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cl5qm"]
 atlas = ExtResource("4_tuvjo")
@@ -258,23 +270,35 @@ atlas = ExtResource("9_uefxw")
 region = Rect2(0, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ioox"]
-atlas = ExtResource("11_7i0fp")
-region = Rect2(800, 0, 200, 200)
+atlas = ExtResource("12_al6w1")
+region = Rect2(1400, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g4b2w"]
-atlas = ExtResource("11_7i0fp")
-region = Rect2(600, 0, 200, 200)
+atlas = ExtResource("12_al6w1")
+region = Rect2(1200, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a0tkn"]
-atlas = ExtResource("11_7i0fp")
-region = Rect2(400, 0, 200, 200)
+atlas = ExtResource("12_al6w1")
+region = Rect2(1000, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e3ph3"]
-atlas = ExtResource("11_7i0fp")
-region = Rect2(200, 0, 200, 200)
+atlas = ExtResource("12_al6w1")
+region = Rect2(800, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f7kg8"]
-atlas = ExtResource("11_7i0fp")
+atlas = ExtResource("12_al6w1")
+region = Rect2(600, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y11vy"]
+atlas = ExtResource("12_al6w1")
+region = Rect2(400, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hiski"]
+atlas = ExtResource("12_al6w1")
+region = Rect2(200, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2l75"]
+atlas = ExtResource("12_al6w1")
 region = Rect2(0, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uefxw"]
@@ -531,6 +555,15 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m5si1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbp5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujhru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3o0f")
 }],
 "loop": false,
 "name": &"Dodge",
@@ -697,6 +730,15 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f7kg8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y11vy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hiski")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2l75")
 }],
 "loop": true,
 "name": &"LeftDodge",
@@ -871,4 +913,5 @@ animations = [{
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_yrjqj")
-animation = &"Dodge"
+animation = &"LeftDodge"
+frame_progress = 0.695535

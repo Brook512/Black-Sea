@@ -4,7 +4,7 @@ shader_type canvas_item;
 uniform float inner_radius : hint_range(0.0,1.0) = 0.2;
 uniform float noise_scale  : hint_range(0.1,2.0) = 0.1;
 uniform float transition_width : hint_range(0.01, 0.5) = 0.3;
-uniform float arc_extent : hint_range(0.0, 3.14) = 1.0; 
+uniform float arc_extent : hint_range(0.0, 3.14) = 1.0;
 uniform float pulse_speed : hint_range(0.1, 5.0) = 1.0;
 uniform float pulse_strength : hint_range(0.0, 1.0) = 0.2;
 uniform vec4 color_start : source_color = vec4(1.0, 0.0, 0.0, 1.0);
@@ -71,7 +71,7 @@ float selected_portion(vec2 uv) {
 }
 
 vec3 applyColorTransition() {
-    return mix(color_start.rgb, color_end.rgb, 
+    return mix(color_start.rgb, color_end.rgb,
                smoothstep(0.0, 1.0, u_transition_progress));
 }
 

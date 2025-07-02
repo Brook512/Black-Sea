@@ -22,7 +22,7 @@ const SIGNAL_WINDOW := 1000         # 组合检测窗口 (ms)
 var last_record_time = Time.get_ticks_msec()
 var blend_position_value : float = 0.0
 @onready var character: Sasaki
-
+@export var dodge_duration = 1.
 # 使用栈存储信号 (只保留最近的信号，如果类型相同则忽略)
 #var signal_stack : Array = []      # 存储 SignalEvent 栈
 var current_signal:String = "fall"
@@ -43,7 +43,7 @@ func _ready():
 	attack_timer.one_shot  = true
 	add_child(attack_timer)
 
-	dodge_timer.wait_time = 0.3
+	dodge_timer.wait_time = dodge_duration
 	dodge_timer.one_shot  = true
 	add_child(dodge_timer)
 

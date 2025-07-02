@@ -35,8 +35,8 @@ func _physics_process(delta):
 		target.global_position.y - y_offset  # Y轴上方偏移
 	)
 	
-	global_position = global_position.lerp(target_position, smooth_speed)
-	
+	#global_position = global_position.lerp(target_position, smooth_speed)
+	global_position = target_position
 	# 边界限制
 	_apply_boundary_limits()
 	
