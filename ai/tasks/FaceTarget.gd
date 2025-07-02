@@ -1,12 +1,3 @@
-#* face_target.gd
-#* =============================================================================
-#* Copyright (c) 2023-present Serhii Snitsaruk and the LimboAI contributors.
-#*
-#* Use of this source code is governed by an MIT-style
-#* license that can be found in the LICENSE file or at
-#* https://opensource.org/licenses/MIT.
-#* =============================================================================
-#*
 @tool
 extends BTAction
 ## Flips the agent to face the target, returning [code]SUCCESS[/code]. [br]

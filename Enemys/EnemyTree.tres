@@ -1,6 +1,6 @@
-[gd_resource type="BehaviorTree" load_steps=32 format=3 uid="uid://cuouyuuh2ul1"]
+[gd_resource type="BehaviorTree" load_steps=33 format=3 uid="uid://cuouyuuh2ul1"]
 
-[ext_resource type="Script" uid="uid://bl80wjdhpisac" path="res://ai/tasks/CheckState.gd" id="2_5ovgv"]
+[ext_resource type="Script" uid="uid://ddftftfrkd8jp" path="res://ai/tasks/GetPlayer.gd" id="1_5ovgv"]
 [ext_resource type="Script" uid="uid://m4npr1enwijp" path="res://ai/tasks/FaceTarget.gd" id="2_8lu73"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_bffae"]
@@ -34,12 +34,19 @@ var/CurrentState/type = 21
 var/CurrentState/value = &"Idle"
 var/CurrentState/hint = 2
 var/CurrentState/hint_string = "Combat,Dialogue,Idle"
+var/target/name = &"target"
+var/target/type = 21
+var/target/value = &"Sasaki"
+var/target/hint = 2
+var/target/hint_string = "Sasaki"
 
-[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_2slv1"]
-variable = &"CurrentState"
-custom_name = "CheckState"
-script = ExtResource("2_5ovgv")
-TargetState = "Combat"
+[sub_resource type="BTAction" id="BTAction_8lu73"]
+script = ExtResource("1_5ovgv")
+group = &"player"
+output_var = &"target"
+
+[sub_resource type="BTRunLimit" id="BTRunLimit_swy3f"]
+children = [SubResource("BTAction_8lu73")]
 
 [sub_resource type="BTAction" id="BTAction_swy3f"]
 script = ExtResource("2_8lu73")
@@ -143,10 +150,10 @@ children = [SubResource("BTPlayAnimation_3aimh")]
 
 [sub_resource type="BTSequence" id="BTSequence_2slv1"]
 custom_name = "CombatSeq"
-children = [SubResource("BTCheckTrigger_2slv1"), SubResource("BTAction_swy3f"), SubResource("BTCooldown_swy3f"), SubResource("BTSequence_eh5w0"), SubResource("BTSequence_51cp0"), SubResource("BTSequence_h50fj")]
+children = [SubResource("BTAction_swy3f"), SubResource("BTCooldown_swy3f"), SubResource("BTSequence_eh5w0"), SubResource("BTSequence_51cp0"), SubResource("BTSequence_h50fj")]
 
 [sub_resource type="BTSelector" id="BTSelector_oel21"]
-children = [SubResource("BTSequence_2slv1")]
+children = [SubResource("BTRunLimit_swy3f"), SubResource("BTSequence_2slv1")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_bffae")

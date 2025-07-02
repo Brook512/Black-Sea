@@ -139,10 +139,12 @@ func _update_actions(delta):
 	# 检测攻击输入
 	if Input.is_action_just_pressed("attack"):
 		_handle_attack(facing_vec)
-	
+		
+	if Input.is_action_just_pressed("dialogue"):
+		emit_signal("dialogue_signal")
+		
 	# 处理跳跃输入
 	_handle_jump()
-	
 	
 func _handle_attack(direc):
 	in_attack_stage = true
@@ -155,7 +157,6 @@ func _handle_attack(direc):
 		attack_collision.transform = attack_collision.transform * mirror_transform
 		# 视觉提示：更新碰撞体位置（可选）
 		attack_collision.position.x = abs(attack_collision.position.x)
-
 
 func _handle_jump():
 	# 在地面或离地边缘时间内，且有跳跃请求
@@ -209,13 +210,6 @@ func _attack_end():
 
 func _dodge_end():
 	in_dodge_stage = false
-
-
-
-
-
-func _on_dialogue_range_body_entered(body: Node2D) -> void:
-	pass # Replace with function body.
 
 
 func _on_attack_range_area_entered(hurtarea: Area2D) -> void:
