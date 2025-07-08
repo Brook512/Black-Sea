@@ -24,3 +24,5 @@ demo/
 *.png
 *.jpg
 *.import
+*.wav
+*.mp3

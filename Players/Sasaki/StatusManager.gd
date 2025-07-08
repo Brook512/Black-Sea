@@ -20,6 +20,7 @@ var character
 @export var statmina_recover_speed = 1.
 @export var attack_damage = 2.
 @export var posture_recover_speed = 1.
+@export var invicible_time = 1.
 
 var invicible_timer = Timer.new()
 
@@ -36,36 +37,20 @@ func _ready() -> void:
 	invicible_timer.one_shot = true
 	
 	invicible_timer.timeout.connect(_on_invincibility_timeout)
-	if character:
-		#character.idle_signal.connect(_on_idle)
-		character.attack_signal.connect(_on_attack)
-		character.hurt_signal.connect(_on_hurt)
-	else:
-		push_error("Parent is not a PlayerCharacter")
-		return
+
 
 func _on_attack(dir):
 	_stamina -= attack_cost
 	_stamina = clamp(_stamina, 0.0, max_stamina)
 
 	
-func _on_hurt(damage):
+func _on_hurt(facing_vec,damage):
 	_health -= damage
 	_health = clamp(_health, 0.0, max_health)
-	activate_invicible(1.0)
+	activate_invicible(invicible_time)
 	
-func _recover():
-	_health += health_recover_speed
-	_stamina += stamina_recover_speed
-	_posture += posture_recover_speed
-	_health = clamp(_health, 0.0, max_health)
-	_stamina = clamp(_stamina, 0.0, max_stamina)
-	_stamina = clamp(_posture, 0.0, max_posture)
+
 	
-	
-func _process(delta: float) -> void:
-	_recover()
-		
 
 func activate_invicible(invicible_time):
 	if current_state==State.Normal:

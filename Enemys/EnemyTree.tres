@@ -1,7 +1,8 @@
-[gd_resource type="BehaviorTree" load_steps=33 format=3 uid="uid://cuouyuuh2ul1"]
+[gd_resource type="BehaviorTree" load_steps=39 format=3 uid="uid://cuouyuuh2ul1"]
 
 [ext_resource type="Script" uid="uid://ddftftfrkd8jp" path="res://ai/tasks/GetPlayer.gd" id="1_5ovgv"]
-[ext_resource type="Script" uid="uid://m4npr1enwijp" path="res://ai/tasks/FaceTarget.gd" id="2_8lu73"]
+[ext_resource type="Script" uid="uid://1n7wjhqfrjtx" path="res://ai/tasks/Combat/AttackConnectPlayer.gd" id="2_5ovgv"]
+[ext_resource type="Script" uid="uid://m4npr1enwijp" path="res://ai/tasks/Dialogue/FaceTarget.gd" id="3_5ovgv"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_bffae"]
 var/Health/name = &"Health"
@@ -29,16 +30,22 @@ var/Speed/type = 2
 var/Speed/value = 100
 var/Speed/hint = 1
 var/Speed/hint_string = "100, 200, 10"
-var/CurrentState/name = &"CurrentState"
-var/CurrentState/type = 21
-var/CurrentState/value = &"Idle"
-var/CurrentState/hint = 2
-var/CurrentState/hint_string = "Combat,Dialogue,Idle"
-var/target/name = &"target"
-var/target/type = 21
-var/target/value = &"Sasaki"
-var/target/hint = 2
-var/target/hint_string = "Sasaki"
+var/Gravity/name = &"Gravity"
+var/Gravity/type = 3
+var/Gravity/value = 0.0
+var/Gravity/hint = 1
+var/Gravity/hint_string = "100,300,10"
+var/Position/name = &"Position"
+var/Position/type = 3
+var/Position/value = 0.0
+var/Position/hint = 0
+var/Position/hint_string = ""
+
+[sub_resource type="BTAction" id="BTAction_522cy"]
+script = ExtResource("2_5ovgv")
+
+[sub_resource type="BTRunLimit" id="BTRunLimit_5ovgv"]
+children = [SubResource("BTAction_522cy")]
 
 [sub_resource type="BTAction" id="BTAction_8lu73"]
 script = ExtResource("1_5ovgv")
@@ -49,7 +56,7 @@ output_var = &"target"
 children = [SubResource("BTAction_8lu73")]
 
 [sub_resource type="BTAction" id="BTAction_swy3f"]
-script = ExtResource("2_8lu73")
+script = ExtResource("3_5ovgv")
 target_var = &"target"
 
 [sub_resource type="BBNode" id="BBNode_5ovgv"]
@@ -112,18 +119,6 @@ duration = 3.0
 custom_name = "AttackCoolDown"
 children = [SubResource("BTSelector_d0jqm")]
 
-[sub_resource type="BBNode" id="BBNode_swy3f"]
-saved_value = NodePath("EnemyAnimationPlayer")
-resource_name = "EnemyAnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_522cy"]
-animation_player = SubResource("BBNode_swy3f")
-animation_name = &"Run"
-
-[sub_resource type="BTSequence" id="BTSequence_eh5w0"]
-custom_name = "ChaseSeq"
-children = [SubResource("BTPlayAnimation_522cy")]
-
 [sub_resource type="BBNode" id="BBNode_26gks"]
 saved_value = NodePath("EnemyAnimationPlayer")
 resource_name = "EnemyAnimationPlayer"
@@ -135,6 +130,10 @@ animation_name = &"Dodge"
 [sub_resource type="BTSequence" id="BTSequence_51cp0"]
 custom_name = "DodgeSeq"
 children = [SubResource("BTPlayAnimation_h50fj")]
+
+[sub_resource type="BTProbability" id="BTProbability_2slv1"]
+run_chance = 0.3
+children = [SubResource("BTSequence_51cp0")]
 
 [sub_resource type="BBNode" id="BBNode_eh5w0"]
 saved_value = NodePath("EnemyAnimationPlayer")
@@ -148,12 +147,32 @@ animation_name = &"Block"
 custom_name = "BlockSeq"
 children = [SubResource("BTPlayAnimation_3aimh")]
 
+[sub_resource type="BTProbability" id="BTProbability_5ovgv"]
+run_chance = 0.3
+children = [SubResource("BTSequence_h50fj")]
+
+[sub_resource type="BBNode" id="BBNode_swy3f"]
+saved_value = NodePath("EnemyAnimationPlayer")
+resource_name = "EnemyAnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_522cy"]
+animation_player = SubResource("BBNode_swy3f")
+animation_name = &"Run"
+
+[sub_resource type="BTSequence" id="BTSequence_eh5w0"]
+custom_name = "ChaseSeq"
+children = [SubResource("BTPlayAnimation_522cy")]
+
+[sub_resource type="BTProbability" id="BTProbability_8lu73"]
+run_chance = 0.4
+children = [SubResource("BTSequence_eh5w0")]
+
 [sub_resource type="BTSequence" id="BTSequence_2slv1"]
 custom_name = "CombatSeq"
-children = [SubResource("BTAction_swy3f"), SubResource("BTCooldown_swy3f"), SubResource("BTSequence_eh5w0"), SubResource("BTSequence_51cp0"), SubResource("BTSequence_h50fj")]
+children = [SubResource("BTAction_swy3f"), SubResource("BTCooldown_swy3f"), SubResource("BTProbability_2slv1"), SubResource("BTProbability_5ovgv"), SubResource("BTProbability_8lu73")]
 
 [sub_resource type="BTSelector" id="BTSelector_oel21"]
-children = [SubResource("BTRunLimit_swy3f"), SubResource("BTSequence_2slv1")]
+children = [SubResource("BTRunLimit_5ovgv"), SubResource("BTRunLimit_swy3f"), SubResource("BTSequence_2slv1")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_bffae")

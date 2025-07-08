@@ -14,6 +14,8 @@ var block_rules :Dictionary
 # -----------------------------------------------------------------------------
 signal attack_end_signal
 signal dodge_end_signal
+signal hurt_end_signal
+
 
 # -----------------------------------------------------------------------------
 #  变量与常量
@@ -21,7 +23,7 @@ signal dodge_end_signal
 const SIGNAL_WINDOW := 1000         # 组合检测窗口 (ms)
 var last_record_time = Time.get_ticks_msec()
 var blend_position_value : float = 0.0
-@onready var character: Sasaki
+@onready var player: Sasaki
 @export var dodge_duration = 1.
 # 使用栈存储信号 (只保留最近的信号，如果类型相同则忽略)
 #var signal_stack : Array = []      # 存储 SignalEvent 栈
@@ -34,6 +36,8 @@ var attack_timer : Timer = Timer.new()
 var attack_times: int = 0
 var dodge_timer  : Timer = Timer.new()
 var combo_window = [0.6,0.3]
+var hurt_timer  : Timer = Timer.new()
+
 # -----------------------------------------------------------------------------
 #  _ready – 初始化
 # -----------------------------------------------------------------------------
@@ -46,6 +50,10 @@ func _ready():
 	dodge_timer.wait_time = dodge_duration
 	dodge_timer.one_shot  = true
 	add_child(dodge_timer)
+	
+	hurt_timer.wait_time = 1.
+	hurt_timer.one_shot  = true
+	add_child(hurt_timer)
 
 	# 获取 AnimationTree & AnimationPlayer
 	state_machine = get("parameters/StateMachine/playback")
@@ -56,17 +64,17 @@ func _ready():
 		return
 
 	# 连接父节点发射的动作信号
-	character = get_parent()
-	if character:
-		character.attack_signal.connect(_on_attack_received)
-		character.move_signal.connect(_on_move_received)
-		character.dodge_signal.connect(_on_dodge_received)
-		character.jump_signal.connect(_on_jump_received)
-		character.idle_signal.connect(_on_idle_received)
-		character.fall_signal.connect(_on_fall_received)
-		character.hurt_signal.connect(_on_hurt_received)
+	player = get_parent()
+	if player:
+		player.attack_signal.connect(_on_attack_received)
+		player.move_signal.connect(_on_move_received)
+		player.dodge_signal.connect(_on_dodge_received)
+		player.jump_signal.connect(_on_jump_received)
+		player.idle_signal.connect(_on_idle_received)
+		player.fall_signal.connect(_on_fall_received)
+		player.hurt_signal.connect(_on_hurt_received)
 	else:
-		push_error("Parent is not a PlayerCharacter")
+		push_error("Parent is not a Player")
 		return
 
 	active = true
@@ -139,6 +147,8 @@ func _handle_single_signal(signal_name: String) -> void:
 		"hurt":
 			if _can_transition_to("Hurt"):
 				state_machine.travel("Hurt")
+				hurt_timer.start()
+				
 		"attack":
 			if _can_transition_to("Attack1"):
 				print("触发Attack1动画")
@@ -185,17 +195,17 @@ func _can_transition_to(state:String) -> bool:
 	block_rules = {
 		"Attack1": attack_combos%2==0 and attack_timer.time_left<0.3 and current !=state,
 		"Attack2": attack_combos%2==1 and attack_timer.time_left<0.3 and current !=state,
-		"JumpAttack": not character.is_on_floor() and attack_timer.time_left < 0.1,
+		"JumpAttack": not player.is_on_floor() and attack_timer.time_left < 0.1,
 		"Dodge": dodge_timer.is_stopped(),
-		"JumpDodge": not character.is_on_floor() and dodge_timer.time_left < 0.1,
-		"Jump": not character.is_on_floor(),
-		"Fall": not character.is_on_floor(),
+		"JumpDodge": not player.is_on_floor() and dodge_timer.time_left < 0.1,
+		"Jump": not player.is_on_floor(),
+		"Fall": not player.is_on_floor(),
 		"Idle": true,
 		"Run": true,
-		"Hurt": true
+		"Hurt": hurt_timer.is_stopped()
 	}
-	if attack_timer.time_left <0.3 and attack_timer.time_left >0.25:
-		pass
+	#if attack_timer.time_left <0.3 and attack_timer.time_left >0.25:
+		#pass
 	#var a = attack_combos%2
 
 	
@@ -218,11 +228,14 @@ func handle_end_signals() -> void:
 		emit_signal("attack_end_signal")
 		attack_times=0
 
-
 	if dodge_timer.time_left > 0 and dodge_timer.time_left < 0.05:
 		#print("发射闪避结束信号")
 		emit_signal("dodge_end_signal")
 		set("parameters/TimeScale",2.0)
+		
+	if hurt_timer.time_left > 0 and hurt_timer.time_left < 0.05:
+		#print("发射闪避结束信号")
+		emit_signal("hurt_end_signal")
 		
 
 # -----------------------------------------------------------------------------

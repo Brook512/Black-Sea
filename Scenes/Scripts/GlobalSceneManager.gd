@@ -5,7 +5,14 @@ signal state_changed(old_state, new_state)
 
 var current_state: States = States.Menu
 var previous_state: States = States.Menu
+
 var current_scene: Node = null
+var IsTalked:Dictionary={
+	"BlueEnemy":false,
+}
+var IsCombatted:Dictionary={
+	"BlueEnemy":false,
+}
 
 # Scene paths for each state
 const STATE_SCENES: Dictionary = {

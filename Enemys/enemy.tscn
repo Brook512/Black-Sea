@@ -1,14 +1,12 @@
-[gd_scene load_steps=29 format=3 uid="uid://cxrrtphldctpn"]
+[gd_scene load_steps=27 format=3 uid="uid://cxrrtphldctpn"]
 
 [ext_resource type="PackedScene" uid="uid://dpyckqm27j3be" path="res://Enemys/BlueSprite/enemy_sprite.tscn" id="1_3j5ps"]
 [ext_resource type="Script" uid="uid://cebwjb65ksbr2" path="res://Enemys/enemy.gd" id="1_sd3jc"]
-[ext_resource type="BlackboardPlan" uid="uid://cjmhn3bjh1si3" path="res://Enemys/EnemyBlackboard.tres" id="3_3j5ps"]
 [ext_resource type="Script" uid="uid://hn1amxmjubcq" path="res://Enemys/normal_state.gd" id="5_5y6g5"]
 [ext_resource type="Script" uid="uid://t0fce5croj8m" path="res://Enemys/dialogue_state.gd" id="6_sd3jc"]
 [ext_resource type="Script" uid="uid://g5gxrv1ud6tb" path="res://Enemys/combat_state.gd" id="8_cqow8"]
 [ext_resource type="Texture2D" uid="uid://daku17hrdyv42" path="res://Menus/PixelArtGUI/Textures/Icons/8/ArrowSmallDown.png" id="9_sd3jc"]
 [ext_resource type="Script" uid="uid://ctqs8150283i6" path="res://Enemys/dialogue_icon.gd" id="10_cqow8"]
-[ext_resource type="Script" uid="uid://53xv6wefgd41" path="res://Enemys/Scripts/EnemyStatus.gd" id="12_111e3"]
 [ext_resource type="BehaviorTree" uid="uid://cuouyuuh2ul1" path="res://Enemys/EnemyTree.tres" id="15_bffae"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cqow8"]
@@ -264,7 +262,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_qyywi"]
-length = 0.8
+length = 1.6
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -273,7 +271,7 @@ tracks/0/path = NodePath("EnemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -394,7 +392,7 @@ position = Vector2(-3, -4.5)
 shape = SubResource("RectangleShape2D_cqow8")
 
 [node name="DialogueRange" type="Area2D" parent="."]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 64
 
 [node name="DialogueCollision" type="CollisionShape2D" parent="DialogueRange"]
@@ -424,18 +422,13 @@ shape = SubResource("CircleShape2D_111e3")
 disabled = true
 debug_color = Color(1, 0, 0.113725, 0.278431)
 
-[node name="Status" type="Node2D" parent="."]
-position = Vector2(2.38419e-07, -4)
-scale = Vector2(1.25, 1.25)
-script = ExtResource("12_111e3")
-
 [node name="EnemyAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_138e1")
 }
+speed_scale = 2.0
 
 [node name="EnemyHSM" type="LimboHSM" parent="."]
-blackboard_plan = ExtResource("3_3j5ps")
 
 [node name="NormalState" type="LimboState" parent="EnemyHSM" node_paths=PackedStringArray("animation_player")]
 script = ExtResource("5_5y6g5")

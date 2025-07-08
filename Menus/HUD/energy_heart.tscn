@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bh030g7kpdsh0"]
+
+[ext_resource type="Texture2D" uid="uid://byxuwqjomgt08" path="res://Menus/HUD/HeartEnergy.png" id="1_j8ht7"]
+[ext_resource type="Script" uid="uid://tj6ycep5b452" path="res://Menus/HUD/energy_heart.gd" id="2_ev0sv"]
+
+[node name="EnergyHeart" type="Sprite2D"]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_j8ht7")
+script = ExtResource("2_ev0sv")
