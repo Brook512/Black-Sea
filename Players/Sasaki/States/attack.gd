@@ -37,6 +37,15 @@ func _update(delta: float) -> void:
 			else:
 				play_animation("Attack1")
 				play_sound("Attack")
+				
+	if Input.is_action_just_pressed("dodge") and attack_timer.time_left<0.19:
+		var result = _check_energy(hsm_blackboard.get_var("dodge_cost"),hsm_blackboard)
+		if agent.anim_player.is_playing() and result:
+			var current_anim = agent.anim_player.current_animation
+			agent.shadow.visible=true
+			agent.shadow_player.play(current_anim)
+		agent.hsm.dispatch(&"ForceDodge")
+		
 
 	elif attack_timer.is_stopped() and !agent.anim_player.is_playing():
 		dispatch(EVENT_FINISHED)

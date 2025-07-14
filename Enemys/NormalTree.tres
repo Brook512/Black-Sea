@@ -1,0 +1,33 @@
+[gd_resource type="BehaviorTree" load_steps=10 format=3 uid="uid://06xfggtunev4"]
+
+[ext_resource type="Script" uid="uid://ddftftfrkd8jp" path="res://ai/tasks/GetPlayer.gd" id="1_5vr2k"]
+[ext_resource type="Script" uid="uid://m4npr1enwijp" path="res://ai/tasks/Dialogue/FaceTarget.gd" id="1_josdn"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_sd3jc"]
+
+[sub_resource type="BTAction" id="BTAction_ol7qp"]
+script = ExtResource("1_5vr2k")
+group = &"player"
+output_var = &"target"
+
+[sub_resource type="BTRunLimit" id="BTRunLimit_5vr2k"]
+children = [SubResource("BTAction_ol7qp")]
+
+[sub_resource type="BTAction" id="BTAction_5vr2k"]
+script = ExtResource("1_josdn")
+target_var = &"target"
+
+[sub_resource type="BBNode" id="BBNode_5vr2k"]
+saved_value = NodePath("EnemyAnimationPlayer")
+resource_name = "EnemyAnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_ol7qp"]
+animation_player = SubResource("BBNode_5vr2k")
+animation_name = &"Idle"
+
+[sub_resource type="BTSelector" id="BTSelector_5vr2k"]
+children = [SubResource("BTRunLimit_5vr2k"), SubResource("BTAction_5vr2k"), SubResource("BTPlayAnimation_ol7qp")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_sd3jc")
+root_task = SubResource("BTSelector_5vr2k")

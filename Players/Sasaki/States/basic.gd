@@ -76,6 +76,7 @@ func _handle_input(hsm_blackboard, control_factor=1.):
 		agent.velocity.x = speed * facing_vec * control_factor
 	else:
 		agent.velocity.x = 0
+		#agent.velocity.y = 0
 
 func _check_energy(energy_cost, hsm_blackboard):
 	var current_energy = hsm_blackboard.get_var("energy")
@@ -95,6 +96,18 @@ func _check_health(health_cost, hsm_blackboard):
 		hsm_blackboard.set_var("health",current_health)
 		return true
 
+func _recover(hsm_blackboard):
+	var health = hsm_blackboard.get_var("health")
+	var energy = hsm_blackboard.get_var("energy")
+	
+	health += hsm_blackboard.get_var("health_recover_speed")
+	energy += hsm_blackboard.get_var("energy_recover_speed")
+
+	health = clamp(health, 0.0, hsm_blackboard.get_var("max_health"))
+	energy = clamp(energy, 0.0, hsm_blackboard.get_var("max_energy"))
+	
+	hsm_blackboard.set_var("health", health)
+	hsm_blackboard.set_var("energy", energy)
 #func _setup() -> void:
 	#pass
 #func _enter() -> void:

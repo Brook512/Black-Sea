@@ -1,11 +1,14 @@
-[gd_scene load_steps=57 format=3 uid="uid://b1ukdapkscdqb"]
+[gd_scene load_steps=64 format=3 uid="uid://b1ukdapkscdqb"]
 
 [ext_resource type="Script" uid="uid://c6ru8kvol2lqt" path="res://Players/Sasaki/Scripts/Sasaki.gd" id="1_6cpd0"]
 [ext_resource type="PackedScene" uid="uid://88jhg7biipll" path="res://Players/Sasaki/SasakiSprite.tscn" id="3_4v5of"]
 [ext_resource type="Shader" uid="uid://d1nxp6wi85bok" path="res://Players/Shaders/Glass.gdshader" id="3_clwwg"]
 [ext_resource type="Script" uid="uid://p8d3hpl25ci3" path="res://Players/Sasaki/StatusManager.gd" id="4_x50d2"]
+[ext_resource type="Script" uid="uid://t76fb1ywoyex" path="res://Players/Sasaki/Scripts/hurt_body.gd" id="5_y4syw"]
+[ext_resource type="Script" uid="uid://8u73wwrn0lgd" path="res://Players/Sasaki/Scripts/attack_range.gd" id="6_2e7ff"]
 [ext_resource type="BlackboardPlan" uid="uid://cvrjkq8rkq8fo" path="res://Players/Sasaki/States/PlayerBlackboard.tres" id="6_3rbhi"]
 [ext_resource type="Script" uid="uid://bge583m63bafb" path="res://Players/Sasaki/States/jump.gd" id="6_clwwg"]
+[ext_resource type="PackedScene" uid="uid://da8aalcpy86pa" path="res://Effects/blood_spark.tscn" id="7_gigsd"]
 [ext_resource type="Script" uid="uid://ca1ai4j18vldj" path="res://Players/Sasaki/States/move.gd" id="8_y4syw"]
 [ext_resource type="Script" uid="uid://72k5pd0qoui0" path="res://Players/Sasaki/States/dodge.gd" id="9_2e7ff"]
 [ext_resource type="Script" uid="uid://bndunudqe26xn" path="res://Players/Sasaki/States/idle.gd" id="10_4iom4"]
@@ -14,33 +17,8 @@
 [ext_resource type="Script" uid="uid://coguctqijtflk" path="res://Players/Sasaki/States/heavy_attack.gd" id="13_3rbhi"]
 [ext_resource type="Script" uid="uid://b8cngwwyva376" path="res://Players/Sasaki/States/block.gd" id="13_qcx3w"]
 [ext_resource type="Script" uid="uid://dmucgao0w23v6" path="res://Players/Sasaki/States/charging.gd" id="14_y4syw"]
-
-[sub_resource type="Animation" id="Animation_gigsd"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AttackRange/AttackCollision:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AttackRange/AttackCollision:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(27.335, -15.87)]
-}
+[ext_resource type="Script" uid="uid://dbcc38dsinuue" path="res://Players/Sasaki/States/death.gd" id="17_4iom4"]
+[ext_resource type="PackedScene" uid="uid://cjv0koec7ry00" path="res://Effects/spark.tscn" id="18_fq43n"]
 
 [sub_resource type="Animation" id="Animation_6cpd0"]
 length = 1.2
@@ -145,7 +123,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_igr7n"]
-length = 1.8
+length = 1.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -153,7 +131,7 @@ tracks/0/path = NodePath("SasakiSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2, 1.5),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 3, 4, 5, 6]
@@ -253,6 +231,9 @@ tracks/1/keys = {
 "values": ["Fall"]
 }
 
+[sub_resource type="Animation" id="Animation_my1wn"]
+resource_name = "GameOver"
+
 [sub_resource type="Animation" id="Animation_hry8p"]
 length = 0.6
 tracks/0/type = "value"
@@ -302,6 +283,34 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(27.335, -15.87), Vector2(27.335, -15.87)]
+}
+
+[sub_resource type="Animation" id="Animation_fq43n"]
+resource_name = "Hurt"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SasakiSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SasakiSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["TakeHit"]
 }
 
 [sub_resource type="Animation" id="Animation_5kta4"]
@@ -651,6 +660,34 @@ tracks/3/keys = {
 "values": [Vector2(-27.335, -15.87), Vector2(-27.335, -15.87)]
 }
 
+[sub_resource type="Animation" id="Animation_2e7ff"]
+resource_name = "LeftHurt"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SasakiSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SasakiSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["LeftTake Hit"]
+}
+
 [sub_resource type="Animation" id="Animation_clwwg"]
 length = 1.6
 loop_mode = 1
@@ -763,31 +800,31 @@ tracks/1/keys = {
 "values": ["LeftRun"]
 }
 
-[sub_resource type="Animation" id="Animation_2e7ff"]
-length = 0.8
+[sub_resource type="Animation" id="Animation_gigsd"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SasakiSprite2D:frame")
+tracks/0/path = NodePath("AttackRange/AttackCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [true]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("SasakiSprite2D:animation")
+tracks/1/path = NodePath("AttackRange/AttackCollision:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["LeftTake Hit"]
+"update": 0,
+"values": [Vector2(27.335, -15.87)]
 }
 
 [sub_resource type="Animation" id="Animation_4iom4"]
@@ -818,33 +855,6 @@ tracks/1/keys = {
 "values": ["Run"]
 }
 
-[sub_resource type="Animation" id="Animation_fq43n"]
-length = 0.8
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SasakiSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SasakiSprite2D:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["TakeHit"]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gigsd"]
 _data = {
 &"Attack1": SubResource("Animation_6cpd0"),
@@ -853,7 +863,9 @@ _data = {
 &"Death": SubResource("Animation_4v5of"),
 &"Dodge": SubResource("Animation_6uw1v"),
 &"Fall": SubResource("Animation_0dbv8"),
+&"GameOver": SubResource("Animation_my1wn"),
 &"HeavyAttack": SubResource("Animation_hry8p"),
+&"Hurt": SubResource("Animation_fq43n"),
 &"Idle": SubResource("Animation_5kta4"),
 &"Jump": SubResource("Animation_wwim2"),
 &"JumpAttack": SubResource("Animation_ue0xx"),
@@ -864,14 +876,13 @@ _data = {
 &"LeftDodge": SubResource("Animation_p0hgs"),
 &"LeftFall": SubResource("Animation_sb1ct"),
 &"LeftHeavyAttack": SubResource("Animation_dxtgt"),
+&"LeftHurt": SubResource("Animation_2e7ff"),
 &"LeftIdle": SubResource("Animation_clwwg"),
 &"LeftJump": SubResource("Animation_3rbhi"),
 &"LeftJumpAttack": SubResource("Animation_aay8b"),
 &"LeftRun": SubResource("Animation_y4syw"),
-&"LeftTake Hit": SubResource("Animation_2e7ff"),
 &"RESET": SubResource("Animation_gigsd"),
-&"Run": SubResource("Animation_4iom4"),
-&"TakeHit": SubResource("Animation_fq43n")
+&"Run": SubResource("Animation_4iom4")
 }
 
 [sub_resource type="Animation" id="Animation_qcx3w"]
@@ -1216,33 +1227,6 @@ tracks/1/keys = {
 "values": ["LeftTake Hit"]
 }
 
-[sub_resource type="Animation" id="Animation_vtvj0"]
-length = 0.8
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["TakeHit"]
-}
-
 [sub_resource type="Animation" id="Animation_5nstc"]
 length = 0.001
 tracks/0/type = "value"
@@ -1270,6 +1254,33 @@ tracks/1/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_vtvj0"]
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["TakeHit"]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5nstc"]
 _data = {
 &"Attack1": SubResource("Animation_qcx3w"),
@@ -1293,19 +1304,23 @@ size = Vector2(15.3333, 4)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_htt48"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4v5of"]
-size = Vector2(27, 53)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4iom4"]
+radius = 13.0
+height = 48.0
+
+[sub_resource type="Gradient" id="Gradient_fq43n"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.266667)
 
 [node name="sasaki" type="CharacterBody2D" groups=["player"]]
-collision_mask = 46
+collision_mask = 32
 collision_priority = 2.0
 platform_wall_layers = 32
 script = ExtResource("1_6cpd0")
 
 [node name="SasakiSprite2D" parent="." instance=ExtResource("3_4v5of")]
 animation = &"Charging"
-frame = 6
 frame_progress = 0.0
+metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1321,7 +1336,6 @@ libraries = {
 speed_scale = 4.0
 
 [node name="SasakiShadow" parent="." instance=ExtResource("3_4v5of")]
-visible = false
 material = SubResource("ShaderMaterial_3rbhi")
 animation = &"Attack1"
 frame_progress = 0.0
@@ -1333,9 +1347,11 @@ script = ExtResource("4_x50d2")
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
-[node name="DialogueRange" type="Area2D" parent="."]
+[node name="DialogueRange" type="Area2D" parent="." groups=["player"]]
+visible = false
 collision_layer = 64
 collision_mask = 0
+metadata/_edit_lock_ = true
 
 [node name="DialogueCollision" type="CollisionShape2D" parent="DialogueRange"]
 position = Vector2(0, 7)
@@ -1343,18 +1359,22 @@ scale = Vector2(6, 3.5)
 shape = SubResource("RectangleShape2D_0dbv8")
 debug_color = Color(1.78084e-06, 0.630676, 0.470089, 0.42)
 
-[node name="HurtBody" type="Area2D" parent="."]
-collision_layer = 0
+[node name="HurtBody" type="Area2D" parent="." groups=["player"]]
+collision_layer = 8
 collision_mask = 8
 collision_priority = 2.0
+script = ExtResource("5_y4syw")
+metadata/_edit_lock_ = true
 
 [node name="BodyCollision" type="CollisionPolygon2D" parent="HurtBody"]
 scale = Vector2(3, 3)
 polygon = PackedVector2Array(-2.66667, -7.33333, 2.33333, -7.33333, 4.33333, -3.33333, 2.66667, 1, 4.33333, 7.66667, -4.66667, 7.66667, -3, 1, -4.66667, -2.33333)
 
 [node name="ShadowAttackRange" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 0
+metadata/_edit_lock_ = true
 
 [node name="ShadowCollision" type="CollisionShape2D" parent="ShadowAttackRange"]
 position = Vector2(27.335, -15.87)
@@ -1366,6 +1386,8 @@ debug_color = Color(1, 0.00784314, 0.0509804, 0.270588)
 [node name="AttackRange" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 0
+script = ExtResource("6_2e7ff")
+metadata/_edit_lock_ = true
 
 [node name="AttackCollision" type="CollisionShape2D" parent="AttackRange"]
 position = Vector2(27.335, -15.87)
@@ -1375,8 +1397,33 @@ disabled = true
 debug_color = Color(1, 0.00784314, 0.0509804, 0.270588)
 
 [node name="CollisionBody" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, -3.5)
-shape = SubResource("RectangleShape2D_4v5of")
+shape = SubResource("CapsuleShape2D_4iom4")
+metadata/_edit_lock_ = true
+
+[node name="BloodSpark" parent="." instance=ExtResource("7_gigsd")]
+
+[node name="PerfectSpark" type="CPUParticles2D" parent="."]
+position = Vector2(59, -12)
+emitting = false
+amount = 15
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.5
+fixed_fps = 60
+spread = 40.2
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.77
+initial_velocity_max = 92.31
+damping_min = 49.231
+damping_max = 49.231
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+color = Color(1, 0.713943, 0.675968, 1)
+color_ramp = SubResource("Gradient_fq43n")
+
+[node name="Spark" parent="." instance=ExtResource("18_fq43n")]
+position = Vector2(76, -24)
+fixed_fps = 60
 
 [node name="SasakiHSM" type="LimboHSM" parent="."]
 blackboard_plan = ExtResource("6_3rbhi")
@@ -1408,10 +1455,10 @@ script = ExtResource("13_3rbhi")
 [node name="Charging" type="LimboState" parent="SasakiHSM"]
 script = ExtResource("14_y4syw")
 
+[node name="Death" type="LimboState" parent="SasakiHSM"]
+script = ExtResource("17_4iom4")
+
 [node name="EffectAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 autoplay = true
 
-[node name="HUD" type="Sprite2D" parent="."]
-
 [connection signal="body_entered" from="DialogueRange" to="." method="_on_dialogue_range_body_entered"]
-[connection signal="area_entered" from="HurtBody" to="." method="_on_hurt_body_area_entered"]

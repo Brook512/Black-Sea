@@ -1,10 +1,7 @@
 @tool 
 extends BTAction
 
-@export var patrol_speed_var: StringName = &"patrol_speed"
-@export var patrol_range_var: StringName = &"patrol_range"
-@export var patrol_direction_var: StringName = &"patrol_direction"
-@export var tolerance: float = 2.0  # 到达边界时的容差距离
+@export var target_var: StringName = &"target"
 
 func _tick(delta: float) -> Status:
 	var blackboard: Blackboard = get_blackboard()

@@ -9,7 +9,7 @@ func _enter() -> void:
 		agent.velocity.y -= jump_speed
 
 func _update(delta: float) -> void:
-	
+	_handle_input(hsm_blackboard,1.)
 	if agent.is_on_floor():
 		dispatch(EVENT_FINISHED)
 	elif agent.velocity.y >= 0: 

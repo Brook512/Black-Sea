@@ -1,0 +1,194 @@
+[gd_scene load_steps=13 format=3 uid="uid://b2lew5gtuaruc"]
+
+[ext_resource type="Shader" uid="uid://bxsge4p5blgx6" path="res://Menus/Scripts/CycleBackground.gdshader" id="1_4tbtc"]
+[ext_resource type="Script" uid="uid://c5r6xsl4b8xf5" path="res://Scenes/start_anim.gd" id="1_dlcsm"]
+[ext_resource type="Texture2D" uid="uid://jdi7gqfdw426" path="res://Menus/Background/3.png" id="2_dlcsm"]
+[ext_resource type="Shader" uid="uid://0wkvmlm3dek6" path="res://Players/Shaders/Moon.gdshader" id="3_qw0b6"]
+[ext_resource type="Texture2D" uid="uid://cbrnyr8vqow6r" path="res://Menus/Background/2.png" id="4_hl3gf"]
+[ext_resource type="Texture2D" uid="uid://cbrtby03xx82t" path="res://Menus/Background/1.png" id="5_1lxvg"]
+[ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="7_qw0b6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mml6u"]
+shader = ExtResource("1_4tbtc")
+shader_parameter/offset = Vector2(1, 0)
+shader_parameter/speed = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rl1o0"]
+shader = ExtResource("3_qw0b6")
+shader_parameter/outline_color = Color(1, 1, 1, 0.8)
+shader_parameter/outline_size = 1.0
+shader_parameter/glow_speed = 1.0
+shader_parameter/glow_intensity = 0.5
+shader_parameter/glow_pulse_range = 0.3
+
+[sub_resource type="Animation" id="Animation_dlcsm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D/BottomCloud:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(194.333, 119.375)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D/Moon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(121, 84)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera2D/ColorRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera2D/Label:visible_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_4tbtc"]
+resource_name = "background"
+length = 9.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D/Moon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4.96667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-39, -36), Vector2(0, -95)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D/BottomCloud:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(14.333, 3), Vector2(14.333, 209.375)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera2D/ColorRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3.46667, 4.13333, 4.96667, 5.63333, 6.4, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(0.412152, 0.412152, 0.412152, 1), Color(1, 1, 1, 0), Color(0.412152, 0.412152, 0.412152, 1), Color(1, 1, 1, 0), Color(0.412152, 0.412152, 0.412152, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera2D/Label:visible_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(7, 8.96667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_on_animation_finished"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dlcsm"]
+_data = {
+&"RESET": SubResource("Animation_dlcsm"),
+&"background": SubResource("Animation_4tbtc")
+}
+
+[node name="Loading" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_dlcsm")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="BottomCloud" type="Sprite2D" parent="Camera2D"]
+z_index = -1
+material = SubResource("ShaderMaterial_mml6u")
+position = Vector2(194.333, 119.375)
+scale = Vector2(0.703704, 0.73071)
+texture = ExtResource("2_dlcsm")
+metadata/_edit_lock_ = true
+
+[node name="Moon" type="Sprite2D" parent="Camera2D"]
+material = SubResource("ShaderMaterial_rl1o0")
+position = Vector2(121, 84)
+texture = ExtResource("4_hl3gf")
+metadata/_edit_lock_ = true
+
+[node name="Background" type="Sprite2D" parent="Camera2D"]
+visibility_layer = 8
+z_index = -2
+scale = Vector2(0.77691, 0.890432)
+texture = ExtResource("5_1lxvg")
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_dlcsm")
+}
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D"]
+offset_left = -245.0
+offset_top = -147.0
+offset_right = 269.0
+offset_bottom = 157.0
+color = Color(0.169245, 0.169245, 0.169245, 1)
+
+[node name="Label" type="Label" parent="Camera2D"]
+offset_left = -45.0
+offset_top = -31.0
+offset_right = 98.0
+offset_bottom = 48.0
+theme_override_fonts/font = ExtResource("7_qw0b6")
+text = "我在哪 . . . "

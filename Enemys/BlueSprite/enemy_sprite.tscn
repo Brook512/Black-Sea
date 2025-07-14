@@ -1,6 +1,5 @@
 [gd_scene load_steps=66 format=3 uid="uid://dpyckqm27j3be"]
 
-[ext_resource type="Shader" uid="uid://ihptsce2xesl" path="res://Enemys/Scripts/HitFlash.gdshader" id="1_68qwe"]
 [ext_resource type="Texture2D" uid="uid://d003ug3fw2t8l" path="res://Enemys/BlueSprite/Attack1.png" id="2_10eyo"]
 [ext_resource type="Texture2D" uid="uid://doin4q254t23d" path="res://Enemys/BlueSprite/Attack2.png" id="3_8sl58"]
 [ext_resource type="Texture2D" uid="uid://bjkne0aix74u2" path="res://Enemys/BlueSprite/Block.png" id="4_8sl58"]
@@ -12,11 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://dkg8rt27b030a" path="res://Enemys/BlueSprite/HeavyAttack.png" id="8_eskag"]
 [ext_resource type="Texture2D" uid="uid://beu8biewcxaw0" path="res://Enemys/BlueSprite/Jump.png" id="8_hc54p"]
 [ext_resource type="Texture2D" uid="uid://d3baxcr1we22d" path="res://Enemys/BlueSprite/Run.png" id="9_okxpk"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_oy085"]
-shader = ExtResource("1_68qwe")
-shader_parameter/hit_intensity = 0.0
-shader_parameter/hit_color = Color(1, 0.2, 0.2, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_32qkw"]
 atlas = ExtResource("2_10eyo")
@@ -122,37 +116,45 @@ region = Rect2(0, 0, 200, 200)
 atlas = ExtResource("5_xnpwx")
 region = Rect2(200, 0, 200, 200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jvr24"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8sl58"]
 atlas = ExtResource("8_eskag")
 region = Rect2(0, 0, 200, 200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sct5y"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_eskag"]
 atlas = ExtResource("8_eskag")
 region = Rect2(200, 0, 200, 200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8idlb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvr24"]
 atlas = ExtResource("8_eskag")
 region = Rect2(400, 0, 200, 200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2dd07"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sct5y"]
 atlas = ExtResource("8_eskag")
 region = Rect2(600, 0, 200, 200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pompa"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8idlb"]
 atlas = ExtResource("8_eskag")
 region = Rect2(800, 0, 200, 200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eehja"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2dd07"]
 atlas = ExtResource("8_eskag")
 region = Rect2(1000, 0, 200, 200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7w7je"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pompa"]
 atlas = ExtResource("8_eskag")
 region = Rect2(1200, 0, 200, 200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5hd2s"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_eehja"]
 atlas = ExtResource("8_eskag")
 region = Rect2(1400, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7w7je"]
+atlas = ExtResource("8_eskag")
+region = Rect2(1600, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hd2s"]
+atlas = ExtResource("8_eskag")
+region = Rect2(1800, 0, 200, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qkfcv"]
 atlas = ExtResource("6_n2ax4")
@@ -334,6 +336,12 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_8sl58")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eskag")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_jvr24")
 }, {
 "duration": 1.0,
@@ -434,9 +442,8 @@ animations = [{
 }]
 
 [node name="EnemySprite" type="AnimatedSprite2D"]
-material = SubResource("ShaderMaterial_oy085")
 scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_wuphf")
 animation = &"HeavyAttack"
-frame = 7
+frame = 9
 frame_progress = 1.0

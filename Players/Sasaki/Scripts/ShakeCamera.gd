@@ -3,6 +3,7 @@ extends Camera2D
 
 # 暴露在编辑器中的可调节参数
 @export var target: Node2D    # 追踪的目标节点
+@export var player: Sasaki
 @export var smooth_speed: float = 0.15  # 跟随平滑度 (0:即时, 1:最平滑)
 @export var enable_screen_shake: bool = true  # 是否启用屏幕震动
 @export var y_offset: float = 70.0  # 相机在目标上方的垂直距离
@@ -40,6 +41,8 @@ func _physics_process(delta):
 	# 边界限制
 	_apply_boundary_limits()
 	
+	if player.invincible_timer.time_left>1.3:
+		_screen_shake_intensity=0.02
 	# 屏幕震动处理
 	if enable_screen_shake && _screen_shake_intensity > 0:
 		_apply_screen_shake(delta)

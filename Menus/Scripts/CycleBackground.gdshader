@@ -1,6 +1,6 @@
 shader_type canvas_item;
 uniform vec2 offset = vec2(1.0,0.);
-uniform float speed = 0.1;
+uniform float speed: hint_range(0.1, 1)= 0.1;
 void fragment(){
 	vec2 cycled_uv = UV + offset * 0.1 * TIME * speed;
 

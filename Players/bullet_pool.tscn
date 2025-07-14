@@ -1,6 +1,3 @@
-[gd_scene load_steps=2 format=3 uid="uid://rhtnhyaafieg"]
-
-[ext_resource type="Script" uid="uid://r7hgk2iqsfkb" path="res://Players/MainCharacter/scripts/BulletPool.gd" id="1_u2dgp"]
+[gd_scene format=3 uid="uid://do1lexbwln4vf"]
 
 [node name="BulletPool" type="Node2D"]
-script = ExtResource("1_u2dgp")

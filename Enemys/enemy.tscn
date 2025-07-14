@@ -1,24 +1,21 @@
-[gd_scene load_steps=27 format=3 uid="uid://cxrrtphldctpn"]
+[gd_scene load_steps=51 format=3 uid="uid://cxrrtphldctpn"]
 
 [ext_resource type="PackedScene" uid="uid://dpyckqm27j3be" path="res://Enemys/BlueSprite/enemy_sprite.tscn" id="1_3j5ps"]
 [ext_resource type="Script" uid="uid://cebwjb65ksbr2" path="res://Enemys/enemy.gd" id="1_sd3jc"]
-[ext_resource type="Script" uid="uid://hn1amxmjubcq" path="res://Enemys/normal_state.gd" id="5_5y6g5"]
+[ext_resource type="Script" uid="uid://da6gmx7tijla6" path="res://Enemys/Scripts/dialogue_range.gd" id="3_sd3jc"]
+[ext_resource type="Script" uid="uid://ca4hbyil2bbyg" path="res://Enemys/hurt_body.gd" id="6_111e3"]
+[ext_resource type="AudioStream" uid="uid://dd1t10goj5kry" path="res://Sounds/Attack.mp3" id="6_cqow8"]
+[ext_resource type="Script" uid="uid://dvrc4wo35xn8p" path="res://Enemys/attack_range.gd" id="6_dwt4o"]
 [ext_resource type="Script" uid="uid://t0fce5croj8m" path="res://Enemys/dialogue_state.gd" id="6_sd3jc"]
+[ext_resource type="AudioStream" uid="uid://b0x7rck2noece" path="res://Sounds/8BIT/Hit.wav" id="7_oy085"]
 [ext_resource type="Script" uid="uid://g5gxrv1ud6tb" path="res://Enemys/combat_state.gd" id="8_cqow8"]
+[ext_resource type="BehaviorTree" uid="uid://06xfggtunev4" path="res://Enemys/NormalTree.tres" id="9_cqow8"]
 [ext_resource type="Texture2D" uid="uid://daku17hrdyv42" path="res://Menus/PixelArtGUI/Textures/Icons/8/ArrowSmallDown.png" id="9_sd3jc"]
 [ext_resource type="Script" uid="uid://ctqs8150283i6" path="res://Enemys/dialogue_icon.gd" id="10_cqow8"]
+[ext_resource type="Script" uid="uid://bb141fnmqi6ya" path="res://Enemys/hurt_state.gd" id="14_oel21"]
 [ext_resource type="BehaviorTree" uid="uid://cuouyuuh2ul1" path="res://Enemys/EnemyTree.tres" id="15_bffae"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cqow8"]
-size = Vector2(28, 71)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dwt4o"]
-size = Vector2(8.33333, 8.28571)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_oy085"]
-size = Vector2(38, 71)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_111e3"]
+[ext_resource type="Script" uid="uid://baxja7yn5w8tm" path="res://Enemys/death_state.gd" id="15_hslyg"]
+[ext_resource type="PackedScene" uid="uid://da8aalcpy86pa" path="res://Effects/blood_spark.tscn" id="16_hslyg"]
 
 [sub_resource type="Animation" id="Animation_bffae"]
 length = 0.8
@@ -53,11 +50,26 @@ tracks/2/path = NodePath("AttackRange/AttackCollision:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.7),
+"times": PackedFloat32Array(0, 0.4, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
 }
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer2D")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_cqow8")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
 
 [sub_resource type="Animation" id="Animation_hslyg"]
 length = 0.8
@@ -97,6 +109,21 @@ tracks/2/keys = {
 "update": 1,
 "values": [true, false, true]
 }
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer2D")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_cqow8")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
 
 [sub_resource type="Animation" id="Animation_xdmhx"]
 length = 0.6
@@ -208,7 +235,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_ddrbr"]
-length = 1.6
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -216,10 +243,10 @@ tracks/0/path = NodePath("EnemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -232,6 +259,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["HeavyAttack"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackRange/AttackCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.6, 1.9667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_c3loo"]
@@ -260,9 +299,24 @@ tracks/1/keys = {
 "update": 1,
 "values": ["Hurt"]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.34,
+"start_offset": 0.0,
+"stream": ExtResource("7_oy085")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_qyywi"]
-length = 1.6
+length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -271,7 +325,7 @@ tracks/0/path = NodePath("EnemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8, 1.2),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -360,11 +414,40 @@ tracks/1/keys = {
 "values": ["Run"]
 }
 
+[sub_resource type="Animation" id="Animation_hi78g"]
+resource_name = "Dash"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [7, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemySprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Run"]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_138e1"]
 _data = {
 &"Attack1": SubResource("Animation_bffae"),
 &"Attack2": SubResource("Animation_hslyg"),
 &"Block": SubResource("Animation_xdmhx"),
+&"Dash": SubResource("Animation_hi78g"),
 &"Death": SubResource("Animation_o5r7r"),
 &"Dodge": SubResource("Animation_h0rhf"),
 &"Fall": SubResource("Animation_0ssqf"),
@@ -376,24 +459,454 @@ _data = {
 &"Run": SubResource("Animation_5yjoq")
 }
 
+[sub_resource type="Animation" id="Animation_138e1"]
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Attack1"]
+}
+
+[sub_resource type="Animation" id="Animation_h6tn4"]
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Attack2"]
+}
+
+[sub_resource type="Animation" id="Animation_jwp5g"]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Block"]
+}
+
+[sub_resource type="Animation" id="Animation_yggdo"]
+length = 1.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Death"]
+}
+
+[sub_resource type="Animation" id="Animation_w674g"]
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Dodge"]
+}
+
+[sub_resource type="Animation" id="Animation_tm1ay"]
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Fall"]
+}
+
+[sub_resource type="Animation" id="Animation_e1d31"]
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["HeavyAttack"]
+}
+
+[sub_resource type="Animation" id="Animation_vgnen"]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Hurt"]
+}
+
+[sub_resource type="Animation" id="Animation_23hh5"]
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Idle"]
+}
+
+[sub_resource type="Animation" id="Animation_qg0ga"]
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Jump"]
+}
+
+[sub_resource type="Animation" id="Animation_ql1y7"]
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Run"]
+}
+
+[sub_resource type="Animation" id="Animation_jr8c4"]
+resource_name = "Dash"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [7, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Run"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShadowSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-30, 0), Vector2(0, 0), Vector2(-30, 0), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShadowSprite:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.366667, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.144063, 0.144063, 0.144063, 0.619608), Color(0.145098, 0.145098, 0.145098, 0), Color(0.145098, 0.145098, 0.145098, 0), Color(0.144063, 0.144063, 0.144063, 0.619608), Color(0.145098, 0.145098, 0.145098, 0), Color(0.145098, 0.145098, 0.145098, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_850lg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.144063, 0.144063, 0.144063, 0.619608)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ql1y7"]
+_data = {
+&"Attack1": SubResource("Animation_138e1"),
+&"Attack2": SubResource("Animation_h6tn4"),
+&"Block": SubResource("Animation_jwp5g"),
+&"Dash": SubResource("Animation_jr8c4"),
+&"Death": SubResource("Animation_yggdo"),
+&"Dodge": SubResource("Animation_w674g"),
+&"Fall": SubResource("Animation_tm1ay"),
+&"HeavyAttack": SubResource("Animation_e1d31"),
+&"Hurt": SubResource("Animation_vgnen"),
+&"Idle": SubResource("Animation_23hh5"),
+&"Jump": SubResource("Animation_qg0ga"),
+&"RESET": SubResource("Animation_850lg"),
+&"Run": SubResource("Animation_ql1y7")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cqow8"]
+size = Vector2(28, 71)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dwt4o"]
+size = Vector2(8.33333, 8.28571)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oy085"]
+size = Vector2(31, 71)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_111e3"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_oy085"]
+
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_xdmhx"]
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+scale = Vector2(-1, 1)
 script = ExtResource("1_sd3jc")
 
 [node name="EnemySprite" parent="." instance=ExtResource("1_3j5ps")]
-position = Vector2(2.38419e-07, -4)
+visible = false
 animation = &"Attack1"
 frame = 0
 frame_progress = 0.0
+
+[node name="ShadowSprite" parent="." instance=ExtResource("1_3j5ps")]
+modulate = Color(0.144063, 0.144063, 0.144063, 0.619608)
+animation = &"Run"
+frame = 7
+frame_progress = 0.0
+
+[node name="EnemyAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_138e1")
+}
+
+[node name="ShadowPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ql1y7")
+}
+speed_scale = 2.0
 
 [node name="MoveBody" type="CollisionShape2D" parent="."]
 position = Vector2(-3, -4.5)
 shape = SubResource("RectangleShape2D_cqow8")
 
-[node name="DialogueRange" type="Area2D" parent="."]
+[node name="DialogueRange" type="Area2D" parent="." groups=["enemy"]]
 collision_layer = 0
 collision_mask = 64
+script = ExtResource("3_sd3jc")
 
 [node name="DialogueCollision" type="CollisionShape2D" parent="DialogueRange"]
 position = Vector2(10, -0.5)
@@ -401,39 +914,41 @@ scale = Vector2(6, 3.5)
 shape = SubResource("RectangleShape2D_dwt4o")
 debug_color = Color(3.27289e-06, 0.634881, 0.423843, 0.42)
 
-[node name="HurtBody" type="Area2D" parent="."]
-collision_layer = 0
+[node name="DialogueIcon" type="Sprite2D" parent="DialogueRange"]
+visible = false
+position = Vector2(1, -50)
+scale = Vector2(1.875, 1.875)
+texture = ExtResource("9_sd3jc")
+script = ExtResource("10_cqow8")
+
+[node name="HurtBody" type="Area2D" parent="." groups=["enemy"]]
+collision_layer = 2
 collision_mask = 2
+script = ExtResource("6_111e3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBody"]
-position = Vector2(0, -2.5)
+position = Vector2(-3.5, -2.5)
 shape = SubResource("RectangleShape2D_oy085")
 disabled = true
 
 [node name="AttackRange" type="Area2D" parent="."]
-position = Vector2(17, 9)
-collision_layer = 8
-collision_mask = 0
+position = Vector2(0, 9)
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("6_dwt4o")
 
 [node name="AttackCollision" type="CollisionShape2D" parent="AttackRange"]
-position = Vector2(27.335, -15.87)
+position = Vector2(41, -16)
 scale = Vector2(6, 3.5)
 shape = SubResource("CircleShape2D_111e3")
 disabled = true
 debug_color = Color(1, 0, 0.113725, 0.278431)
 
-[node name="EnemyAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_138e1")
-}
-speed_scale = 2.0
-
 [node name="EnemyHSM" type="LimboHSM" parent="."]
 
-[node name="NormalState" type="LimboState" parent="EnemyHSM" node_paths=PackedStringArray("animation_player")]
-script = ExtResource("5_5y6g5")
-animation_player = NodePath("../../EnemyAnimationPlayer")
-animation_name = &"Idle"
+[node name="NormalState" type="BTState" parent="EnemyHSM"]
+behavior_tree = ExtResource("9_cqow8")
+blackboard_plan = SubResource("BlackboardPlan_oy085")
 
 [node name="DialogueState" type="LimboState" parent="EnemyHSM"]
 script = ExtResource("6_sd3jc")
@@ -443,12 +958,12 @@ behavior_tree = ExtResource("15_bffae")
 blackboard_plan = SubResource("BlackboardPlan_xdmhx")
 script = ExtResource("8_cqow8")
 
-[node name="DialogueIcon" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(1, -50)
-scale = Vector2(1.875, 1.875)
-texture = ExtResource("9_sd3jc")
-script = ExtResource("10_cqow8")
+[node name="HurtState" type="LimboState" parent="EnemyHSM"]
+script = ExtResource("14_oel21")
 
-[connection signal="area_entered" from="DialogueRange" to="." method="_on_dialogue_range_area_entered"]
-[connection signal="area_exited" from="DialogueRange" to="." method="_on_dialogue_range_area_exited"]
+[node name="DeathState" type="LimboState" parent="EnemyHSM"]
+script = ExtResource("15_hslyg")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[node name="BloodSpark" parent="." instance=ExtResource("16_hslyg")]

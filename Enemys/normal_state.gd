@@ -5,5 +5,6 @@ extends LimboState
 func _enter() -> void:
 	animation_player.play(animation_name)
 	
+
 #func _update(delta: float) -> void:
 	#pass

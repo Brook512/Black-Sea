@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://k1e74ldfnc0i" path="res://Menus/MoveLabel.gd" id="7_krje8"]
 [ext_resource type="Shader" uid="uid://bxsge4p5blgx6" path="res://Menus/Scripts/CycleBackground.gdshader" id="8_dd46u"]
 [ext_resource type="Texture2D" uid="uid://jdi7gqfdw426" path="res://Menus/Background/3.png" id="9_n3nbb"]
-[ext_resource type="Shader" uid="uid://0wkvmlm3dek6" path="res://Menus/Background/Moon.gdshader" id="10_dm44m"]
+[ext_resource type="Shader" uid="uid://0wkvmlm3dek6" path="res://Players/Shaders/Moon.gdshader" id="10_dm44m"]
 [ext_resource type="Texture2D" uid="uid://cbrnyr8vqow6r" path="res://Menus/Background/2.png" id="11_du1yi"]
 [ext_resource type="Texture2D" uid="uid://cbrtby03xx82t" path="res://Menus/Background/1.png" id="12_c0stj"]
 
@@ -92,7 +92,7 @@ theme_override_colors/font_color = Color(0.586693, 0.740235, 0.94617, 1)
 theme_override_colors/font_shadow_color = Color(0.588235, 0.741176, 0.945098, 0.760784)
 theme_override_fonts/font = ExtResource("3_a8aa6")
 theme_override_font_sizes/font_size = 50
-text = "Life"
+text = "Sea"
 script = ExtResource("7_krje8")
 
 [node name="BottomCloud" type="Sprite2D" parent="."]

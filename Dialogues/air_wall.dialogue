@@ -1,0 +1,4 @@
+~ start
+我: 
+	前方是悬崖，还是不要前进了吧。
+set GlobalSceneManager.IsTalked["LeftAirWall"] = true

@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://2mnn8t05ljb"]
-
-[node name="Dialogue" type="Node2D"]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]

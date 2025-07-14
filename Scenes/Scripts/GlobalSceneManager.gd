@@ -1,6 +1,6 @@
 extends Node
 
-enum States {Dialogue, Combat, Menu, Settings}
+enum States {Dialogue, Combat, Normal, Menu, Settings}
 signal state_changed(old_state, new_state)
 
 var current_state: States = States.Menu
@@ -9,6 +9,7 @@ var previous_state: States = States.Menu
 var current_scene: Node = null
 var IsTalked:Dictionary={
 	"BlueEnemy":false,
+	"LeftAirWall":false,
 }
 var IsCombatted:Dictionary={
 	"BlueEnemy":false,
@@ -17,17 +18,19 @@ var IsCombatted:Dictionary={
 # Scene paths for each state
 const STATE_SCENES: Dictionary = {
 	States.Dialogue: "res://scenes/World.tscn",
-	States.Combat: "res://scenes/World.tscn",
-	States.Menu: "res://scenes/Menu.tscn",
+	States.Combat: "res://scenes/Combat.tscn",
+	States.Normal: "res://scenes/StartAnim.tscn",
+	States.Menu: "res://scenes/Loading.tscn",
 	States.Settings: "res://scenes/Settings.tscn"
 }
 
 # State transition rules - which states can transition to which
 const VALID_TRANSITIONS: Dictionary = {
-	States.Dialogue: [States.Combat, States.Settings],
-	States.Combat: [States.Dialogue, States.Menu],
-	States.Menu: [States.Dialogue],
-	States.Settings: [States.Menu]
+	States.Dialogue: [States.Combat, States.Normal],
+	States.Combat: [States.Normal],
+	States.Menu: [States.Normal, States.Settings],
+	States.Settings: [States.Menu],
+	States.Normal: [States.Combat, States.Dialogue]
 }
 
 func _ready():
@@ -52,10 +55,6 @@ func change_state(new_state: States) -> bool:
 		# Change state
 		current_state = new_state
 		
-		# Load corresponding scene
-		var scene_path = STATE_SCENES.get(new_state)
-		if scene_path:
-			goto_scene(scene_path)
 		
 		# Perform state enter actions
 		_on_state_enter(new_state)
@@ -82,19 +81,19 @@ func get_current_state_name() -> String:
 # State transition handlers (can be overridden in inherited scripts)
 func _on_state_enter(new_state: States):
 	match new_state:
+		States.Normal:
+			print("Entering Normal state")
 		States.Dialogue:
 			print("Entering Dialogue state")
-			# Pause world simulation
-			get_tree().paused = true
 		States.Combat:
 			print("Entering Combat state")
-			get_tree().paused = false
+			goto_scene(STATE_SCENES[new_state])
 		States.Menu:
 			print("Entering Menu state")
-			# Pause game when in menu
-			get_tree().paused = true
+			goto_scene(STATE_SCENES[new_state])
 		States.Settings:
 			print("Entering Settings state")
+			goto_scene(STATE_SCENES[new_state])
 
 @warning_ignore("unused_parameter")
 func _on_state_exit(old_state: States, new_state: States):

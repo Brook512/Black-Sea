@@ -1,21 +1,13 @@
 extends Node2D
 
 var scene_map = {
-	"EnterGame": "res://scenes/world.tscn",
+	"EnterGame": "res://Scenes/StartAnim.tscn",
 	"Settings": "res://scenes/SettingScene.tscn"
 }
 
 func _on_start_pressed() -> void:
-	switch_scene("EnterGame")
-
-func switch_scene(scene_key: String) -> void:
-	var path = _get_scene_path(scene_key)
-	if ResourceLoader.exists(path):
-		GlobalSceneManager.goto_scene(path)
-
-		print("场景切换至: " + scene_key)
-	else:
-		push_error("场景路径无效: " + path)
+	GlobalSceneManager.change_state(GlobalSceneManager.States.Normal)
+	GlobalSceneManager.goto_scene("res://scenes/StartAnim.tscn")
 
 # 私有方法：获取场景路径
 func _get_scene_path(key: String) -> String:
@@ -23,7 +15,7 @@ func _get_scene_path(key: String) -> String:
 
 
 func _on_settings_pressed() -> void:
-	switch_scene("Setiings")
+	GlobalSceneManager.change_state(GlobalSceneManager.States.Settings)
 
 
 

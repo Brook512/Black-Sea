@@ -1,0 +1,21 @@
+extends Area2D
+@onready var player:Sasaki 
+@export var attack_damage=1
+var current_collision_area: Area2D
+var current_body
+func _ready() -> void:
+	player = get_parent()
+	area_entered.connect(_on_collision)
+	area_exited.connect(_empty)
+
+func _physics_process(delta: float) -> void:
+	if current_collision_area:
+		if current_collision_area.is_in_group("enemy"):
+			current_collision_area.take_damage(attack_damage, player.hsm.blackboard.get_var("facing_vec"))
+
+func _on_collision(area:Area2D):
+	current_collision_area = area
+
+
+func _empty(area:Area2D):
+	current_collision_area = null
