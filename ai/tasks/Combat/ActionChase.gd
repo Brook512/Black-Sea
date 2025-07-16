@@ -1,12 +1,10 @@
 @tool
 extends BTAction
 
-@export var chase_speed_var: StringName = &"chase_speed"
-#@export var player_position_var: StringName = &"player_position"
 var player_var:StringName = &"target"
 
-func _tick(delta: float) -> Status:
-	var blackboard: Blackboard = get_blackboard()
+func _tick(_delta: float) -> Status:
+
 	var enemy: CharacterBody2D = get_agent()
 	var player = blackboard.get_var(player_var)
 	# 获取玩家位置（需要其他任务/系统更新此值）

@@ -1,3 +1,3 @@
 extends BTState
-#func _enter() -> void:
-	#print(self.is_active())
+func _enter() -> void:
+	agent.hurt_body.disabled = false

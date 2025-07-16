@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=10 format=3 uid="uid://06xfggtunev4"]
+[gd_resource type="BehaviorTree" load_steps=11 format=3 uid="uid://06xfggtunev4"]
 
 [ext_resource type="Script" uid="uid://ddftftfrkd8jp" path="res://ai/tasks/GetPlayer.gd" id="1_5vr2k"]
 [ext_resource type="Script" uid="uid://m4npr1enwijp" path="res://ai/tasks/Dialogue/FaceTarget.gd" id="1_josdn"]
@@ -25,8 +25,11 @@ resource_name = "EnemyAnimationPlayer"
 animation_player = SubResource("BBNode_5vr2k")
 animation_name = &"Idle"
 
+[sub_resource type="BTParallel" id="BTParallel_5vr2k"]
+children = [SubResource("BTAction_5vr2k"), SubResource("BTPlayAnimation_ol7qp")]
+
 [sub_resource type="BTSelector" id="BTSelector_5vr2k"]
-children = [SubResource("BTRunLimit_5vr2k"), SubResource("BTAction_5vr2k"), SubResource("BTPlayAnimation_ol7qp")]
+children = [SubResource("BTRunLimit_5vr2k"), SubResource("BTParallel_5vr2k")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_sd3jc")

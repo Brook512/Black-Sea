@@ -11,7 +11,7 @@ func _enter() -> void:
 	else:
 		dispatch(EVENT_FINISHED)
 
-func _update(delta: float) -> void:
+func _update(_delta: float) -> void:
 	_handle_input(hsm_blackboard, 0.)
 	if !agent.anim_player.is_playing():
 		dispatch(EVENT_FINISHED)

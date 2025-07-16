@@ -21,7 +21,7 @@ func _on_reposition_timeout():
 	# 创建淡出动画序列
 	var fade_out_tween = create_tween()
 	fade_out_tween.tween_property(self, "position", Vector2(position.x,position.y+ wave_y_range), FADE_DURATION).set_trans(Tween.TRANS_SPRING)
-	#fade_out_tween.tween_property(self, "modulate:a", 0., FADE_DURATION)
+	fade_out_tween.tween_property(self, "modulate:a", 0., FADE_DURATION)
 	fade_out_tween.finished.connect(_on_fade_out_completed.bind())
 
 # 淡出动画完成后执行
@@ -32,6 +32,6 @@ func _on_fade_out_completed():
 	# 创建淡入动画序列
 	var fade_in_tween = create_tween()
 	fade_in_tween.tween_property(self, "position", Vector2(position.x,position.y- wave_y_range), FADE_DURATION).set_trans(Tween.TRANS_SPRING)
-	#fade_in_tween.tween_property(self, "modulate:a", 1., FADE_DURATION)
+	fade_in_tween.tween_property(self, "modulate:a", 1., FADE_DURATION)
 	fade_in_tween.finished.connect(_on_reposition_timeout.bind())
 	#fade_in_tween.tween_property(self, "modulate:a", 1.0, FADE_DURATION)

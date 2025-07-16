@@ -54,6 +54,8 @@ enabled=PackedStringArray("res://addons/AS2P/plugin.cfg", "res://addons/dialogue
 
 enemy=""
 player=""
+enemy_attack=""
+player_attack=""
 
 [input]
 
@@ -109,7 +111,7 @@ dialogue={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://Dialogues/air_wall.dialogue", "res://Dialogues/first_enemy.dialogue")
+locale/translations_pot_files=PackedStringArray("res://Dialogues/air_wall.dialogue", "res://Dialogues/first_enemy.dialogue", "res://Dialogues/air_wall2.dialogue")
 locale/size/borderless=false
 locale/subwindows/embed_subwindows=true
 

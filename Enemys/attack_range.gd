@@ -1,22 +1,58 @@
 extends Area2D
 
-@export var enemy_damage=1
-var current_collision_area: Area2D
-var current_body
+
+@export var attack_damage := 1
+@export var clash_window := 0.15        # 判定窗口（秒）
+
+var _pending_enemy: Area2D = null      # 等待结算伤害的敌人
+var _window_timer = Timer.new()
+var enemy 
+var _is_counter:bool = false
+var _prepared_player=null
+var _attacked:bool = false
+var particlea:CPUParticles2D
+@onready var self_collision = $AttackCollision
+#var _emitted:bool = false
+## --------------------------------------------------
+## 初始化：连接进入 / 退出信号
+## --------------------------------------------------
 func _ready() -> void:
-	area_entered.connect(_on_collision)
-	area_exited.connect(_empty)
+	enemy = get_parent()
+	area_entered.connect(_on_area_entered)
+	area_exited.connect(_on_area_exited)
+	_window_timer.one_shot = true
+	_window_timer.wait_time = clash_window
+	add_child(_window_timer)
 
+	
 func _physics_process(delta: float) -> void:
-	if current_collision_area:
-		if current_collision_area.is_in_group("player"):
-			current_collision_area.take_damage(enemy_damage, get_parent().last_sign)
+	if enemy.anim_player.current_animation.begins_with("Attack") or enemy.shadow_player.current_animation.begins_with("Attack"):
+		enemy.perfect_spark.emitting=true
+		_window_timer.start()
 
-func _on_collision(area:Area2D):
-	current_collision_area = area
+	if !_attacked and _prepared_player and !_is_counter:
+		_prepared_player.take_damage(
+			enemy.combat_state.blackboard.get_var("AttackDamage"),
+			enemy.combat_state.blackboard.get_var("FacingVec")
+		)
+		_attacked = true
+		
+	if _window_timer.time_left>0:
+		if Input.is_action_just_pressed("attack"):
+			enemy.spark.emitting=true
+			_is_counter = true
+			_attacked=false
+	else:
+		_is_counter  = false
 
-
-func _empty(area:Area2D):
-	current_collision_area = null
-
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group("player"):
+		_prepared_player = area
+		
+	
+func _on_area_exited(area:Area2D) -> void:
+	if area.is_in_group("player"):
+		_prepared_player = null
+		_attacked=false
+		_is_counter=false
 	

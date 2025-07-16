@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://dg03en08br3yw"]
+[gd_scene load_steps=28 format=4 uid="uid://dg03en08br3yw"]
 
 [ext_resource type="Script" uid="uid://y46nub3ux1w0" path="res://Scenes/WorldScene.gd" id="1_q2d71"]
 [ext_resource type="TileSet" uid="uid://gcnqibusu2d4" path="res://Scenes/SeaTileset.tres" id="1_y7y61"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://bp5g6wp584tw7" path="res://Items/wave.gd" id="12_op4cu"]
 [ext_resource type="Script" uid="uid://cf2w3by7h75kg" path="res://Items/air_wall.gd" id="14_8l3nt"]
 [ext_resource type="Texture2D" uid="uid://dp1gaw3ufbghc" path="res://Scenes/sea.png" id="15_kwl8l"]
+[ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="17_rwt1y"]
 [ext_resource type="Script" uid="uid://ckju1j05ko0ov" path="res://Items/Trap.gd" id="17_waglr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xiqgv"]
@@ -35,6 +36,67 @@ shader_parameter/xSpeed = 0.0
 shader_parameter/ySpeed = 1.0
 shader_parameter/yRange = 100.0
 
+[sub_resource type="Animation" id="Animation_mvfa8"]
+resource_name = "START"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.169245, 0.169245, 0.169245, 1), Color(0.168627, 0.168627, 0.168627, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D/Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_r0dna"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D/Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D/ColorRect:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.169245, 0.169245, 0.169245, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b5aes"]
+_data = {
+&"RESET": SubResource("Animation_r0dna"),
+&"START": SubResource("Animation_mvfa8")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_op4cu"]
 size = Vector2(171, 207.5)
 
@@ -45,6 +107,9 @@ shader_parameter/speed = 0.2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xiqgv"]
 size = Vector2(20.5378, 1.95633)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_waglr"]
+size = Vector2(32, 170)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_q2d71")
@@ -103,6 +168,27 @@ position = Vector2(19, 15)
 scale = Vector2(1, 1)
 player = NodePath("../../../sasaki")
 
+[node name="ColorRect" type="ColorRect" parent="Camera2D"]
+modulate = Color(0.412152, 0.412152, 0.412152, 1)
+z_index = 2
+offset_left = -245.0
+offset_top = -147.0
+offset_right = 269.0
+offset_bottom = 157.0
+color = Color(0.169245, 0.169245, 0.169245, 1)
+
+[node name="Label" type="Label" parent="Camera2D"]
+z_index = 2
+offset_left = -67.0
+offset_top = -32.0
+offset_right = 76.0
+offset_bottom = 47.0
+theme_override_fonts/font = ExtResource("17_rwt1y")
+theme_override_font_sizes/font_size = 30
+text = "Where am I . . . "
+visible_characters = 16
+visible_ratio = 0.981354
+
 [node name="wave" type="Sprite2D" parent="." node_paths=PackedStringArray("target")]
 material = SubResource("ShaderMaterial_kn06e")
 position = Vector2(-29, 148)
@@ -115,6 +201,9 @@ target = NodePath("../sasaki")
 stream = ExtResource("9_uo7di")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_b5aes")
+}
 
 [node name="AirWall" type="Area2D" parent="."]
 collision_layer = 0
@@ -133,6 +222,7 @@ scale = Vector2(0.170904, 0.31709)
 texture = ExtResource("15_kwl8l")
 
 [node name="DeathTrap" type="Area2D" parent="Sprite2D"]
+position = Vector2(117.024, 0)
 collision_layer = 0
 collision_mask = 8
 script = ExtResource("17_waglr")
@@ -142,3 +232,21 @@ trap_damage = 100
 position = Vector2(0, -74.7951)
 scale = Vector2(100, 100)
 shape = SubResource("RectangleShape2D_xiqgv")
+
+[node name="AirWall2" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("14_8l3nt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AirWall2"]
+position = Vector2(425, 20)
+shape = SubResource("RectangleShape2D_op4cu")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(425, 23)
+shape = SubResource("RectangleShape2D_waglr")

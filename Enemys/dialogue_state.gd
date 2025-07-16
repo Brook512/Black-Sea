@@ -16,7 +16,7 @@ func _enter() -> void:
 	for player in players:
 		player.set_physics_process(false)
 	
-func _update(delta: float) -> void:
+func _update(_delta: float) -> void:
 	if GlobalSceneManager.current_state != GlobalSceneManager.States.Dialogue:
 		dispatch(EVENT_FINISHED)
 

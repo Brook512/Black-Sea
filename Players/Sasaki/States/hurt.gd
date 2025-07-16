@@ -16,12 +16,19 @@ func _enter() -> void:
 	agent.invincible()
 	
 
-func _update(delta: float) -> void:
+func _update(_delta: float) -> void:
 	_handle_input(hsm_blackboard, 0.)
 	if !agent.anim_player.is_playing():
 		dispatch(EVENT_FINISHED)
 	if !agent.shadow_player.is_playing():
 		agent.shadow.visible=false
+	
+	if agent.velocity.y <= 0: 
+		_gravity()
+
 
 func _exit() -> void:
 	agent.blood_spark.position -= new_pos
+
+func _gravity():
+	agent.velocity.y +=hsm_blackboard.get_var("gravity")

@@ -35,33 +35,34 @@ func _process(delta):
 		shake_heart()
 
 	
-func _update_heart_frame(health):
-	health = clamp(health, 0.0, 1.0)
+func _update_heart_frame(_health):
+	#_health = clamp(_health, 0.0, 1.0)
 	
 	# 计算应该显示的心形帧数（0-4）
 	# 使用线性插值将health值映射到帧范围
-	var frame = int(lerp(4, 0, health))
-	
+	#var _frame = 4
+	var _frame = floor(lerp(0., 4., (_health/10.)))
+	#_frame = floor(lerp(0, 4, 0.9))
 	# 根据当前生命值设置相应的帧
-	match frame:
-		0:
+	match _frame:
+		4.:
 			self.frame = 0  # 满心
-		1:
-			self.frame = 1  # 4/5心
-		2:
+		3.:
+			self.frame = 1  # 4/5心a
+		2.:
 			self.frame = 2  # 3/5心
-		3:
+		1.:
 			self.frame = 3  # 2/5心
-		4:
+		0.:
 			self.frame = 4  # 空心
 	
 	# (可选)当生命值低于20%时添加闪烁效果
-	if health < 0.2:
-		# 创建闪烁动画
-		var tween = create_tween()
-		tween.tween_property($Hearts, "modulate", Color(1, 0.5, 0.5), 0.3)
-		tween.tween_property($Hearts, "modulate", Color(1, 1, 1), 0.3)
-		tween.set_loops()  # 无限循环直到低血量状态结束
+	#if _health < 0.2:
+		## 创建闪烁动画
+		#var _tween = create_tween()
+		#_tween.tween_property(self, "modulate", Color(1, 0.5, 0.5), 0.3)
+		#_tween.tween_property(self, "modulate", Color(1, 1, 1), 0.3)
+		#_tween.set_loops()  # 无限循环直到低血量状态结束
 	
 # ─── 公开的震动接口 ──────────────────
 func shake_heart(strength: float = 2.0, duration: float = 0.5) -> void:
@@ -73,17 +74,17 @@ func shake_heart(strength: float = 2.0, duration: float = 0.5) -> void:
 
 # ─── 核心震动逻辑 ──────────────────
 func _shake(strength: float, duration: float) -> void:
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	var _tween = create_tween()
+	_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	
-	tween.tween_method(
+	_tween.tween_method(
 		_update_shake_position.bind(strength),  # 绑定强度参数
 		0.0,                # 起始值
 		1.0,                # 结束值
 		duration            # 持续时间
 	)
 	
-	tween.finished.connect(func():
+	_tween.finished.connect(func():
 		position = _original_position  # 恢复原始位置
 		_shaking = false
 	)

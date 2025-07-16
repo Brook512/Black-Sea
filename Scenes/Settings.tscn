@@ -31,15 +31,6 @@ offset_top = 33.0
 offset_right = 295.0
 offset_bottom = 227.0
 
-[node name="LabelSetting" type="Label" parent="Box"]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 5.0
-offset_right = 132.0
-offset_bottom = 28.0
-theme_override_fonts/font = ExtResource("1_a0gra")
-text = "Settings"
-
 [node name="QuitButton" type="TextureButton" parent="Box"]
 layout_mode = 0
 offset_left = 149.0
@@ -101,14 +92,23 @@ offset_right = -10.0
 offset_bottom = 34.0
 
 [node name="WhiteTitle" type="NinePatchRect" parent="."]
-visible = false
-offset_left = 45.0
-offset_top = 72.0
-offset_right = 76.0
-offset_bottom = 88.0
+offset_left = 137.0
+offset_top = 29.0
+offset_right = 179.0
+offset_bottom = 45.0
+scale = Vector2(3, 2.52)
 texture = ExtResource("4_d4sj2")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 8
 patch_margin_top = 8
 patch_margin_right = 8
 patch_margin_bottom = 8
+
+[node name="LabelSetting" type="Label" parent="."]
+offset_left = 164.0
+offset_top = 33.72
+offset_right = 207.0
+offset_bottom = 48.72
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("1_a0gra")
+text = "Settings"

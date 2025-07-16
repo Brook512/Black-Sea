@@ -11,7 +11,7 @@ var max_health = 5.
 var max_posture = 20.
 var _health = max_health 
 var _stamina = max_stamina
-var _posture = max_posture
+
 var health_recover_speed = 0.01
 var stamina_recover_speed = 0.1
 var character
@@ -39,12 +39,12 @@ func _ready() -> void:
 	invicible_timer.timeout.connect(_on_invincibility_timeout)
 
 
-func _on_attack(dir):
+func _on_attack(_dir):
 	_stamina -= attack_cost
 	_stamina = clamp(_stamina, 0.0, max_stamina)
 
 	
-func _on_hurt(facing_vec,damage):
+func _on_hurt(_facing_vec,damage):
 	_health -= damage
 	_health = clamp(_health, 0.0, max_health)
 	activate_invicible(invicible_time)
@@ -52,9 +52,9 @@ func _on_hurt(facing_vec,damage):
 
 	
 
-func activate_invicible(invicible_time):
+func activate_invicible(_invicible_time):
 	if current_state==State.Normal:
-		invicible_timer.start(invicible_time)
+		invicible_timer.start(_invicible_time)
 	if character.hurt_signal.is_connected(_on_hurt):
 		character.hurt_signal.disconnect(_on_hurt)
 

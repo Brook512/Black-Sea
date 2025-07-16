@@ -6,8 +6,8 @@ var scene_map = {
 }
 
 func _on_start_pressed() -> void:
-	GlobalSceneManager.change_state(GlobalSceneManager.States.Normal)
-	GlobalSceneManager.goto_scene("res://scenes/StartAnim.tscn")
+	GlobalSceneManager.change_state(GlobalSceneManager.States.Begin)
+	#GlobalSceneManager.goto_scene("res://scenes/StartAnim.tscn")
 
 # 私有方法：获取场景路径
 func _get_scene_path(key: String) -> String:

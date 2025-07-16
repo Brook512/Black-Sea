@@ -1,9 +1,5 @@
-class_name BaseScene extends Node2D
-
-#@onready var blue_enemy:BasicEnemy = $Enemy
-
+extends Node2D
+@onready var anim_player = $AnimationPlayer
 func _ready() -> void:
-	pass
+	anim_player.play("START")
 	
-func _test_func():
-	print("测试对话函数执行")

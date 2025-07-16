@@ -8,7 +8,7 @@ func _enter() -> void:
 		var jump_speed = hsm_blackboard.get_var("jump_speed")
 		agent.velocity.y -= jump_speed
 
-func _update(delta: float) -> void:
+func _update(_delta: float) -> void:
 	_handle_input(hsm_blackboard,1.)
 	if agent.is_on_floor():
 		dispatch(EVENT_FINISHED)

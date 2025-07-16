@@ -24,8 +24,7 @@ class_name Sasaki
 @onready var invincible_timer = Timer.new()
 @onready var hurt_box = $HurtBody/BodyCollision
 @onready var blood_spark = $BloodSpark
-@onready var perfect_spark = $PerfectSpark
-@onready var spark = $Spark
+
 
 
 var HurtMaterial = preload("res://Players/Shaders/HitMaterial.tres")
@@ -40,7 +39,7 @@ func _ready():
 	attack_timer.wait_time = 1.
 	add_child(attack_timer)
 	invincible_timer.one_shot = true
-	invincible_timer.wait_time = 1.5
+	invincible_timer.wait_time = 0.3
 	add_child(invincible_timer)
 	
 	# 基本移动转换
@@ -94,15 +93,8 @@ func initialization():
 	hsm.add_transition(hurt_state, idle_state, hurt_state.EVENT_FINISHED)
 	hsm.add_transition(dodge_state, idle_state, dodge_state.EVENT_FINISHED)
 	
-	hsm.add_transition(idle_state, death_state, &"EmptyHealth")
-	hsm.add_transition(move_state, death_state, &"EmptyHealth")
-	hsm.add_transition(jump_state, death_state, &"EmptyHealth")
-	hsm.add_transition(attack_state, death_state, &"EmptyHealth")
-	hsm.add_transition(heavy_attack, death_state, &"EmptyHealth")
-	hsm.add_transition(charging_state, death_state, &"EmptyHealth")
-	hsm.add_transition(block_state, death_state, &"EmptyHealth")
-	hsm.add_transition(hurt_state, death_state, &"EmptyHealth")
-	hsm.add_transition(dodge_state, death_state, &"EmptyHealth")
+	hsm.add_transition(hsm.ANYSTATE, death_state, &"EmptyHealth")
+
 	
 	hsm.blackboard.set_var("speed",100)
 	hsm.blackboard.set_var("facing_vec",1)
@@ -134,7 +126,7 @@ func is_attributes_enough(attribute:StringName) -> bool:
 	else:
 		return true
 
-func _update_state(delta):
+func _update_state(_delta):
 	## 控制状态的转换
 	if Input.is_action_just_pressed("dodge") and is_attributes_enough("dodge"):
 		hsm.dispatch(&"DodgePressed")
@@ -157,7 +149,7 @@ func _update_state(delta):
 		if abs(Input.get_axis("move_left", "move_right")) > 0.1 :
 			hsm.dispatch(&"StartMoving")
 	
-func invincible(wait_time=1.5):
+func invincible(wait_time=0.3):
 	invincible_timer.start(wait_time)
 
 func _is_invincible():

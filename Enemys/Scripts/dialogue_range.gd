@@ -9,16 +9,16 @@ func _ready() -> void:
 
 
 func _on_dialogue_range_area_entered(area: Area2D) -> void:
-	if area.is_in_group("player") and GlobalSceneManager.current_state == GlobalSceneManager.States.Normal:
+	if area.is_in_group("player") and GlobalSceneManager.current_state == GlobalSceneManager.States.World:
 		dialogue_icon.visible = true
 		_is_player_near = true
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("dialogue") and _is_player_near:
 		get_parent().hsm.dispatch(&"TriggerDialogue")	
 
 func _on_dialogue_range_area_exited(area: Area2D) -> void:
-	if area.is_in_group("player") and GlobalSceneManager.current_state == GlobalSceneManager.States.Normal:
+	if area.is_in_group("player") and GlobalSceneManager.current_state == GlobalSceneManager.States.World:
 		dialogue_icon.visible = false
 		_is_player_near = false
 		

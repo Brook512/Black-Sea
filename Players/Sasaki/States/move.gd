@@ -1,6 +1,6 @@
 extends BasicPlayerState
 var target_velocity_x:float
-var _dir = 0.
+
 var facing_vec: float = 1.0  # 默认为朝右
 var health
 var energy
@@ -11,7 +11,7 @@ func _enter() -> void:
 	
 	
 
-func _update(delta: float) -> void:
+func _update(_delta: float) -> void:
 	moving()
 	play_animation("Run")
 	_recover(hsm_blackboard)

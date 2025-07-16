@@ -6,7 +6,7 @@ else
 	天狗: 来者何人？
 	我: （要不要去招惹他？）
 	- （隐去身形） 
-		do GlobalSceneManager.change_state(GlobalSceneManager.States.Normal)
+		do GlobalSceneManager.change_state(GlobalSceneManager.States.World)
 	- 你还不配知道！
 		set GlobalSceneManager.IsTalked["BlueEnemy"] = true
 		do GlobalSceneManager.change_state(GlobalSceneManager.States.Combat)

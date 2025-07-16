@@ -5,4 +5,4 @@ func _ready() -> void:
 	anim_player.play("background")
 	
 func _on_animation_finished():
-	GlobalSceneManager.goto_scene("res://Scenes/World.tscn")
+	GlobalSceneManager.change_state(GlobalSceneManager.States.World)

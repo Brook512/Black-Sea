@@ -18,7 +18,7 @@ func _enter() -> void:
 		dispatch(EVENT_FINISHED)
 	
 	
-func _update(delta: float) -> void:
+func _update(_delta: float) -> void:
 	_handle_input(hsm_blackboard, 0.)
 	if !agent.shadow_player.is_playing():
 		agent.shadow.visible=false

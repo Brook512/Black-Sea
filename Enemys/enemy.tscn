@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://cxrrtphldctpn"]
+[gd_scene load_steps=53 format=3 uid="uid://cxrrtphldctpn"]
 
 [ext_resource type="PackedScene" uid="uid://dpyckqm27j3be" path="res://Enemys/BlueSprite/enemy_sprite.tscn" id="1_3j5ps"]
 [ext_resource type="Script" uid="uid://cebwjb65ksbr2" path="res://Enemys/enemy.gd" id="1_sd3jc"]
@@ -12,10 +12,10 @@
 [ext_resource type="BehaviorTree" uid="uid://06xfggtunev4" path="res://Enemys/NormalTree.tres" id="9_cqow8"]
 [ext_resource type="Texture2D" uid="uid://daku17hrdyv42" path="res://Menus/PixelArtGUI/Textures/Icons/8/ArrowSmallDown.png" id="9_sd3jc"]
 [ext_resource type="Script" uid="uid://ctqs8150283i6" path="res://Enemys/dialogue_icon.gd" id="10_cqow8"]
-[ext_resource type="Script" uid="uid://bb141fnmqi6ya" path="res://Enemys/hurt_state.gd" id="14_oel21"]
 [ext_resource type="BehaviorTree" uid="uid://cuouyuuh2ul1" path="res://Enemys/EnemyTree.tres" id="15_bffae"]
 [ext_resource type="Script" uid="uid://baxja7yn5w8tm" path="res://Enemys/death_state.gd" id="15_hslyg"]
 [ext_resource type="PackedScene" uid="uid://da8aalcpy86pa" path="res://Effects/blood_spark.tscn" id="16_hslyg"]
+[ext_resource type="PackedScene" uid="uid://cjv0koec7ry00" path="res://Effects/spark.tscn" id="17_o5r7r"]
 
 [sub_resource type="Animation" id="Animation_bffae"]
 length = 0.8
@@ -43,25 +43,13 @@ tracks/1/keys = {
 "update": 1,
 "values": ["Attack1"]
 }
-tracks/2/type = "value"
+tracks/2/type = "audio"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AttackRange/AttackCollision:disabled")
+tracks/2/path = NodePath("AudioStreamPlayer2D")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [true, false, true]
-}
-tracks/3/type = "audio"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AudioStreamPlayer2D")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
@@ -69,7 +57,19 @@ tracks/3/keys = {
 }],
 "times": PackedFloat32Array(0)
 }
-tracks/3/use_blend = true
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackRange/AttackCollision:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.0666667, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
 
 [sub_resource type="Animation" id="Animation_hslyg"]
 length = 0.8
@@ -104,7 +104,7 @@ tracks/2/path = NodePath("AttackRange/AttackCollision:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.7),
+"times": PackedFloat32Array(0, 0.4, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -150,6 +150,34 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["Block"]
+}
+
+[sub_resource type="Animation" id="Animation_hi78g"]
+resource_name = "Dash"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [7, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemySprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Run"]
 }
 
 [sub_resource type="Animation" id="Animation_o5r7r"]
@@ -235,7 +263,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_ddrbr"]
-length = 2.0
+length = 2.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -243,10 +271,10 @@ tracks/0/path = NodePath("EnemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -267,7 +295,7 @@ tracks/2/path = NodePath("AttackRange/AttackCollision:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1.6, 1.9667),
+"times": PackedFloat32Array(0, 1.6, 1.8),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -342,6 +370,18 @@ tracks/1/keys = {
 "update": 1,
 "values": ["Idle"]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackRange/AttackCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_dfsua"]
 length = 0.4
@@ -414,34 +454,6 @@ tracks/1/keys = {
 "values": ["Run"]
 }
 
-[sub_resource type="Animation" id="Animation_hi78g"]
-resource_name = "Dash"
-length = 0.8
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("EnemySprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [7, 7]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("EnemySprite:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["Run"]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_138e1"]
 _data = {
 &"Attack1": SubResource("Animation_bffae"),
@@ -484,6 +496,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["Attack1"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackRange/AttackCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_h6tn4"]
@@ -538,6 +562,59 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["Block"]
+}
+
+[sub_resource type="Animation" id="Animation_jr8c4"]
+resource_name = "Dash"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [7, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Run"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShadowSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-30, 0), Vector2(0, 0), Vector2(-30, 0), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShadowSprite:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.366667, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.144063, 0.144063, 0.144063, 0.619608), Color(0.145098, 0.145098, 0.145098, 0), Color(0.145098, 0.145098, 0.145098, 0), Color(0.144063, 0.144063, 0.144063, 0.619608), Color(0.145098, 0.145098, 0.145098, 0), Color(0.145098, 0.145098, 0.145098, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_yggdo"]
@@ -732,6 +809,45 @@ tracks/1/keys = {
 "values": ["Jump"]
 }
 
+[sub_resource type="Animation" id="Animation_850lg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.144063, 0.144063, 0.144063, 0.619608)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackRange/AttackCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_ql1y7"]
 length = 1.6
 loop_mode = 1
@@ -760,86 +876,6 @@ tracks/1/keys = {
 "values": ["Run"]
 }
 
-[sub_resource type="Animation" id="Animation_jr8c4"]
-resource_name = "Dash"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ShadowSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [7, 7]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ShadowSprite:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["Run"]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ShadowSprite:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(-30, 0), Vector2(0, 0), Vector2(-30, 0), Vector2(0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("ShadowSprite:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.366667, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(0.144063, 0.144063, 0.144063, 0.619608), Color(0.145098, 0.145098, 0.145098, 0), Color(0.145098, 0.145098, 0.145098, 0), Color(0.144063, 0.144063, 0.144063, 0.619608), Color(0.145098, 0.145098, 0.145098, 0), Color(0.145098, 0.145098, 0.145098, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_850lg"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ShadowSprite:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.144063, 0.144063, 0.144063, 0.619608)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ShadowSprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ql1y7"]
 _data = {
 &"Attack1": SubResource("Animation_138e1"),
@@ -858,7 +894,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cqow8"]
-size = Vector2(28, 71)
+size = Vector2(28, 78)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dwt4o"]
 size = Vector2(8.33333, 8.28571)
@@ -872,20 +908,26 @@ size = Vector2(31, 71)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_xdmhx"]
 
+[sub_resource type="Gradient" id="Gradient_hslyg"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.117647)
+
+[sub_resource type="Gradient" id="Gradient_0ssqf"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.266667)
+
 [node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
 scale = Vector2(-1, 1)
 script = ExtResource("1_sd3jc")
 
 [node name="EnemySprite" parent="." instance=ExtResource("1_3j5ps")]
-visible = false
-animation = &"Attack1"
+animation = &"Idle"
 frame = 0
 frame_progress = 0.0
 
 [node name="ShadowSprite" parent="." instance=ExtResource("1_3j5ps")]
+visible = false
 modulate = Color(0.144063, 0.144063, 0.144063, 0.619608)
-animation = &"Run"
-frame = 7
+animation = &"Attack1"
+frame = 3
 frame_progress = 0.0
 
 [node name="EnemyAnimationPlayer" type="AnimationPlayer" parent="."]
@@ -897,10 +939,9 @@ libraries = {
 libraries = {
 &"": SubResource("AnimationLibrary_ql1y7")
 }
-speed_scale = 2.0
 
 [node name="MoveBody" type="CollisionShape2D" parent="."]
-position = Vector2(-3, -4.5)
+position = Vector2(-3, -1)
 shape = SubResource("RectangleShape2D_cqow8")
 
 [node name="DialogueRange" type="Area2D" parent="." groups=["enemy"]]
@@ -925,17 +966,20 @@ script = ExtResource("10_cqow8")
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("6_111e3")
+metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBody"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBody" groups=["enemy"]]
 position = Vector2(-3.5, -2.5)
 shape = SubResource("RectangleShape2D_oy085")
 disabled = true
+metadata/_edit_lock_ = true
 
-[node name="AttackRange" type="Area2D" parent="."]
+[node name="AttackRange" type="Area2D" parent="." groups=["enemy_attack"]]
 position = Vector2(0, 9)
-collision_layer = 0
+collision_layer = 2
 collision_mask = 8
 script = ExtResource("6_dwt4o")
+metadata/_edit_lock_ = true
 
 [node name="AttackCollision" type="CollisionShape2D" parent="AttackRange"]
 position = Vector2(41, -16)
@@ -943,6 +987,7 @@ scale = Vector2(6, 3.5)
 shape = SubResource("CircleShape2D_111e3")
 disabled = true
 debug_color = Color(1, 0, 0.113725, 0.278431)
+metadata/_edit_lock_ = true
 
 [node name="EnemyHSM" type="LimboHSM" parent="."]
 
@@ -958,12 +1003,63 @@ behavior_tree = ExtResource("15_bffae")
 blackboard_plan = SubResource("BlackboardPlan_xdmhx")
 script = ExtResource("8_cqow8")
 
-[node name="HurtState" type="LimboState" parent="EnemyHSM"]
-script = ExtResource("14_oel21")
-
 [node name="DeathState" type="LimboState" parent="EnemyHSM"]
 script = ExtResource("15_hslyg")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [node name="BloodSpark" parent="." instance=ExtResource("16_hslyg")]
+position = Vector2(5, -10)
+amount = 30
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+
+[node name="TiredSpark" type="CPUParticles2D" parent="."]
+position = Vector2(1, -24)
+emitting = false
+amount = 10
+one_shot = true
+explosiveness = 0.5
+lifetime_randomness = 0.5
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector2(0, 1)
+spread = 8.61
+gravity = Vector2(0, 5)
+initial_velocity_max = 10.0
+scale_amount_max = 2.0
+color_ramp = SubResource("Gradient_hslyg")
+
+[node name="Spark" parent="." instance=ExtResource("17_o5r7r")]
+position = Vector2(58.6108, -9.60857)
+scale = Vector2(0.166667, 0.285714)
+amount = 20
+lifetime = 0.3
+explosiveness = 0.5
+randomness = 0.5
+fixed_fps = 60
+gravity = Vector2(0, 30)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+scale_amount_max = 2.0
+
+[node name="PerfectSpark" type="CPUParticles2D" parent="."]
+position = Vector2(9.44417, -28.8943)
+scale = Vector2(0.166667, 0.285714)
+emitting = false
+amount = 20
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.5
+fixed_fps = 60
+direction = Vector2(1, -1)
+spread = 50.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 190.48
+initial_velocity_max = 265.35
+damping_min = 13.776
+damping_max = 18.322
+scale_amount_min = 3.0
+scale_amount_max = 5.0
+color = Color(3.08037e-06, 0.698532, 0.791735, 1)
+color_ramp = SubResource("Gradient_0ssqf")

@@ -1,6 +1,6 @@
 extends Node
 
-enum States {Dialogue, Combat, Normal, Menu, Settings}
+enum States {Dialogue, Combat, Begin, Menu, Settings, World}
 signal state_changed(old_state, new_state)
 
 var current_state: States = States.Menu
@@ -17,28 +17,33 @@ var IsCombatted:Dictionary={
 
 # Scene paths for each state
 const STATE_SCENES: Dictionary = {
-	States.Dialogue: "res://scenes/World.tscn",
+	States.World: "res://scenes/World.tscn",
 	States.Combat: "res://scenes/Combat.tscn",
-	States.Normal: "res://scenes/StartAnim.tscn",
+	States.Begin: "res://scenes/StartAnim.tscn",
 	States.Menu: "res://scenes/Loading.tscn",
 	States.Settings: "res://scenes/Settings.tscn"
 }
 
 # State transition rules - which states can transition to which
 const VALID_TRANSITIONS: Dictionary = {
-	States.Dialogue: [States.Combat, States.Normal],
-	States.Combat: [States.Normal],
-	States.Menu: [States.Normal, States.Settings],
+	States.Dialogue: [States.Combat, States.World],
+	States.Combat: [States.World],
+	States.Menu: [States.Begin, States.Settings, States.Combat],
 	States.Settings: [States.Menu],
-	States.Normal: [States.Combat, States.Dialogue]
+	States.World: [States.Combat, States.Dialogue],
+	States.Begin: [States.World]
 }
 
 func _ready():
-	var root = get_tree().root
-	current_scene = root.get_child(-1)
+	var current_scene_name = get_tree().current_scene.name
+	current_scene = get_tree().current_scene
 	# Ensure the state matches the initial scene
-	if current_scene.scene_file_path == STATE_SCENES[States.Menu]:
+	if current_scene_name == "Menu":
 		current_state = States.Menu
+	elif current_scene_name == "World":
+		current_state = States.World
+	elif current_scene_name == "Combat":
+		current_state = States.Combat
 	else:
 		push_warning("Initial scene doesn't match initial state. Consider starting from menu scene.")
 
@@ -51,10 +56,9 @@ func change_state(new_state: States) -> bool:
 		
 		# Perform state exit actions
 		_on_state_exit(previous_state, new_state)
-		
+
 		# Change state
 		current_state = new_state
-		
 		
 		# Perform state enter actions
 		_on_state_enter(new_state)
@@ -81,8 +85,11 @@ func get_current_state_name() -> String:
 # State transition handlers (can be overridden in inherited scripts)
 func _on_state_enter(new_state: States):
 	match new_state:
-		States.Normal:
-			print("Entering Normal state")
+		States.World:
+			if previous_state == States.Begin:
+				goto_scene(STATE_SCENES[new_state])
+			print("Entering World state")
+			
 		States.Dialogue:
 			print("Entering Dialogue state")
 		States.Combat:
@@ -94,16 +101,17 @@ func _on_state_enter(new_state: States):
 		States.Settings:
 			print("Entering Settings state")
 			goto_scene(STATE_SCENES[new_state])
+		States.Begin:
+			print("Entering Begin state")
+			goto_scene(STATE_SCENES[new_state])
 
 @warning_ignore("unused_parameter")
 func _on_state_exit(old_state: States, new_state: States):
 	match old_state:
 		States.Dialogue:
 			print("Exiting Dialogue state")
-			# Cleanup dialogue resources
 		States.Combat:
 			print("Exiting Combat state")
-			# Save combat results
 		States.Menu:
 			print("Exiting Menu state")
 		States.Settings:

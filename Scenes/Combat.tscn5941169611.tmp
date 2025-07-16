@@ -1,6 +1,6 @@
-[gd_scene load_steps=23 format=4 uid="uid://cbn254ewvbjjf"]
+[gd_scene load_steps=20 format=4 uid="uid://cbn254ewvbjjf"]
 
-[ext_resource type="Script" uid="uid://qlnpv0yuijpi" path="res://Scenes/Combat.gd" id="1_nm52r"]
+[ext_resource type="Script" uid="uid://y46nub3ux1w0" path="res://Scenes/WorldScene.gd" id="1_wpely"]
 [ext_resource type="TileSet" uid="uid://gcnqibusu2d4" path="res://Scenes/SeaTileset.tres" id="2_kbh2q"]
 [ext_resource type="PackedScene" uid="uid://cxrrtphldctpn" path="res://Enemys/enemy.tscn" id="3_nnvvn"]
 [ext_resource type="PackedScene" uid="uid://b1ukdapkscdqb" path="res://Players/Sasaki/sasaki.tscn" id="4_asp03"]
@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://cbrtby03xx82t" path="res://Menus/Background/1.png" id="8_4totf"]
 [ext_resource type="PackedScene" uid="uid://b5y35wky1p1qm" path="res://Menus/HUD/health_heart.tscn" id="9_entan"]
 [ext_resource type="Shader" uid="uid://b7viy7h8xrhyn" path="res://Players/Shaders/Wave.gdshader" id="10_cb7dr"]
-[ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="10_fgfhv"]
 [ext_resource type="Texture2D" uid="uid://dp1gaw3ufbghc" path="res://Scenes/sea.png" id="11_x4y81"]
 [ext_resource type="Script" uid="uid://bp5g6wp584tw7" path="res://Items/wave.gd" id="12_3rlnw"]
 [ext_resource type="AudioStream" uid="uid://dy7lx2lw627d4" path="res://Sounds/8BIT/background theme.mp3" id="13_h3w46"]
@@ -33,245 +32,19 @@ shader_parameter/xSpeed = 0.0
 shader_parameter/ySpeed = 1.0
 shader_parameter/yRange = 100.0
 
-[sub_resource type="Animation" id="Animation_fgfhv"]
-resource_name = "ENDING"
-length = 2.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D/ColorRect:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.96667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(200, -136), Vector2(-2, -136)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D/ColorRect:color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.96667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.184314, 0.184314, 0.184314, 0), Color(0.18359, 0.18359, 0.18359, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Camera2D/ColorRect2:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 1.96667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-597, -137), Vector2(-397, -137)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Camera2D/ColorRect2:color")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 1.96667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.184314, 0.184314, 0.184314, 0), Color(0.18359, 0.18359, 0.18359, 1)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Camera2D/LossLabel:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 1.96667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.666667, 0, 0, 0), Color(0.665604, 1.96133e-06, 4.33177e-07, 1)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Camera2D/WinLabel:modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 1.96667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.360784, 0.65098, 0.180392, 0), Color(0.360084, 0.650167, 0.181132, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_cy1ba"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D/ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.18359, 0.18359, 0.18359, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D/ColorRect:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-2, -136)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Camera2D/ColorRect2:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-397, -137)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Camera2D/ColorRect2:color")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.18359, 0.18359, 0.18359, 1)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Camera2D/Label:visible_ratio")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Camera2D/LossLabel:modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.665604, 1.96133e-06, 4.33177e-07, 1)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Camera2D/WinLabel:modulate")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.360084, 0.650167, 0.181132, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_nm52r"]
-resource_name = "START"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D/ColorRect:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.966667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-2, -136), Vector2(200, -136)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D/ColorRect:color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.966667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.18359, 0.18359, 0.18359, 1), Color(0.184314, 0.184314, 0.184314, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Camera2D/ColorRect2:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.966667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-397, -137), Vector2(-597, -137)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Camera2D/ColorRect2:color")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.966667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.18359, 0.18359, 0.18359, 1), Color(0.184314, 0.184314, 0.184314, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Camera2D/Label:visible_ratio")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 1, 1.63333, 1.96667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0.0, 1.0, 1.0, 0.0]
-}
+resource_name = "StartFight"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fgfhv"]
 _data = {
-&"ENDING": SubResource("Animation_fgfhv"),
-&"RESET": SubResource("Animation_cy1ba"),
-&"START": SubResource("Animation_nm52r")
+&"StartFight": SubResource("Animation_nm52r")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nm52r"]
 size = Vector2(32, 170)
 
-[node name="Combat" type="Node2D"]
-script = ExtResource("1_nm52r")
+[node name="World" type="Node2D"]
+script = ExtResource("1_wpely")
 
 [node name="Land" type="TileMapLayer" parent="."]
 material = SubResource("ShaderMaterial_xiqgv")
@@ -323,61 +96,6 @@ offset_bottom = -79.0
 modulate = Color(0.992157, 0.952941, 0.956863, 0.627451)
 position = Vector2(39, 27)
 player = NodePath("../../../sasaki")
-
-[node name="ColorRect" type="ColorRect" parent="Camera2D"]
-z_index = 1
-offset_left = -2.0
-offset_top = -136.0
-offset_right = 38.0
-offset_bottom = -96.0
-scale = Vector2(9.93509, 6.3659)
-color = Color(0.18359, 0.18359, 0.18359, 1)
-
-[node name="ColorRect2" type="ColorRect" parent="Camera2D"]
-z_index = 1
-offset_left = -397.0
-offset_top = -137.0
-offset_right = -357.0
-offset_bottom = -97.0
-scale = Vector2(9.93509, 6.3659)
-color = Color(0.18359, 0.18359, 0.18359, 1)
-
-[node name="Label" type="Label" parent="Camera2D"]
-z_index = 1
-offset_left = -82.0
-offset_top = -42.0
-offset_right = 72.0
-offset_bottom = -15.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("10_fgfhv")
-theme_override_font_sizes/font_size = 30
-text = "One Live One Die"
-
-[node name="LossLabel" type="Label" parent="Camera2D"]
-visible = false
-modulate = Color(0.665604, 1.96133e-06, 4.33177e-07, 1)
-z_index = 1
-offset_left = -10.0
-offset_top = -43.0
-offset_right = 144.0
-offset_bottom = -16.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("10_fgfhv")
-theme_override_font_sizes/font_size = 30
-text = "Die"
-
-[node name="WinLabel" type="Label" parent="Camera2D"]
-visible = false
-modulate = Color(0.360084, 0.650167, 0.181132, 1)
-z_index = 1
-offset_left = -18.0
-offset_top = -42.0
-offset_right = 136.0
-offset_bottom = -15.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("10_fgfhv")
-theme_override_font_sizes/font_size = 30
-text = "Live"
 
 [node name="wave" type="Sprite2D" parent="." node_paths=PackedStringArray("target")]
 material = SubResource("ShaderMaterial_kn06e")

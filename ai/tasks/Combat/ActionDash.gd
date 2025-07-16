@@ -1,8 +1,6 @@
 @tool
 extends BTAction
 
-@export var chase_speed_var: StringName = &"chase_speed"
-#@export var player_position_var: StringName = &"player_position"
 var player_var:StringName = &"target"
 
 func _enter() -> void:
@@ -18,5 +16,6 @@ func _enter() -> void:
 			0.8                   # 持续时间（秒，可按需调整）
 	).set_trans(Tween.TRANS_QUART)  # 四次缓动曲线
 
-
+func _tick(delta: float) -> Status:
+	return SUCCESS
 	

@@ -11,7 +11,7 @@ func _enter() -> void:
 	max_energy = blackboard.get_var("MaxEnergy")
 	blackboard.set_var("Energy", max_energy)
 
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	if max_energy:
 		return SUCCESS
 	else:
