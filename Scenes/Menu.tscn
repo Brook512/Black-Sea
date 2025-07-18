@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cr1y42hfhbqpn"]
+[gd_scene load_steps=16 format=3 uid="uid://cr1y42hfhbqpn"]
 
 [ext_resource type="Script" uid="uid://oker8m1j6vkj" path="res://Menus/Scripts/MenuScene.gd" id="1_qki4b"]
 [ext_resource type="Theme" uid="uid://c6xtw867jkixy" path="res://Menus/ButtonStyles/ButtonTheme.tres" id="2_byewe"]
@@ -12,6 +12,7 @@
 [ext_resource type="Shader" uid="uid://0wkvmlm3dek6" path="res://Players/Shaders/Moon.gdshader" id="10_dm44m"]
 [ext_resource type="Texture2D" uid="uid://cbrnyr8vqow6r" path="res://Menus/Background/2.png" id="11_du1yi"]
 [ext_resource type="Texture2D" uid="uid://cbrtby03xx82t" path="res://Menus/Background/1.png" id="12_c0stj"]
+[ext_resource type="PackedScene" uid="uid://b7j2faaxdn5f7" path="res://Scenes/setting_layer.tscn" id="13_byewe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xdhtn"]
 shader = ExtResource("8_dd46u")
@@ -111,6 +112,9 @@ position = Vector2(191, 125)
 scale = Vector2(0.77691, 0.890432)
 texture = ExtResource("12_c0stj")
 metadata/_edit_lock_ = true
+
+[node name="SettingLayer" parent="." instance=ExtResource("13_byewe")]
+visible = false
 
 [connection signal="pressed" from="UI/VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/Settings" to="." method="_on_settings_pressed"]

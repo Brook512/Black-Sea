@@ -22,6 +22,8 @@ func _on_leave() -> void:
 func _on_pressed() -> void:
 	scale     = _press_scale    # 微缩
 	position += _press_offset   # 稍稍下移，产生“压下”错觉
+	get_parent().get_parent().visible = false
+
 
 func _on_released() -> void:
 	scale     = _ori_scale

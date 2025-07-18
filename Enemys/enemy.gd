@@ -54,6 +54,8 @@ func _physics_process(_delta: float) -> void:
 
 	_is_death()
 	_is_invincible()
+	if hsm.get_active_state()!=combat_state:
+		invincible_timer.start()
 
 func face_dir(dir: float) -> void:
 	# 如果没有方向输入，直接返回
@@ -62,7 +64,7 @@ func face_dir(dir: float) -> void:
 
 	var target_sign = sign(dir)          # -1  or  +1
 	# 仅在朝向需要改变时执行
-	combat_state.blackboard.set_var("FacingVec", self.scale.x)
+	combat_state.blackboard.set_var("FacingVec", target_sign)
 	if target_sign != last_sign:
 		self.scale.x = -self.scale.x               # 翻转角色
 		tired_spark.position.x = -tired_spark.position.x

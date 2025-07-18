@@ -2,8 +2,9 @@
 extends BTAction
 
 var player_var:StringName = &"target"
-
+var dash_timer = 0.
 func _enter() -> void:
+	dash_timer = 0.
 	var target: Node2D = blackboard.get_var(player_var)
 	var dir: float = target.global_position.x - agent.global_position.x
 	
@@ -17,5 +18,14 @@ func _enter() -> void:
 	).set_trans(Tween.TRANS_QUART)  # 四次缓动曲线
 
 func _tick(delta: float) -> Status:
-	return SUCCESS
+	agent.shadow_sprite.visible = true
+	agent.anim_player.play("Dash")
+	agent.shadow_player.play("Dash")
+	dash_timer+=delta
+	if dash_timer>0.2:
+		agent.shadow_player.stop()
+		agent.shadow_sprite.visible = false
+		return SUCCESS
+
+	return RUNNING
 	

@@ -1,11 +1,12 @@
 extends Area2D
 var resource
 @onready var collision =$CollisionShape2D
+@export var dialogue_id:int
 var dialogue_dict = {1:"res://Dialogues/air_wall.dialogue",2:"res://Dialogues/air_wall2.dialogue"}
 
 func _ready() -> void:
 	area_entered.connect(_on_collision)
-	resource = load("res://Dialogues/air_wall.dialogue")
+	resource = load(dialogue_dict[dialogue_id])
 	
 func _on_collision(area:Area2D):
 	if area.is_in_group("player"):

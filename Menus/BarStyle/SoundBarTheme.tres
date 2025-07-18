@@ -1,12 +1,21 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://5l7yydypenmq"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://5l7yydypenmq"]
 
+[ext_resource type="StyleBox" uid="uid://dudltpkp4eygg" path="res://Menus/BarStyle/BarButtonHover.tres" id="1_fnufb"]
 [ext_resource type="Texture2D" uid="uid://qvcnaswxmxfr" path="res://Menus/BarStyle/GrabberDown.png" id="1_fwgcu"]
 [ext_resource type="Texture2D" uid="uid://by8xl41lidsgk" path="res://Menus/BarStyle/Grabber.png" id="2_c2kq4"]
 [ext_resource type="StyleBox" uid="uid://b5lhg5aec3gpf" path="res://Menus/BarStyle/soundbar.tres" id="2_detr7"]
+[ext_resource type="StyleBox" uid="uid://b44qxxabk0710" path="res://Menus/BarStyle/BarButton.tres" id="2_swsk8"]
+[ext_resource type="StyleBox" uid="uid://cxuvnntv5xy4t" path="res://Menus/BarStyle/BarButtonPressed.tres" id="3_h17bc"]
 [ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="4_fnufb"]
+[ext_resource type="StyleBox" uid="uid://cupein8c0nojm" path="res://Menus/BarStyle/BarButtonHoverPressed.tres" id="5_swsk8"]
 
 [resource]
 default_font = ExtResource("4_fnufb")
+Button/styles/hover = ExtResource("1_fnufb")
+Button/styles/normal = ExtResource("2_swsk8")
+Button/styles/pressed = ExtResource("3_h17bc")
+CheckBox/fonts/font = ExtResource("4_fnufb")
+CheckBox/styles/hover_pressed = ExtResource("5_swsk8")
 CheckButton/icons/checked = null
 CheckButton/icons/checked_mirrored = null
 HSlider/icons/grabber = ExtResource("1_fwgcu")

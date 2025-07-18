@@ -27,8 +27,8 @@ const STATE_SCENES: Dictionary = {
 # State transition rules - which states can transition to which
 const VALID_TRANSITIONS: Dictionary = {
 	States.Dialogue: [States.Combat, States.World],
-	States.Combat: [States.World],
-	States.Menu: [States.Begin, States.Settings, States.Combat],
+	States.Combat: [States.World, States.Menu],
+	States.Menu: [States.Begin, States.Settings],
 	States.Settings: [States.Menu],
 	States.World: [States.Combat, States.Dialogue],
 	States.Begin: [States.World]

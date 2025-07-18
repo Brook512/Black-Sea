@@ -14,14 +14,5 @@ func take_damage(damage: int, dir) -> void:
 	hp -= damage
 	enemy.combat_state.blackboard.set_var("Health", hp)
 	
-	enemy.velocity.x = sign(dir) * hurt_speed
-	var tween = create_tween()
-	tween.tween_property(
-			enemy,                  # 目标对象
-			"velocity:x",           # 属性路径
-			0,                      # 目标值
-			0.4                  # 持续时间（秒，可按需调整）
-	).set_trans(Tween.TRANS_QUART)  # 四次缓动曲线
-	
 	enemy.invincible_timer.start()
 	

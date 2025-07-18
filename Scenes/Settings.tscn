@@ -1,17 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkybf0olo5ww7"]
+[gd_scene load_steps=2 format=3 uid="uid://dkybf0olo5ww7"]
 
-[ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="1_a0gra"]
-[ext_resource type="Texture2D" uid="uid://bp8g7lskaud3p" path="res://Menus/PixelArtGUI/Textures/Icons/8/X.png" id="2_u1eg5"]
-[ext_resource type="Script" uid="uid://bb1gx1emcj5iq" path="res://Menus/Scripts/SettingButtons.gd" id="3_u1eg5"]
-[ext_resource type="Script" uid="uid://cc06aloeclj6r" path="res://Menus/volume_slider.gd" id="4_78fqw"]
-[ext_resource type="Theme" uid="uid://5l7yydypenmq" path="res://Menus/BarStyle/SoundBarTheme.tres" id="4_b00vg"]
-[ext_resource type="Texture2D" uid="uid://bjmbfr2wapub0" path="res://Menus/WhiteGUI/TitleBarWhite2-1.png" id="4_d4sj2"]
-[ext_resource type="Texture2D" uid="uid://bnehhdm228kis" path="res://Menus/PixelArtGUI/Textures/Icons/8/SoundHigh.png" id="5_uxiu0"]
-[ext_resource type="Script" uid="uid://bda38b64mnin0" path="res://Menus/full_screen_check_button.gd" id="7_x66pf"]
+[ext_resource type="PackedScene" uid="uid://b7j2faaxdn5f7" path="res://Scenes/setting_layer.tscn" id="1_4hxq3"]
 
 [node name="SettingScene" type="Node2D"]
 
 [node name="SettingMenu" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 340.0
@@ -25,90 +19,4 @@ offset_right = 373.0
 offset_bottom = 249.0
 color = Color(0, 0, 0, 0.501961)
 
-[node name="Box" type="Panel" parent="."]
-offset_left = 116.0
-offset_top = 33.0
-offset_right = 295.0
-offset_bottom = 227.0
-
-[node name="QuitButton" type="TextureButton" parent="Box"]
-layout_mode = 0
-offset_left = 149.0
-offset_top = -5.0
-offset_right = 168.0
-offset_bottom = 13.0
-scale = Vector2(2, 2)
-texture_normal = ExtResource("2_u1eg5")
-script = ExtResource("3_u1eg5")
-
-[node name="VolumeSlider" type="VBoxContainer" parent="Box"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.752
-anchor_top = -0.182
-anchor_right = -0.752
-anchor_bottom = -0.182
-offset_left = 176.608
-offset_top = 149.308
-offset_right = 296.608
-offset_bottom = 171.308
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-script = ExtResource("4_78fqw")
-
-[node name="HSlider" type="HSlider" parent="Box/VolumeSlider"]
-layout_mode = 2
-theme = ExtResource("4_b00vg")
-value = 10.0
-
-[node name="TextureRect" type="TextureRect" parent="Box/VolumeSlider/HSlider"]
-layout_mode = 2
-offset_left = -22.0
-offset_top = 1.0
-offset_right = -7.0
-offset_bottom = 16.0
-size_flags_horizontal = 3
-texture = ExtResource("5_uxiu0")
-
-[node name="Label" type="Label" parent="Box/VolumeSlider/HSlider"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 14.0
-
-[node name="FullScreenCheckButton" type="CheckButton" parent="Box"]
-layout_mode = 0
-offset_left = 68.0
-offset_top = 87.0
-offset_right = 112.0
-offset_bottom = 111.0
-script = ExtResource("7_x66pf")
-
-[node name="TextureRect" type="TextureRect" parent="Box/FullScreenCheckButton"]
-layout_mode = 0
-offset_left = -50.0
-offset_top = -6.0
-offset_right = -10.0
-offset_bottom = 34.0
-
-[node name="WhiteTitle" type="NinePatchRect" parent="."]
-offset_left = 137.0
-offset_top = 29.0
-offset_right = 179.0
-offset_bottom = 45.0
-scale = Vector2(3, 2.52)
-texture = ExtResource("4_d4sj2")
-region_rect = Rect2(0, 0, 16, 16)
-patch_margin_left = 8
-patch_margin_top = 8
-patch_margin_right = 8
-patch_margin_bottom = 8
-
-[node name="LabelSetting" type="Label" parent="."]
-offset_left = 164.0
-offset_top = 33.72
-offset_right = 207.0
-offset_bottom = 48.72
-scale = Vector2(2, 2)
-theme_override_fonts/font = ExtResource("1_a0gra")
-text = "Settings"
+[node name="SettingLayer" parent="." instance=ExtResource("1_4hxq3")]

@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=117 format=3 uid="uid://cuouyuuh2ul1"]
+[gd_resource type="BehaviorTree" load_steps=94 format=3 uid="uid://cuouyuuh2ul1"]
 
 [ext_resource type="Script" uid="uid://ddftftfrkd8jp" path="res://ai/tasks/GetPlayer.gd" id="1_5ovgv"]
 [ext_resource type="Script" uid="uid://m4npr1enwijp" path="res://ai/tasks/Dialogue/FaceTarget.gd" id="3_5ovgv"]
@@ -18,7 +18,7 @@
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_bffae"]
 var/Health/name = &"Health"
 var/Health/type = 2
-var/Health/value = 10
+var/Health/value = 100
 var/Health/hint = 1
 var/Health/hint_string = "0, 100, 1"
 var/AttackDamage/name = &"AttackDamage"
@@ -38,9 +38,9 @@ var/Gravity/hint = 1
 var/Gravity/hint_string = "100,300,10"
 var/MaxHealth/name = &"MaxHealth"
 var/MaxHealth/type = 2
-var/MaxHealth/value = 30
+var/MaxHealth/value = 100
 var/MaxHealth/hint = 0
-var/MaxHealth/hint_string = "0, 6, 1"
+var/MaxHealth/hint_string = "0, 100, 1"
 var/DashSpeed/name = &"DashSpeed"
 var/DashSpeed/type = 2
 var/DashSpeed/value = 50
@@ -112,7 +112,7 @@ children = [SubResource("BTPlayAnimation_2rhbl")]
 script = ExtResource("9_26gks")
 
 [sub_resource type="BTDelay" id="BTDelay_hk5wl"]
-seconds = 3.0
+seconds = 1.5
 custom_name = "delay recover"
 children = [SubResource("BTAction_d0jqm")]
 
@@ -120,8 +120,16 @@ children = [SubResource("BTAction_d0jqm")]
 script = ExtResource("6_733lj")
 
 [sub_resource type="BTDelay" id="BTDelay_xw46n"]
+seconds = 0.5
 custom_name = "delay tired"
 children = [SubResource("BTAction_xw46n")]
+
+[sub_resource type="BTAction" id="BTAction_lnopu"]
+script = ExtResource("6_733lj")
+
+[sub_resource type="BTDelay" id="BTDelay_ymmfq"]
+custom_name = "delay tired"
+children = [SubResource("BTAction_lnopu")]
 
 [sub_resource type="BTCondition" id="BTCondition_xw46n"]
 script = ExtResource("3_733lj")
@@ -154,16 +162,22 @@ animation_name = &"Idle"
 children = [SubResource("BTRepeatUntilSuccess_733lj"), SubResource("BTAction_phdo1"), SubResource("BTPlayAnimation_xw46n"), SubResource("BTPlayAnimation_ibwua")]
 
 [sub_resource type="BTTimeLimit" id="BTTimeLimit_xw46n"]
-time_limit = 2.0
+time_limit = 1.5
 children = [SubResource("BTDynamicSequence_733lj")]
 
 [sub_resource type="BTParallel" id="BTParallel_xw46n"]
 num_successes_required = 4
-children = [SubResource("BTDelay_hk5wl"), SubResource("BTDelay_xw46n"), SubResource("BTTimeLimit_xw46n")]
+children = [SubResource("BTDelay_hk5wl"), SubResource("BTDelay_xw46n"), SubResource("BTDelay_ymmfq"), SubResource("BTTimeLimit_xw46n")]
 
 [sub_resource type="BTSequence" id="BTSequence_3aimh"]
 custom_name = "RestSeq"
 children = [SubResource("BTAction_7j62m"), SubResource("BTCondition_51cp0"), SubResource("BTDelay_6feeu"), SubResource("BTParallel_xw46n")]
+
+[sub_resource type="BTCondition" id="BTCondition_733lj"]
+script = ExtResource("8_3aimh")
+
+[sub_resource type="BTInvert" id="BTInvert_xw46n"]
+children = [SubResource("BTCondition_733lj")]
 
 [sub_resource type="BTAction" id="BTAction_3axf4"]
 script = ExtResource("3_5ovgv")
@@ -171,24 +185,16 @@ target_var = &"target"
 
 [sub_resource type="BTCondition" id="BTCondition_swy3f"]
 script = ExtResource("4_8lu73")
-distance_min = 100.0
-distance_max = 200.0
+distance_min = 90.0
+distance_max = 300.0
 target_var = &"target"
-
-[sub_resource type="BBNode" id="BBNode_swy3f"]
-saved_value = NodePath("EnemyAnimationPlayer")
-resource_name = "EnemyAnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_522cy"]
-animation_player = SubResource("BBNode_swy3f")
-animation_name = &"Run"
 
 [sub_resource type="BTAction" id="BTAction_522cy"]
 script = ExtResource("5_swy3f")
 
 [sub_resource type="BTSequence" id="BTSequence_eh5w0"]
 custom_name = "ChaseSeq"
-children = [SubResource("BTAction_3axf4"), SubResource("BTCondition_swy3f"), SubResource("BTPlayAnimation_522cy"), SubResource("BTAction_522cy")]
+children = [SubResource("BTInvert_xw46n"), SubResource("BTAction_3axf4"), SubResource("BTCondition_swy3f"), SubResource("BTAction_522cy")]
 
 [sub_resource type="BTCondition" id="BTCondition_06jbo"]
 script = ExtResource("8_3aimh")
@@ -200,290 +206,170 @@ children = [SubResource("BTCondition_06jbo")]
 script = ExtResource("3_5ovgv")
 target_var = &"target"
 
-[sub_resource type="BTAction" id="BTAction_ibwua"]
+[sub_resource type="BTAction" id="BTAction_733lj"]
 script = ExtResource("6_d0jqm")
 
-[sub_resource type="BTCondition" id="BTCondition_522cy"]
+[sub_resource type="BTCondition" id="BTCondition_6feeu"]
 script = ExtResource("4_8lu73")
-distance_min = 0.0
-distance_max = 70.0
+distance_min = 40.0
+distance_max = 60.0
 target_var = &"target"
 
-[sub_resource type="BTCondition" id="BTCondition_5ovgv"]
+[sub_resource type="BTCondition" id="BTCondition_hk5wl"]
 script = ExtResource("3_8lu73")
 action = "attack"
 
-[sub_resource type="BTAction" id="BTAction_26gks"]
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_xw46n"]
+children = [SubResource("BTCondition_hk5wl")]
+
+[sub_resource type="BTTimeLimit" id="BTTimeLimit_6feeu"]
+time_limit = 1.0
+children = [SubResource("BTRepeatUntilSuccess_xw46n")]
+
+[sub_resource type="BTAction" id="BTAction_ibwua"]
 script = ExtResource("5_eh5w0")
-
-[sub_resource type="BBNode" id="BBNode_26gks"]
-saved_value = NodePath("EnemyAnimationPlayer")
-resource_name = "EnemyAnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_h50fj"]
-animation_player = SubResource("BBNode_26gks")
-animation_name = &"Dodge"
-
-[sub_resource type="BTSequence" id="BTSequence_51cp0"]
-custom_name = "DodgeSeq"
-children = [SubResource("BTAction_26gks"), SubResource("BTPlayAnimation_h50fj")]
-
-[sub_resource type="BTProbability" id="BTProbability_522cy"]
-children = [SubResource("BTSequence_51cp0")]
-
-[sub_resource type="BBNode" id="BBNode_3aimh"]
-saved_value = NodePath("EnemyAnimationPlayer")
-resource_name = "EnemyAnimationPlayer"
-
-[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_26gks"]
-animation_player = SubResource("BBNode_3aimh")
-animation_name = &"Attack1"
-max_time = 0.8
-
-[sub_resource type="BBNode" id="BBNode_h50fj"]
-saved_value = NodePath("EnemyAnimationPlayer")
-resource_name = "EnemyAnimationPlayer"
-
-[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_51cp0"]
-animation_player = SubResource("BBNode_h50fj")
-animation_name = &"Attack2"
-max_time = 0.8
-
-[sub_resource type="BBNode" id="BBNode_d0jqm"]
-saved_value = NodePath("EnemyAnimationPlayer")
-resource_name = "EnemyAnimationPlayer"
-
-[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_733lj"]
-animation_player = SubResource("BBNode_d0jqm")
-animation_name = &"Attack1"
-max_time = 0.8
-
-[sub_resource type="BTSequence" id="BTSequence_swy3f"]
-custom_name = "QuickAttackSeq"
-children = [SubResource("BTAwaitAnimation_26gks"), SubResource("BTAwaitAnimation_51cp0"), SubResource("BTAwaitAnimation_733lj")]
-
-[sub_resource type="BTSelector" id="BTSelector_06jbo"]
-children = [SubResource("BTProbability_522cy"), SubResource("BTSequence_swy3f")]
-
-[sub_resource type="BTSequence" id="BTSequence_522cy"]
-custom_name = "WhenPlayerAttack"
-children = [SubResource("BTAction_ibwua"), SubResource("BTCondition_522cy"), SubResource("BTCondition_5ovgv"), SubResource("BTSelector_06jbo")]
-
-[sub_resource type="BTAction" id="BTAction_gyy1q"]
-script = ExtResource("6_d0jqm")
-
-[sub_resource type="BTCondition" id="BTCondition_eh5w0"]
-script = ExtResource("4_8lu73")
-distance_min = 0.0
-distance_max = 70.0
-target_var = &"target"
-
-[sub_resource type="BTCondition" id="BTCondition_26gks"]
-script = ExtResource("3_8lu73")
-action = "dodge"
-
-[sub_resource type="GDScript" id="GDScript_d0jqm"]
-script/source = "@tool
-extends BTAction
-
-@export var attack_damage_var: StringName = &\"attack_damage\"
-@export var attack_cooldown_var: StringName = &\"attack_cooldown\"
-@export var player_position_var: StringName = &\"player_position\"
-
-var attack_timer: float = 0
-
-func _tick(_delta: float) -> Status:
-	agent.velocity.x = 0
-	
-	return SUCCESS
-"
-
-[sub_resource type="BTAction" id="BTAction_51cp0"]
-script = SubResource("GDScript_d0jqm")
-attack_damage_var = &"attack_damage"
-attack_cooldown_var = &"attack_cooldown"
-player_position_var = &"player_position"
-
-[sub_resource type="BBNode" id="BBNode_06jbo"]
-saved_value = NodePath("EnemyAnimationPlayer")
-resource_name = "EnemyAnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_d0jqm"]
-animation_player = SubResource("BBNode_06jbo")
-animation_name = &"HeavyAttack"
-
-[sub_resource type="BTSequence" id="BTSequence_733lj"]
-custom_name = "WhenPlayerDodge"
-children = [SubResource("BTAction_gyy1q"), SubResource("BTCondition_eh5w0"), SubResource("BTCondition_26gks"), SubResource("BTAction_51cp0"), SubResource("BTPlayAnimation_d0jqm")]
-
-[sub_resource type="BTAction" id="BTAction_2rhbl"]
-script = ExtResource("6_d0jqm")
-
-[sub_resource type="BTCondition" id="BTCondition_733lj"]
-script = ExtResource("4_8lu73")
-distance_min = 0.0
-distance_max = 70.0
-target_var = &"target"
-
-[sub_resource type="BBNode" id="BBNode_ibwua"]
-saved_value = NodePath("EnemyAnimationPlayer")
-resource_name = "EnemyAnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_gyy1q"]
-await_completion = 1.0
-animation_player = SubResource("BBNode_ibwua")
-animation_name = &"Attack1"
-
-[sub_resource type="BBNode" id="BBNode_lnopu"]
-saved_value = NodePath("EnemyAnimationPlayer")
-resource_name = "EnemyAnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_ymmfq"]
-await_completion = 1.0
-animation_player = SubResource("BBNode_lnopu")
-animation_name = &"Attack2"
-
-[sub_resource type="BTSequence" id="BTSequence_wtwsq"]
-custom_name = "QuickAttackSeq"
-children = [SubResource("BTPlayAnimation_gyy1q"), SubResource("BTPlayAnimation_ymmfq")]
-
-[sub_resource type="BTAction" id="BTAction_wtwsq"]
-script = ExtResource("12_d0jqm")
-value = true
-
-[sub_resource type="BBNode" id="BBNode_ymmfq"]
-saved_value = NodePath("ShadowPlayer")
-resource_name = "ShadowPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_n0y7j"]
-await_completion = 0.5
-animation_player = SubResource("BBNode_ymmfq")
-animation_name = &"Attack1"
-
-[sub_resource type="BTAction" id="BTAction_3mfxd"]
-script = ExtResource("12_d0jqm")
-value = false
-
-[sub_resource type="BTSequence" id="BTSequence_p3t5p"]
-custom_name = "ShadowAttack"
-children = [SubResource("BTAction_wtwsq"), SubResource("BTPlayAnimation_n0y7j"), SubResource("BTAction_3mfxd")]
-
-[sub_resource type="BBNode" id="BBNode_7hmh1"]
-saved_value = NodePath("EnemyAnimationPlayer")
-resource_name = "EnemyAnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_lnopu"]
-animation_player = SubResource("BBNode_7hmh1")
-animation_name = &"Dodge"
-
-[sub_resource type="BTAction" id="BTAction_hk5wl"]
-script = ExtResource("5_eh5w0")
-
-[sub_resource type="BTSequence" id="BTSequence_lnopu"]
-custom_name = "WhenPlayerIdle"
-children = [SubResource("BTAction_2rhbl"), SubResource("BTCondition_733lj"), SubResource("BTSequence_wtwsq"), SubResource("BTSequence_p3t5p"), SubResource("BTPlayAnimation_lnopu"), SubResource("BTAction_hk5wl")]
-
-[sub_resource type="BTAction" id="BTAction_7hmh1"]
-script = ExtResource("6_d0jqm")
-
-[sub_resource type="BTCondition" id="BTCondition_3aimh"]
-script = ExtResource("4_8lu73")
-distance_min = 70.0
-distance_max = 100.0
-target_var = &"target"
 
 [sub_resource type="BBNode" id="BBNode_2rhbl"]
 saved_value = NodePath("EnemyAnimationPlayer")
 resource_name = "EnemyAnimationPlayer"
 
 [sub_resource type="BTPlayAnimation" id="BTPlayAnimation_7hmh1"]
-await_completion = 1.0
+await_completion = 0.3
 animation_player = SubResource("BBNode_2rhbl")
-animation_name = &"HeavyAttack"
-speed = 2.0
+animation_name = &"Dodge"
 
-[sub_resource type="BTAction" id="BTAction_lnopu"]
-script = ExtResource("9_h50fj")
+[sub_resource type="BTSequence" id="BTSequence_lnopu"]
+custom_name = "DodgeSeq"
+children = [SubResource("BTAction_ibwua"), SubResource("BTPlayAnimation_7hmh1")]
 
-[sub_resource type="BTSequence" id="BTSequence_d0jqm"]
-custom_name = "HeavyAttack"
-children = [SubResource("BTPlayAnimation_7hmh1"), SubResource("BTAction_lnopu")]
+[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_gyy1q"]
+custom_name = "WhenPlayerAttack"
+children = [SubResource("BTAction_733lj"), SubResource("BTCondition_6feeu"), SubResource("BTTimeLimit_6feeu"), SubResource("BTSequence_lnopu")]
 
-[sub_resource type="BTProbability" id="BTProbability_26gks"]
-children = [SubResource("BTSequence_d0jqm")]
+[sub_resource type="BTAction" id="BTAction_x7d1l"]
+script = ExtResource("6_d0jqm")
 
-[sub_resource type="BTAction" id="BTAction_6feeu"]
-script = ExtResource("10_06jbo")
+[sub_resource type="BTCondition" id="BTCondition_a5ipy"]
+script = ExtResource("4_8lu73")
+distance_min = 0.0
+distance_max = 70.0
+target_var = &"target"
 
-[sub_resource type="BTAction" id="BTAction_ymmfq"]
+[sub_resource type="BBNode" id="BBNode_k08m7"]
+saved_value = NodePath("EnemyAnimationPlayer")
+resource_name = "EnemyAnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_dtvis"]
+await_completion = 1.0
+animation_player = SubResource("BBNode_k08m7")
+animation_name = &"Attack1"
+
+[sub_resource type="BBNode" id="BBNode_gq1jp"]
+saved_value = NodePath("EnemyAnimationPlayer")
+resource_name = "EnemyAnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_btywt"]
+await_completion = 1.0
+animation_player = SubResource("BBNode_gq1jp")
+animation_name = &"Attack2"
+
+[sub_resource type="BTAction" id="BTAction_yb08t"]
 script = ExtResource("12_d0jqm")
 value = true
 
-[sub_resource type="BBNode" id="BBNode_xw46n"]
-saved_value = NodePath("EnemyAnimationPlayer")
-resource_name = "EnemyAnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_6feeu"]
-await_completion = 0.5
-animation_player = SubResource("BBNode_xw46n")
-animation_name = &"Dash"
-speed = 2.0
-
-[sub_resource type="BBNode" id="BBNode_n0y7j"]
+[sub_resource type="BBNode" id="BBNode_8elif"]
 saved_value = NodePath("ShadowPlayer")
 resource_name = "ShadowPlayer"
 
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_wtwsq"]
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_ecus0"]
 await_completion = 0.5
-animation_player = SubResource("BBNode_n0y7j")
-animation_name = &"Dash"
-speed = 2.0
+animation_player = SubResource("BBNode_8elif")
+animation_name = &"Attack1"
 
-[sub_resource type="BTParallel" id="BTParallel_733lj"]
-num_successes_required = 2
-children = [SubResource("BTPlayAnimation_6feeu"), SubResource("BTPlayAnimation_wtwsq")]
-
-[sub_resource type="BTAction" id="BTAction_n0y7j"]
+[sub_resource type="BTAction" id="BTAction_7nvfc"]
 script = ExtResource("12_d0jqm")
 value = false
 
-[sub_resource type="BBNode" id="BBNode_6feeu"]
+[sub_resource type="BBNode" id="BBNode_2l5gh"]
 saved_value = NodePath("EnemyAnimationPlayer")
 resource_name = "EnemyAnimationPlayer"
 
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_hk5wl"]
-await_completion = 0.87
-animation_player = SubResource("BBNode_6feeu")
-animation_name = &"Attack1"
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_oa0yx"]
+animation_player = SubResource("BBNode_2l5gh")
+animation_name = &"Dodge"
 
-[sub_resource type="BTAction" id="BTAction_733lj"]
+[sub_resource type="BTAction" id="BTAction_h6del"]
+script = ExtResource("5_eh5w0")
+
+[sub_resource type="BTAction" id="BTAction_gyy1q"]
 script = ExtResource("9_h50fj")
 
-[sub_resource type="BTSequence" id="BTSequence_hk5wl"]
+[sub_resource type="BTSequence" id="BTSequence_n6khq"]
+custom_name = "WhenPlayerIdle"
+children = [SubResource("BTAction_x7d1l"), SubResource("BTCondition_a5ipy"), SubResource("BTPlayAnimation_dtvis"), SubResource("BTPlayAnimation_btywt"), SubResource("BTAction_yb08t"), SubResource("BTPlayAnimation_ecus0"), SubResource("BTAction_7nvfc"), SubResource("BTPlayAnimation_oa0yx"), SubResource("BTAction_h6del"), SubResource("BTAction_gyy1q")]
+
+[sub_resource type="BTParallel" id="BTParallel_hk5wl"]
+num_failures_required = 3
+children = [SubResource("BTDynamicSequence_gyy1q"), SubResource("BTSequence_n6khq")]
+
+[sub_resource type="BTAction" id="BTAction_3b6b8"]
+script = ExtResource("6_d0jqm")
+
+[sub_resource type="BTCondition" id="BTCondition_d6m5o"]
+script = ExtResource("4_8lu73")
+distance_min = 70.0
+distance_max = 100.0
+target_var = &"target"
+
+[sub_resource type="BTAction" id="BTAction_elqmg"]
+script = ExtResource("10_06jbo")
+
+[sub_resource type="BBNode" id="BBNode_h2j7k"]
+saved_value = NodePath("EnemyAnimationPlayer")
+resource_name = "EnemyAnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_e676j"]
+await_completion = 0.87
+animation_player = SubResource("BBNode_h2j7k")
+animation_name = &"Attack1"
+
+[sub_resource type="BBNode" id="BBNode_yrcyt"]
+saved_value = NodePath("EnemyAnimationPlayer")
+resource_name = "EnemyAnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_ymius"]
+await_completion = 1.1
+animation_player = SubResource("BBNode_yrcyt")
+animation_name = &"HeavyAttack"
+speed = 2.0
+
+[sub_resource type="BTAction" id="BTAction_ymmfq"]
+script = ExtResource("9_h50fj")
+
+[sub_resource type="BTSequence" id="BTSequence_n0y7j"]
+children = [SubResource("BTPlayAnimation_ymius"), SubResource("BTAction_ymmfq")]
+
+[sub_resource type="BTProbability" id="BTProbability_b4wui"]
+run_chance = 0.2
+children = [SubResource("BTSequence_n0y7j")]
+
+[sub_resource type="BTSequence" id="BTSequence_rbxmu"]
 custom_name = "DashSeq"
-children = [SubResource("BTAction_6feeu"), SubResource("BTAction_ymmfq"), SubResource("BTParallel_733lj"), SubResource("BTAction_n0y7j"), SubResource("BTPlayAnimation_hk5wl"), SubResource("BTAction_733lj")]
+children = [SubResource("BTAction_elqmg"), SubResource("BTPlayAnimation_e676j"), SubResource("BTProbability_b4wui")]
 
-[sub_resource type="BTProbability" id="BTProbability_hk5wl"]
-children = [SubResource("BTSequence_hk5wl")]
+[sub_resource type="BTSelector" id="BTSelector_12mbo"]
+children = [SubResource("BTSequence_rbxmu")]
 
-[sub_resource type="BTSelector" id="BTSelector_26gks"]
-children = [SubResource("BTProbability_26gks"), SubResource("BTProbability_hk5wl")]
-
-[sub_resource type="BTSequence" id="BTSequence_26gks"]
+[sub_resource type="BTSequence" id="BTSequence_stug7"]
 custom_name = "Maintain"
-children = [SubResource("BTAction_7hmh1"), SubResource("BTCondition_3aimh"), SubResource("BTSelector_26gks")]
+children = [SubResource("BTAction_3b6b8"), SubResource("BTCondition_d6m5o"), SubResource("BTSelector_12mbo")]
 
-[sub_resource type="BTSelector" id="BTSelector_d0jqm"]
-children = [SubResource("BTSequence_522cy"), SubResource("BTSequence_733lj"), SubResource("BTSequence_lnopu"), SubResource("BTSequence_26gks")]
-
-[sub_resource type="BTCooldown" id="BTCooldown_swy3f"]
-duration = 1.0
-custom_name = "AttackCoolDown"
-children = [SubResource("BTSelector_d0jqm")]
+[sub_resource type="BTSelector" id="BTSelector_mm70s"]
+children = [SubResource("BTParallel_hk5wl"), SubResource("BTSequence_stug7")]
 
 [sub_resource type="BTSequence" id="BTSequence_2slv1"]
 custom_name = "CombatSeq"
-children = [SubResource("BTInvert_d0jqm"), SubResource("BTAction_swy3f"), SubResource("BTCooldown_swy3f")]
+children = [SubResource("BTInvert_d0jqm"), SubResource("BTAction_swy3f"), SubResource("BTSelector_mm70s")]
 
 [sub_resource type="BTSelector" id="BTSelector_oel21"]
 children = [SubResource("BTRunLimit_swy3f"), SubResource("BTRunLimit_7j62m"), SubResource("BTSequence_3aimh"), SubResource("BTSequence_eh5w0"), SubResource("BTSequence_2slv1")]

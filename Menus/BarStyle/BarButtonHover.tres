@@ -1,0 +1,11 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://dudltpkp4eygg"]
+
+[ext_resource type="Texture2D" uid="uid://cxarsppm8klor" path="res://Menus/PixelArtGUI/Textures/Buttons/buttonhover.png" id="1_kavn1"]
+
+[resource]
+texture = ExtResource("1_kavn1")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+modulate_color = Color(0.592596, 0.709354, 0.868672, 1)

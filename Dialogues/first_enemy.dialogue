@@ -2,6 +2,8 @@
 do GlobalSceneManager.change_state(GlobalSceneManager.States.Dialogue)
 if GlobalSceneManager.IsTalked["BlueEnemy"] == true
 	天狗：看刀！
+	do GlobalSceneManager.change_state(GlobalSceneManager.States.Combat)
+	
 else
 	天狗: 来者何人？
 	我: （要不要去招惹他？）

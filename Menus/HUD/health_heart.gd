@@ -1,7 +1,6 @@
-class_name Shaker
 extends AnimatedSprite2D
 
-@export var player:Sasaki
+@export var player:CharacterBody2D
 var _elapsed_time: float = 10.0
 var _original_position: Vector2
 var _noise = FastNoiseLite.new()  # Godot内置柏林噪声生成器

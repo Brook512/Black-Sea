@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://cbn254ewvbjjf"]
+[gd_scene load_steps=24 format=4 uid="uid://cbn254ewvbjjf"]
 
 [ext_resource type="Script" uid="uid://qlnpv0yuijpi" path="res://Scenes/Combat.gd" id="1_nm52r"]
 [ext_resource type="TileSet" uid="uid://gcnqibusu2d4" path="res://Scenes/SeaTileset.tres" id="2_kbh2q"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cbrtby03xx82t" path="res://Menus/Background/1.png" id="8_4totf"]
 [ext_resource type="PackedScene" uid="uid://b5y35wky1p1qm" path="res://Menus/HUD/health_heart.tscn" id="9_entan"]
 [ext_resource type="Shader" uid="uid://b7viy7h8xrhyn" path="res://Players/Shaders/Wave.gdshader" id="10_cb7dr"]
+[ext_resource type="Script" uid="uid://u1pcejsy3b4t" path="res://Menus/HUD/enemy_health_heart.gd" id="10_cy1ba"]
 [ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="10_fgfhv"]
 [ext_resource type="Texture2D" uid="uid://dp1gaw3ufbghc" path="res://Scenes/sea.png" id="11_x4y81"]
 [ext_resource type="Script" uid="uid://bp5g6wp584tw7" path="res://Items/wave.gd" id="12_3rlnw"]
@@ -323,6 +324,11 @@ offset_bottom = -79.0
 modulate = Color(0.992157, 0.952941, 0.956863, 0.627451)
 position = Vector2(39, 27)
 player = NodePath("../../../sasaki")
+
+[node name="HealthHeart2" parent="Camera2D/HUD" node_paths=PackedStringArray("player") instance=ExtResource("9_entan")]
+position = Vector2(321, 27)
+script = ExtResource("10_cy1ba")
+player = NodePath("../../../Enemy")
 
 [node name="ColorRect" type="ColorRect" parent="Camera2D"]
 z_index = 1

@@ -12,5 +12,5 @@ func take_damage(damage, dir=null):
 		hsm.dispatch(&"HurtReceived",damage)
 	
 	if dir:
-		get_parent().velocity.x -= sign(dir)*hit_speed
+		get_parent().velocity.x = sign(dir)*hit_speed
 		#get_parent().velocity.x -= hit_speed

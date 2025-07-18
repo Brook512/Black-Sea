@@ -1,11 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://b5y35wky1p1qm"]
+[gd_scene load_steps=13 format=3 uid="uid://b5y35wky1p1qm"]
 
 [ext_resource type="Texture2D" uid="uid://iuuqud5f6uii" path="res://Menus/HUD/HeartBreaks/HeartRed.png" id="1_nkon4"]
 [ext_resource type="Texture2D" uid="uid://5t1uxti4atk2" path="res://Menus/HUD/HeartBreaks/HeartBreak1.png" id="2_5bv7c"]
 [ext_resource type="Texture2D" uid="uid://dimatav6nvibv" path="res://Menus/HUD/HeartBreaks/HeartBreak2.png" id="3_to82o"]
 [ext_resource type="Texture2D" uid="uid://kdvh3k8p8qsb" path="res://Menus/HUD/HeartBreaks/HeartBreak3.png" id="4_yoyum"]
 [ext_resource type="Texture2D" uid="uid://ddp41panm62o0" path="res://Menus/HUD/HeartBreaks/EmptyHeart.png" id="5_orm3i"]
+[ext_resource type="Texture2D" uid="uid://cxty58pgnf2h2" path="res://Menus/HUD/HeartBreaks/BlueHeart1.png" id="6_0a7pj"]
 [ext_resource type="Script" uid="uid://c50e03yadtjus" path="res://Menus/HUD/health_heart.gd" id="6_tplfm"]
+[ext_resource type="Texture2D" uid="uid://b752m4g6hwlhv" path="res://Menus/HUD/HeartBreaks/BlueHeart2.png" id="7_1ppdp"]
+[ext_resource type="Texture2D" uid="uid://bqg3yifmlw0gg" path="res://Menus/HUD/HeartBreaks/BlueHeart3.png" id="8_jf3uq"]
+[ext_resource type="Texture2D" uid="uid://4darv7ng7p2i" path="res://Menus/HUD/HeartBreaks/BlueHeart4.png" id="9_ushme"]
+[ext_resource type="Texture2D" uid="uid://y3k7rkcmno3l" path="res://Menus/HUD/HeartBreaks/BlueHeart5.png" id="10_lg6co"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_unl12"]
 animations = [{
@@ -24,6 +29,21 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("5_orm3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0a7pj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1ppdp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jf3uq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ushme")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_lg6co")
 }],
 "loop": false,
 "name": &"Hurt",

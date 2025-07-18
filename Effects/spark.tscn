@@ -1,7 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://cjv0koec7ry00"]
 
 [sub_resource type="Gradient" id="Gradient_4iom4"]
-colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 0.321569)
+offsets = PackedFloat32Array(0, 0.587156, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.65098, 0.882353, 1, 1, 1, 1, 1, 0.321569)
 
 [node name="Spark" type="CPUParticles2D"]
 emitting = false
@@ -16,5 +17,5 @@ initial_velocity_min = 20.0
 initial_velocity_max = 30.0
 damping_min = 5.0
 damping_max = 5.0
-color = Color(1, 0.34902, 0.219608, 1)
+color = Color(0.634174, 0.80268, 0.940968, 1)
 color_ramp = SubResource("Gradient_4iom4")

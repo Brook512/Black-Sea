@@ -1,0 +1,145 @@
+[gd_scene load_steps=12 format=3 uid="uid://b7j2faaxdn5f7"]
+
+[ext_resource type="Texture2D" uid="uid://bp8g7lskaud3p" path="res://Menus/PixelArtGUI/Textures/Icons/8/X.png" id="1_fttdf"]
+[ext_resource type="Script" uid="uid://bb1gx1emcj5iq" path="res://Menus/Scripts/SettingButtons.gd" id="2_2ywcy"]
+[ext_resource type="Theme" uid="uid://5l7yydypenmq" path="res://Menus/BarStyle/SoundBarTheme.tres" id="3_yipkn"]
+[ext_resource type="Script" uid="uid://665rpfmumlwq" path="res://Menus/Scripts/VolumnSlider.gd" id="4_llnx4"]
+[ext_resource type="Texture2D" uid="uid://bnehhdm228kis" path="res://Menus/PixelArtGUI/Textures/Icons/8/SoundHigh.png" id="5_i7udt"]
+[ext_resource type="Texture2D" uid="uid://bjmbfr2wapub0" path="res://Menus/WhiteGUI/TitleBarWhite2-1.png" id="6_fyh50"]
+[ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="7_vy3sd"]
+[ext_resource type="Script" uid="uid://dmkdri4t285yn" path="res://Scenes/full_screen_check.gd" id="8_4j0uv"]
+[ext_resource type="Texture2D" uid="uid://dwd1sbjtcxcbk" path="res://Menus/PixelArtGUI/Textures/Icons/8/FullScreen.png" id="9_2bbgw"]
+[ext_resource type="Texture2D" uid="uid://brm0sicxoni88" path="res://Menus/WhiteGUI/WhiteWindow.png" id="10_5stt8"]
+[ext_resource type="Texture2D" uid="uid://cgk1276bf3n3t" path="res://Menus/WhiteGUI/corner.png" id="11_3g4pu"]
+
+[node name="SettingLayer" type="CanvasLayer"]
+
+[node name="Box" type="Panel" parent="."]
+anchors_preset = -1
+anchor_left = 0.54
+anchor_top = 0.471
+anchor_right = 0.54
+anchor_bottom = 0.471
+offset_left = -104.4
+offset_top = -73.04
+offset_right = 74.6
+offset_bottom = 68.96
+
+[node name="QuitButton" type="TextureButton" parent="Box"]
+z_index = 1
+layout_mode = 0
+offset_left = 170.0
+offset_top = -4.0
+offset_right = 180.0
+offset_bottom = 6.0
+scale = Vector2(2, 2)
+texture_normal = ExtResource("1_fttdf")
+script = ExtResource("2_2ywcy")
+
+[node name="VolumeSlider" type="VBoxContainer" parent="Box"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.752
+anchor_top = -0.182
+anchor_right = -0.752
+anchor_bottom = -0.182
+offset_left = 175.608
+offset_top = 72.308
+offset_right = 295.608
+offset_bottom = 94.308
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Box/VolumeSlider"]
+layout_mode = 2
+theme = ExtResource("3_yipkn")
+value = 10.0
+script = ExtResource("4_llnx4")
+
+[node name="TextureRect" type="TextureRect" parent="Box/VolumeSlider/HSlider"]
+layout_mode = 2
+offset_left = -22.0
+offset_top = 1.0
+offset_right = -7.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+texture = ExtResource("5_i7udt")
+
+[node name="WhiteTitle" type="NinePatchRect" parent="Box"]
+self_modulate = Color(0.588235, 0.760784, 1, 1)
+layout_mode = 0
+offset_left = 50.0
+offset_top = 14.0
+offset_right = 107.0
+offset_bottom = 30.0
+scale = Vector2(1.51, 1.32)
+texture = ExtResource("6_fyh50")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="LabelSetting" type="Label" parent="Box/WhiteTitle"]
+layout_mode = 0
+offset_left = 9.93377
+offset_top = 0.757576
+offset_right = 49.9338
+offset_bottom = 16.7576
+scale = Vector2(0.945, 0.945)
+theme_override_colors/font_color = Color(0.762075, 0.899529, 1, 1)
+theme_override_fonts/font = ExtResource("7_vy3sd")
+text = "Settings"
+
+[node name="CheckBox" type="CheckBox" parent="Box"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 76.0
+offset_right = 149.0
+offset_bottom = 100.0
+scale = Vector2(0.875, 0.825)
+theme = ExtResource("3_yipkn")
+text = "FullScreen"
+script = ExtResource("8_4j0uv")
+
+[node name="TextureRect" type="TextureRect" parent="Box/CheckBox"]
+layout_mode = 0
+offset_left = -27.4286
+offset_top = 3.42857
+offset_right = -10.4286
+offset_bottom = 20.4286
+scale = Vector2(1, 1.1)
+texture = ExtResource("9_2bbgw")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Box"]
+modulate = Color(0.47451, 0.615686, 0.807843, 1)
+layout_mode = 0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 182.0
+offset_bottom = 148.0
+texture = ExtResource("10_5stt8")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="Box/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 2.0
+offset_right = -3.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_3g4pu")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[connection signal="pressed" from="Box/QuitButton" to="Box/QuitButton" method="_on_pressed"]

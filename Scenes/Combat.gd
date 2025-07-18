@@ -12,7 +12,7 @@ class_name BaseScene extends Node2D
 var ori_cam_position = Vector2(0.,32.)
 var up_cam_postion = Vector2(0,0)
 var start_timer = 0. 
-
+var played:bool = false
 
 func _ready() -> void:
 	anim_player.play("START")
@@ -28,8 +28,9 @@ func _check_death():
 	if player.hsm.get_active_state() == player.death_state:
 		player.set_physics_process(false)
 		enemy.set_physics_process(false)
-		
-		anim_player.play("ENDING")
+		if !played:
+			anim_player.play("ENDING")
+			played = true
 		loss_label.visible = true
 		win_label.visible = false
 		if !anim_player.is_playing():
@@ -38,7 +39,9 @@ func _check_death():
 	if enemy.hsm.get_active_state() == enemy.death_state:
 		player.set_physics_process(false)
 		enemy.set_physics_process(false)
-		anim_player.play("ENDING")
+		if !played:
+			anim_player.play("ENDING")
+			played = true
 		win_label.visible = true
 		loss_label.visible = false
 		if ending_timer.time_left == 0:

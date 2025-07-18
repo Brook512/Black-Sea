@@ -1,5 +1,5 @@
 extends Node2D
-
+@onready var setting_layer = $SettingLayer
 var scene_map = {
 	"EnterGame": "res://Scenes/StartAnim.tscn",
 	"Settings": "res://scenes/SettingScene.tscn"
@@ -15,7 +15,7 @@ func _get_scene_path(key: String) -> String:
 
 
 func _on_settings_pressed() -> void:
-	GlobalSceneManager.change_state(GlobalSceneManager.States.Settings)
+	setting_layer.visible = true
 
 
 

@@ -8,4 +8,4 @@ texture_margin_left = 4.0
 texture_margin_top = 4.0
 texture_margin_right = 4.0
 texture_margin_bottom = 4.0
-modulate_color = Color(0.498627, 0.687883, 0.535705, 1)
+modulate_color = Color(0.47451, 0.615686, 0.807843, 1)
