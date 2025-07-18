@@ -1047,7 +1047,7 @@ frame_progress = 0.0
 visible = false
 modulate = Color(0.144063, 0.144063, 0.144063, 0.619608)
 animation = &"Attack1"
-frame = 3
+frame = 0
 frame_progress = 0.0
 
 [node name="ShadowPlayer" type="AnimationPlayer" parent="."]

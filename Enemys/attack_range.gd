@@ -7,6 +7,8 @@ extends Area2D
 var _pending_enemy: Area2D = null      # 等待结算伤害的敌人
 var _window_timer = Timer.new()
 var _damage_timer = Timer.new()
+var _slow_timer = Timer.new()
+
 
 var enemy 
 var _is_counter:bool = false
@@ -14,7 +16,7 @@ var _prepared_player=null
 var _attacked:bool = false
 var particlea:CPUParticles2D
 var _ding:bool
-@export var player:Sasaki
+
 
 @onready var self_collision = $AttackCollision
 #var _emitted:bool = false
@@ -31,6 +33,9 @@ func _ready() -> void:
 	_damage_timer.one_shot = true
 	_damage_timer.wait_time = 0.2
 	add_child(_damage_timer)
+	_slow_timer.one_shot = true
+	_slow_timer.wait_time = 2.
+	add_child(_slow_timer)
 
 	
 func _physics_process(delta: float) -> void:
@@ -49,11 +54,15 @@ func _physics_process(delta: float) -> void:
 		enemy.spark.emitting=true
 		_is_counter = true
 		_attacked=false
+		_slow_timer.start()
+		enemy.cam.trigger_screen_shake()
 	else:
 		_is_counter  = false
 	
 	if _window_timer.time_left<0.2:
 		_ding = false
+		
+	_is_slow()
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player"):
@@ -70,4 +79,19 @@ func _on_area_exited(area:Area2D) -> void:
 		_attacked=false
 		_is_counter=false
 
-	
+func _is_slow():
+	if _slow_timer.time_left>0:
+		enemy.anim_player.speed_scale = 0.3
+		enemy.shadow_player.speed_scale = 0.3
+		if enemy.Player:
+			enemy.Player.attack_state.enable_cons_attack = true
+		if enemy.slow_effect:
+			enemy.slow_effect.visible = true
+	else:
+		enemy.anim_player.speed_scale = 1.
+		enemy.shadow_player.speed_scale = 1.
+		if enemy.Player:
+			enemy.Player.attack_state.enable_cons_attack = false
+		if enemy.slow_effect:
+			enemy.slow_effect.visible = false
+		

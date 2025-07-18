@@ -2,6 +2,8 @@ class_name AttackState extends BasicPlayerState
 
 @onready var attack_timer = Timer.new()
 @onready var hsm_blackboard = get_parent().blackboard
+var enable_cons_attack = false
+
 
 func _setup() -> void:
 	attack_timer.wait_time = 0.2
@@ -24,7 +26,7 @@ func _update(_delta: float) -> void:
 		agent.shadow.visible=false
 		
 
-	if Input.is_action_just_pressed("attack") and attack_timer.is_stopped():
+	if Input.is_action_just_pressed("attack") and attack_timer.is_stopped() and enable_cons_attack:
 		var result = _check_energy(hsm_blackboard.get_var("attack_cost"),hsm_blackboard)
 		attack_timer.start()
 		if agent.anim_player.is_playing() and result:

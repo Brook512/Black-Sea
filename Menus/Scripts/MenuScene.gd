@@ -21,3 +21,12 @@ func _on_settings_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+
+
+func _on_about_pressed() -> void:
+	var blog_url: String = "https://brook512.github.io/DNG.github.io/"  # ← 换成你的博客地址
+
+	var err := OS.shell_open(blog_url)
+	if err != OK:
+		push_error("无法打开浏览器，请手动访问: " + blog_url)  # 非必需的错误提示

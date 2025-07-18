@@ -1,4 +1,5 @@
 # camera_controller.gd
+class_name ShakeCamera
 extends Camera2D
 
 # 暴露在编辑器中的可调节参数

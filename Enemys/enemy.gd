@@ -20,6 +20,8 @@ extends CharacterBody2D
 @onready var invincible_timer = Timer.new()
 
 @export var Player:Sasaki
+@export var cam:Camera2D
+@export var slow_effect:ColorRect
 var last_sign =-1.
 
 func _ready() -> void:
