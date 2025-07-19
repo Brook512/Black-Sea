@@ -8,4 +8,4 @@ func _enter():
 func _update(delta: float) -> void:
 	easy_time+=delta
 	if easy_time>=5.0:
-		GlobalSceneManager.goto_scene("res://Scenes/Menu.tscn")
+		GlobalSceneManager.change_state(GlobalSceneManager.States.Menu)

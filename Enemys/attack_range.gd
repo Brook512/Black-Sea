@@ -34,7 +34,7 @@ func _ready() -> void:
 	_damage_timer.wait_time = 0.2
 	add_child(_damage_timer)
 	_slow_timer.one_shot = true
-	_slow_timer.wait_time = 2.
+	_slow_timer.wait_time = 1.5
 	add_child(_slow_timer)
 
 	

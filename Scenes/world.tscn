@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://dg03en08br3yw"]
+[gd_scene load_steps=29 format=4 uid="uid://dg03en08br3yw"]
 
 [ext_resource type="Script" uid="uid://y46nub3ux1w0" path="res://Scenes/WorldScene.gd" id="1_q2d71"]
 [ext_resource type="TileSet" uid="uid://gcnqibusu2d4" path="res://Scenes/SeaTileset.tres" id="1_y7y61"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://dp1gaw3ufbghc" path="res://Scenes/sea.png" id="15_kwl8l"]
 [ext_resource type="FontFile" uid="uid://c0ggshgriyapb" path="res://Menus/PixelArtGUI/Fonts/bitcell_memesbruh03.ttf" id="17_rwt1y"]
 [ext_resource type="Script" uid="uid://ckju1j05ko0ov" path="res://Items/Trap.gd" id="17_waglr"]
+[ext_resource type="PackedScene" uid="uid://b7j2faaxdn5f7" path="res://Scenes/setting_layer.tscn" id="18_rwt1y"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xiqgv"]
 
@@ -252,3 +253,6 @@ metadata/_edit_lock_ = true
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(425, 23)
 shape = SubResource("RectangleShape2D_waglr")
+
+[node name="SettingLayer" parent="." instance=ExtResource("18_rwt1y")]
+visible = false

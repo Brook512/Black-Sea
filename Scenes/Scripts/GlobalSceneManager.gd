@@ -30,7 +30,7 @@ const VALID_TRANSITIONS: Dictionary = {
 	States.Combat: [States.World, States.Menu],
 	States.Menu: [States.Begin, States.Settings],
 	States.Settings: [States.Menu],
-	States.World: [States.Combat, States.Dialogue],
+	States.World: [States.Combat, States.Dialogue, States.Menu],
 	States.Begin: [States.World]
 }
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://cbn254ewvbjjf"]
+[gd_scene load_steps=28 format=4 uid="uid://cbn254ewvbjjf"]
 
 [ext_resource type="Script" uid="uid://qlnpv0yuijpi" path="res://Scenes/Combat.gd" id="1_nm52r"]
 [ext_resource type="TileSet" uid="uid://gcnqibusu2d4" path="res://Scenes/SeaTileset.tres" id="2_kbh2q"]
@@ -16,6 +16,8 @@
 [ext_resource type="Script" uid="uid://bp5g6wp584tw7" path="res://Items/wave.gd" id="12_3rlnw"]
 [ext_resource type="AudioStream" uid="uid://dy7lx2lw627d4" path="res://Sounds/8BIT/background theme.mp3" id="13_h3w46"]
 [ext_resource type="Shader" uid="uid://dvvt3e8wrq8b5" path="res://Players/Shaders/SlowEffect.gdshader" id="16_kbh2q"]
+[ext_resource type="PackedScene" uid="uid://b7j2faaxdn5f7" path="res://Scenes/setting_layer.tscn" id="17_kbh2q"]
+[ext_resource type="Script" uid="uid://d14jbrek48hfx" path="res://Scenes/setting_layer.gd" id="18_nnvvn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xiqgv"]
 
@@ -278,3 +280,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="SettingLayer" parent="." instance=ExtResource("17_kbh2q")]
+visible = false
+script = ExtResource("18_nnvvn")

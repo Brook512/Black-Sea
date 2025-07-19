@@ -1,249 +1,176 @@
-重剑和刺剑
 
-# 一、引擎的核心
+---
+title: 像素风横板动作游戏 Demo 开发笔记
+date: 2025-07-03 15:44:03
+tags: [Godot, 横版动作, 开发经验, 像素风, LimboAI]
+---
 
-1. 特性
-树状数据结构​​：所有节点以树状结构组织，根节点通常是 MainLoop 或 SceneTree，每个节点及其子节点形成一个分支。（子节点继承父节点的变换（位置、旋转等））
-​​逐帧遍历​​：引擎每帧遍历场景树，按固定顺序（物理→输入→逻辑→渲染）触发节点的 _process()、_physics_process() 等方法。
-​​节点生命周期管理​​：引擎自动处理节点的创建、销毁、挂载（_ready()）和卸载（_exit_tree()）。
+## 一、游戏本质：状态机 + 数据驱动
 
-2. 节点的基础功能（打下基础）
-所有节点都具备以下特性：
-名称。
-可编辑的属性。
-每帧都可以接收回调以进行更新。
-你可以使用新的属性和函数来进行扩展。
-你可以将它们添加为其他节点的子节点。
-最后一个特征很重要。节点会组成一棵树
+### 1. 状态机（State Machine）
+游戏中的角色、敌人、系统逻辑本质上都是围绕“状态”运行的。例如玩家的移动、攻击、防御等行为就是不同的状态。通过有限状态机（FSM）或行为树（Behavior Tree）实现清晰的状态管理与切换，降低耦合，提高扩展性。
 
-3. 信号
-信号的使用分为两块
-信号创建方，负责定义信号 signal dead，以及广播信号 dead.emit
-信号接收方，负责连接创建方的信号 dead.connect(func)， 以及创建回调函数
-
-4. 
-
-
-# 二、设计核心
-以时机为核心，战斗体验的设计
-
-核心机制：当攻击相撞之后，可以进入专注时间，敌人速度变慢，可以使用连续攻击
-
-音乐是关键
-
-
-# 三、素材来源
-itch.io
-kenny asset
-sketch fab
-craftpix
-
-# 四、输入
-## 1. inputevent
-如果该 Viewport 内嵌了 Window，则该 Viewport 会尝试以窗口管理器的身份解释事件（例如对 Window 进行大小调整和移动）。
-
-接下来，如果存在聚焦的内嵌 Window，则会将事件发送给该 Window，在该窗口的 Viewport 中进行处理，然后将事件标记为已处理。如果不存在聚焦的内嵌 Window，则会将事件发送给当前视口中的节点，顺序如下。
-
-首先会调用标准的 Node._input() 函数，调用只会发生在覆盖了这个函数（并且输入处理没有通过 Node.set_process_input() 禁用）的节点上。如果某个函数消耗了该事件，可以调用 Viewport.set_input_as_handled()，事件就不会再继续传播。这样就确保你可以在 GUI 之前过滤自己感兴趣的事件。对于游戏输入，Node._unhandled_input() 通常更合适，因为这个函数能够让 GUI 拦截事件。
-
-然后，它会尝试将输入提供给 GUI，并查看是否有控件可以接收它。如果有，该 Control 将通过虚函数 Control._gui_input() 被调用并发出“gui_input”信号（此函数可通过继承它的脚本重新实现）。如果该控件想“消耗”该事件，它将调用 Control.accept_event() 阻止事件的传播。请使用 Control.mouse_filter 属性来控制 Control 是否通过 Control._gui_input() 回调接收鼠标事件的通知，以及是否进一步传播这些事件。
-
-如果事件到目前为止还没有被消耗，并且覆盖了 Node._shortcut_input() 函数（并且没有通过 Node.set_process_shortcut_input() 禁用），那么就会调用这个回调。只有 InputEventKey、InputEventShortcut 和 InputEventJoypadButton 才会如此。如果某个函数消耗了该事件，它可以调用 Viewport.set_input_as_handled()，那么事件就不会再继续传播。快捷键输入回调主要用于处理快捷键相关的事件。
-
-如果事件到目前为止还没有被消耗，并且 Node._unhandled_key_input() 函数已被覆盖（并且没有通过 Node.set_process_unhandled_key_input() 禁用），那么该回调将被调用。仅当事件是 InputEventKey 时才会如此。如果某个函数消耗了该事件，它可以调用 Viewport.set_input_as_handled()，事件就不会再继续传播。未处理按键输入回调主要用于处理按键相关的事件。
-
-如果事件到目前为止还没有被消耗，并且覆盖了 Node._unhandled_input() 函数（并且没有通过 Node.set_process_unhandled_input() 禁用），那么就会调用这个回调。如果某个函数消耗了该事件，它可以调用 Viewport.set_input_as_handled()，事件就不会再继续传播。未处理输入回调主要用于处理全屏游戏事件，因此 GUI 处于活动状态时不会收到。
-
-如果到目前为止没有节点想要该事件，并且对象拾取已打开，则该事件将用于对象拾取。对于根视口，也可以在项目设置中启用该设置。在 3D 场景的情况下，如果将 Camera3D 分配给该 Viewport，则会向物理世界投射一条射线（以从点击开始的射线方向）。如果该射线击中物体，它将调用相关物理对象中的 CollisionObject3D._input_event() 函数。对于 2D 场景，从概念上讲，CollisionObject2D._input_event() 也会发生同样的情况。
-## 2. 
-
-
-# 五、UI
-1. UI信号的传播
-Godot 通过视口传播输入事件。每个 Viewport 负责将 InputEvent传播到其子节点。
-由于 SceneTree.root 是一个 Window，因此游戏中的所有 UI 元素都已自动执行此作。
-通过调用 SceneTree 将输入事件从根节点传播到所有子节点Node._input。特别是对于 UI 元素，覆盖虚拟方法 _gui_input 更有意义，该方法会筛选掉不相关的输入事件，例如通过检查 z 顺序、mouse_filter、焦点或事件是否位于控件的边界框内。
-
-调用 accept_event，以便没有其他节点收到事件。接受输入后，它将被处理，因此Node._unhandled_input不会处理它。
-
-只有一个 Control 节点可以处于焦点状态。只有焦点节点才会接收事件。要获得焦点，请致电 grab_focus。当另一个节点抓住控制节点时，或者如果您隐藏了焦点中的节点，则控制节点会失去焦点。
-
-将 mouse_filter 设置为 MOUSE_FILTER_IGNORE 以指示 Control 节点忽略鼠标或触摸事件。如果您在按钮顶部放置图标，您将需要它。
-
-2. 背包机制 （跳表） 实现快速的插入和查询 （logn）
-传统链表的查询速度为（n）
-
-## 1.按钮设定
-
-
-#六、shader
-1.shader的主循环：渲染管线
-a. ​​顶点着色器（Vertex Shader）​​
-​​作用阶段​​：顶点处理阶段（Vertex Processing）。
-​​执行方式​​：
-对 ​​每个顶点​​ 执行一次。
-Godot 会在渲染模型时，自动遍历所有顶点，并将顶点数据（位置、法线、UV 等）传递给顶点着色器。
-
-b. 片元着色器Fragment Shader
-对 ​​每个片元（像素）​​ 执行一次。
-在光栅化阶段后，Godot 会为每个覆盖模型表面的像素生成片元，并自动调用片元着色器。
-片段函数的标准用途是设置用于计算光照的材质属性。例如，你可以为 ROUGHNESS、RIM、TRNASMISSION 等设置值，
-告诉光照函数光照应该如何处理对应的片段。这样就可以控制复杂的着色管线，而不必让用户编写过多的代码。如果你不需要这一内置功能，
-那么你可以忽略它，自行编写光照处理函数，Godot 会将其优化掉。
-例如，如果你没有向 RIM 写入任何值，那么 Godot 就不会计算边缘光照。
-编译时，Godot 会检查是否使用了 RIM；如果没有，那么它就会把对应的代码删除。因此，你就不会在没有使用的效果上浪费算力。
-
-光照处理器
-light() 处理器也会在每一个像素上运行，并且同时还会在每一个影响该对象的灯光上运行。如果没有灯光影响该对象则不会运行。
-它会被用于 fragment() 处理器，一般会在 fragment() 函数中进行材质属性设置时执行。
-
-## 🎨 内置变量
-| 变量名            | 类型         | Godot 等价物               | 描述                          |
-|--------------------|--------------|---------------------------|-------------------------------|
-| `fragColor`        | `out vec4`   | `COLOR`                   | 像素输出颜色 (Fragment Shader) |
-| `fragCoord`        | `vec2`       | `FRAGCOORD.xy`            | 全屏四边形的像素坐标           |
-| `iResolution`      | `vec3`       | `1.0 / SCREEN_PIXEL_SIZE` | 屏幕分辨率倒数 (可手动传递)    |
-
-## ⏱ 时间相关 Uniform
-| 变量名              | 类型         | 描述                          |
-|----------------------|--------------|-------------------------------|
-| `iTime`             | `float`      | 着色器启动后的累计时间（秒）    |
-| `iTimeDelta`        | `float`      | 前一帧的渲染耗时（秒）         |
-| `iFrame`            | `float`      | 累计渲染帧数                   |
-| `iChannelTime[4]`   | `float`      | 各纹理通道独立计时（秒）        |
-
-## 🖱 输入设备 Uniform
-| 变量名              | 类型         | 描述                          |
-|----------------------|--------------|-------------------------------|
-| `iMouse`            | `vec4`       | 鼠标位置（像素坐标）           |
-| `iDate`             | `vec4`       | 当前时间 `(秒, 分, 时, 年)`     |
-
-## 🖼 纹理相关
-### 分辨率参数
-| 变量名                     | 类型         | Godot 等价物               |
-|----------------------------|--------------|---------------------------|
-| `iChannelResolution[4]`    | `vec3`       | `1.0 / TEXTURE_PIXEL_SIZE` |
-
-### 采样器
-| 变量名          | 类型            | 描述                          |
-|------------------|-----------------|-------------------------------|
-| `iChanneli`      | `sampler2D`     | 纹理采样器 (Godot 默认提供 1 个) |
+### 2. 数据驱动（Data-Driven）
+游戏逻辑应尽可能从“硬编码”过渡到“数据驱动”。通过配置文件（如 JSON、TOML、Resource）来决定角色属性、攻击逻辑、敌人行为，从而提升可维护性和可扩展性。
 
 ---
 
-## 使用说明
-1. **坐标系统**  
-   `fragCoord` 适用于全屏四边形，小范围四边形建议使用 `UV`
+## 二、Godot 引擎核心机制
 
-2. **纹理扩展**  
-   Godot 默认仅提供 1 个内置纹理 (`TEXTURE`)，可通过自定义 Uniform 添加更多纹理通道
+### 1. 树状节点结构
+- 所有节点组成一棵树，SceneTree 为根。
+- 子节点继承父节点的变换属性（如位置、旋转）。
+- 每帧引擎遍历场景树，按以下顺序调用回调函数：
+  ```
+  物理处理 → 输入处理 → 逻辑处理 → 渲染处理
+  ```
 
-3. **分辨率计算**  
-   `iResolution` 等价于屏幕像素尺寸的倒数，可通过 `1.0 / SCREEN_PIXEL_SIZE` 获取
-## 变量传递方法
+### 2. 节点的基本能力
+每个节点拥有：
+- 名称、可编辑属性
+- 生命周期函数：_ready(), _exit_tree(), _process(), _physics_process()
+- 可继承、自定义扩展
+- 可以挂载为其他节点的子节点，组成树结构
 
-### 1. 插值变量（Varying Variables）
-1. **声明插值变量**：在着色器顶部使用 `varying` 声明。
-   ```glsl
-   varying vec3 custom_data;
-	```
+### 3. 信号系统
+信号是一种事件广播机制：
+- **信号定义方**：定义 `signal dead` 并使用 `emit_signal("dead")` 触发
+- **信号接收方**：使用 `connect("dead", target_node, "_on_dead")` 连接信号回调
 
-# 七、Gameplay
+---
 
-## 1.player移动逻辑（本质上是动画切换+坐标移动）
-对应_physics_process 通过Input输入映射获取数值，在character的physical process中实现动画切换
+## 三、游戏设计核心：以时机驱动的战斗体验
 
-## 2.攻击动画 （输入层 → 动画层 → 生成层 → 物理层 → 效果层 五级解耦）
-包含了两个对象 player 和 bullet
-如果我要
+- 攻击相撞后可进入“专注时间”，敌人变慢，玩家可打出连续技。
+- 架势条系统控制“霸体”与“破防”机制。
+- 体力系统控制闪避与攻击节奏。
+- 战斗节奏以“读秒、还击、打断”形成动态博弈。
+- 音乐节奏设计和攻击节奏强相关。
 
-##3.collision
-collision_layer是一个位掩码（bitmask），用于表示这个物体属于哪些碰撞层。
-collision_mask是一个位掩码，用于表示这个物体会检测哪些碰撞层上的物体。
+---
 
-设定 collision layer——1：主角，2：NPC，3：Item，4：敌人攻击，5：主角攻击 6.wall 7 对话
+## 四、美术素材来源
 
-主角的mask——234
-NPC的mask——15
-Item的mask——1
+推荐素材站点：
+- [itch.io](https://itch.io)
+- [Kenney.nl](https://kenney.nl)
+- [Sketchfab](https://sketchfab.com)
+- [Craftpix.net](https://craftpix.net)
 
-wall 的 mask——123
+---
 
-怪物的血量以架势条为核心
+## 五、输入系统解析（InputEvent）
 
-角色有四类碰撞：攻击、受伤、对话、运动
+Godot 的输入事件传播机制如下：
 
-##4.status
-以架势条、血量和体力为核心
+### 1. 基本流程
+Viewport 会按照以下顺序处理输入：
+1. `_input()`：全局输入，可设置 `set_input_as_handled()` 阻断传播。
+2. `_gui_input()`：专用于 GUI 控件的输入逻辑。
+3. `_shortcut_input()`：快捷键专用输入。
+4. `_unhandled_key_input()`：未被 GUI 接收的按键事件。
+5. `_unhandled_input()`：全屏游戏常用的输入函数。
 
-# 八、LimboAI AI树
-Sequence Selector Condition AI树的三个关键组成部分
-通过这三个部分调用各种叶子节点task
+### 2. Control 节点输入
+- `_gui_input()` 会处理鼠标、触摸、键盘等 GUI 输入。
+- `mouse_filter` 控制是否拦截输入事件。
+- `accept_event()` 拦截事件防止继续传播。
+- 控件焦点通过 `grab_focus()` 管理，避免事件被多个控件处理。
 
-创建自定义任务时，请扩展以下基类之一：BTAction、BTCondition、BTDecorator、BTComposite。
-```
-@tool # 表示该脚本在编辑器模式下也可运行
-extends BTAction
+---
 
-# Task parameters.
-@export var parameter1: float
-@export var parameter2: Vector2
+## 六、UI 系统
 
-## Note: Each method declaration is optional.
-## At minimum, you only need to define the "_tick" method.
+- UI 事件由视口统一向下传播。
+- 使用 `Control._gui_input()` + `accept_event()` 控制输入优先级。
+- 鼠标穿透可通过设置 `mouse_filter = MOUSE_FILTER_IGNORE` 实现。
+- 背包系统可采用 **跳表（Skip List）** 数据结构，实现 O(logN) 插入与查询。
 
+---
 
-# Called to generate a display name for the task (requires @tool).
-func _generate_name() -> String:
-	return "MyTask"
+## 七、Shader 系统概览
 
+### 1. 渲染管线核心阶段
+- **Vertex Shader**：每个顶点执行一次
+- **Fragment Shader**：每个像素执行一次
+- **Light Shader**：受光照影响时每像素每光源执行
 
-# Called to initialize the task.
-func _setup() -> void:
-	pass
+### 2. 常用内置变量（GLSL）
+| 类型 | 变量名 | 描述 |
+|------|--------|------|
+| 输出 | `COLOR` | 当前像素颜色 |
+| 输入 | `UV` | 当前像素的 UV 坐标 |
+| Uniform | `TIME` | 全局时间 |
+| Uniform | `SCREEN_PIXEL_SIZE` | 屏幕像素尺寸 |
 
+### 3. 自定义变量传递
+- `uniform`：用于从 GDScript 传值到 Shader
+- `varying`：从 Vertex 向 Fragment 传递数据
 
-# Called when the task is entered.
-func _enter() -> void:
-	pass
+---
 
+## 八、角色控制与战斗系统
 
-# Called when the task is exited.
-func _exit() -> void:
-	pass
+### 1. Player 控制逻辑
+- `_physics_process()` 中处理移动、跳跃、攻击
+- 动画通过 `AnimationPlayer` 或 `AnimationTree` 切换
+- 攻击逻辑五级解耦：
+  ```
+  输入层 → 动画层 → 生成层 → 物理层 → 效果层
+  ```
 
+### 2. 碰撞层设置建议
+| 类型 | Layer | Mask |
+|------|-------|------|
+| 主角 | 1 | 2,3,4 |
+| 敌人 | 4 | 1,5 |
+| NPC | 2 | 1 |
+| 道具 | 3 | 1 |
+| 墙体 | 6 | 1,2,3 |
 
-# Called each time this task is ticked (aka executed).
-func _tick(delta: float) -> Status:
-	return SUCCESS
+---
 
+## 九、AI 系统：LimboAI 行为树
 
-# Strings returned from this method are displayed as warnings in the editor.
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings := PackedStringArray()
-	return warnings
-```	
- ## 敌人AI设计
-1. **全局属性设置**
-  position
-血量health、架势posture、体力stamina
-2. **对话阶段方法设置**  
-position固定，
-动画固定，
-碰撞体只激活对话碰撞体，
-血量、架势、体力无变化
+### 1. 三大核心节点
+- **Selector**：遇到成功就返回成功
+- **Sequence**：遇到失败就返回失败
+- **Condition**：判断条件节点
 
-3. **攻击阶段方法设置**  
-轻击 Light Attack
-重击 Heavy Attack
-闪避 Dodge
-当敌人在远处时，执行追逐
-当敌人在近处时，会执行突进攻击或者重击进行威胁
-当敌人较为靠近玩家时，会不停攻击，直到玩家攻击时会有概率闪避玩家攻击
+### 2. 创建自定义任务
+继承 BTAction / BTCondition，实现 `_tick()` 方法。
 
+### 3. 敌人 AI 设计
+- 属性：血量、体力、架势、状态（待机/攻击/受击）
+- 状态切换：远距 → 追击，近距 → 攻击或重击，受到攻击 → 闪避或硬抗
 
-# 九、UI
+---
 
-# 十、序列化
+## 十、架势/体力/血量机制
 
-# 十一、网络
+- **血量 HP**：归零则死亡
+- **体力 SP**：攻击和闪避消耗，归零则无法行动
+- **架势 Posture**：遭受攻击时减少，归零则进入硬直状态
+
+---
+
+## 十一、序列化系统（待补充）
+
+可使用 Godot 的 Resource、JSON、TOML、ConfigFile 进行存档、角色信息、技能参数等数据的持久化。
+
+---
+
+## 十二、网络系统（待补充）
+
+涉及：
+- 同步动画状态
+- 客户端预测 + 服务器修正
+- P2P vs Dedicated Server 架构对比
+
+---
+
+## 总结
+
+这是一个关于使用 Godot 打造像素风横版动作游戏的开发实践总结。通过结合状态机、行为树、Shader 渲染、模块化输入处理、数据驱动和架势条系统，形成一套结构清晰、功能健全的横版战斗框架。未来计划补充存档系统与网络联机模块，欢迎持续关注。
+
+---
